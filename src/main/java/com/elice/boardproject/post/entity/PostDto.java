@@ -11,7 +11,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Post {
+public class PostDto {
     private Long postId;
     private String userId;
     private Long boardId;

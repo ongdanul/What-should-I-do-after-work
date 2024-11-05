@@ -1,8 +1,23 @@
 package com.elice.boardproject.post.controller;
 
+import com.elice.boardproject.post.entity.Post;
+import com.elice.boardproject.post.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class PostController {
+    @Autowired
+    private PostService postService;
 
+    @GetMapping("/list")
+    public String getLists(Model model) {
+        List<Post> posts = postService.findAll();
+        model.addAttribute("posts", posts);
+        return "list";
+    }
 }

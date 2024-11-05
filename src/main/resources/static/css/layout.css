@@ -1,0 +1,60 @@
+header, main, footer {
+    max-width: 1280px;
+    margin: auto;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    header, main, footer {
+        width: 100%;
+        padding: 5px;
+    }
+}
+
+header {
+    min-height: 150px;
+    align-content: end;
+}
+
+.headerContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.homeLogo{
+    width: 150px;
+    height: 100px;
+    background: yellow;
+}
+
+.loginIcon{
+    width: 50px;
+    height 50px;
+    margin-right: 20px;
+}
+
+.loginIcon i {
+    font-size: 50px;
+}
+
+main {
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    min-height: 100px;
+}
+
+.footerContainer {
+    display: flex;
+    align-items: top;
+    gap: 30px
+}
+
+.project p {
+    margin: 0;
+}

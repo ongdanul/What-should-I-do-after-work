@@ -1,0 +1,56 @@
+server:
+  port: 10000
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  application:
+    name: boardproject
+
+  datasource:
+    url: jdbc:mariadb://localhost:3306/elice
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: elice
+    password: elice
+
+#  datasource:
+#    url: dbc:mysql://localhost:14.35.173.13/elice?useSSL=false&serverTimezone=UTC
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: passw0rd
+  sql:
+    init:
+      mode: never
+
+  # CREATE USER 'elice'@'localhost' IDENTIFIED BY 'elice';
+  # GRANT ALL PRIVILEGES ON elice.* TO 'elice'@'localhost';
+
+
+  #  mail:
+  #    host: smtp.gmail.com
+  #    port: 587
+  #    username:
+  #    password:
+  #    properties:
+  #      mail:
+  #        smtp:
+  #          auth: true
+  #          starttls:
+  #            enable: true
+
+  thymeleaf:
+    cache: false
+
+#  servlet:
+#    multipart:
+#      enabled: true
+#      location:
+#      max-file-size: 50MB
+#      max-request-size: 50MB
+#
+#uploadPath:
+#tempUploadPath:
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

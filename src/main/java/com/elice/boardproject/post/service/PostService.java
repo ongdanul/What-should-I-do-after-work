@@ -5,6 +5,7 @@ import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,7 @@ public class PostService {
         return exists;
     }
 
+    @Transactional
     public int update(Post post) {
         Post findPost = postMapper.detail(post.getPostId());
 
@@ -48,7 +50,7 @@ public class PostService {
         Optional.ofNullable(post.getPostContent())
                 .ifPresent(findPost::setPostContent);
     */
-        return postMapper.update(findPost);
+        return postMapper.update(post);
     }
 
     public void delete(Long postId) {

@@ -33,8 +33,15 @@ public class PostController {
         return "post/detail";
     }
 
+    // 게시글 등록 화면 호출
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        model.addAttribute("post", new PostDto());
+        return "post/register";
+    }
+
     // 게시글 등록
-    @PostMapping
+    @PostMapping("/register")
     public String register(PostDto postDto) {
         Post post = postDto.toPost();
         int newPost = postService.insert(post);
@@ -42,14 +49,22 @@ public class PostController {
         return "redirect:/post/list";
     }
 
+    // 게시글 수정 화면 호출
+    @GetMapping("/edit/{postId}")
+    public String updateForm(@PathVariable Long postId,Model model) {
+        Post findPost = postService.detail(postId);
+        model.addAttribute("post", findPost);
+        return "post/edit";
+    }
+
     // 게시글 수정
     @PatchMapping("/{postId}")
-    public String update(@PathVariable Long postId, PostDto postDto) {
+    public String update(@PathVariable Long postId, @ModelAttribute PostDto postDto) {
         Post post = postDto.toPost();
         post.setPostId(postId);
-        int updatePost = postService.update(post);
+        postService.update(post);
 
-        return "redirect:/post/list/" + postId;
+        return "redirect:/post/" + postId;
     }
 
     // 게시글 삭제

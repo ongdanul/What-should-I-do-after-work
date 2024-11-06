@@ -26,23 +26,31 @@
 
     <!-- post 등록 -->
     <insert id="insert">
-        INSERT INTO post (user_id, board_id, post_title, post_content, view_count)
-        VALUES (#{user_id}, #{board_id}, #{post_title}, #{post_content}, #{view_count})
+        INSERT INTO post (user_id, board_id, post_title, post_content)
+        VALUES (#{userId}, #{boardId}, #{postTitle}, #{postContent})
     </insert>
 
     <!-- post 수정 -->
     <update id="update">
         UPDATE post
-        SET post_title   = #{post_title},
-            post_content = #{post_content},
-            mod_date     = #{mod_date}
-        WHERE post_id = #{post_id}
+        <set>
+            <if test="postTitle != null">
+                post_title = #{postTitle},
+            </if>
+            <if test="postContent != null">
+                post_content = #{postContent},
+            </if>
+            <if test="modDate != null">
+                mod_date = NOW()
+            </if>
+        </set>
+        WHERE post_id = #{postId}
     </update>
 
     <!-- post 삭제 -->
     <delete id="delete">
         DELETE
         FROM post
-        WHERE post_id = #{post_id}
+        WHERE post_id = #{postId}
     </delete>
 </mapper>

@@ -9,6 +9,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Post {
     private Long postId;
     private String userId;
@@ -21,7 +22,6 @@ public class Post {
 
     public PostDto toPostDto() {
         return PostDto.builder()
-                .postId(postId)
                 .userId(userId)
                 .postTitle(postTitle)
                 .postContent(postContent)

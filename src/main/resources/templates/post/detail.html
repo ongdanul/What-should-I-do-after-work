@@ -8,9 +8,34 @@
 <main layout:fragment="content">
     <table border="1">
         <tr>
-            <td th:text="${post.postId}">default value</td>
+            <td th:text="|No.${post.postId}|">default value</td>
+            <td>제목 :</td>
             <td th:text="${post.postTitle}">default value</td>
+            <td th:text="|작성일시 : ${post.regDate}|">default value</td>
+            <!--            <td th:text="|수정일시 : ${post.modDate}|">default value</td>-->
+        </tr>
+        <tr>
             <td th:text="${post.postContent}">default value</td>
+        </tr>
+        <!--
+        <form th:action="@{/post/{postId}(postId=${post.postId})}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="button">Delete</button>
+        </form>
+        -->
+        <tr>
+            <td>
+                <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">
+                    <button type="submit" class="button">삭제</button>
+                </form>
+            </td>
+            <td>
+                <a th:href="'/post/edit/'+${post.postId}">수정</a>
+
+            </td>
+            <td>
+                <button type="button" onclick="location.href='/post/list'">목록</button>
+            </td>
         </tr>
     </table>
 </main>

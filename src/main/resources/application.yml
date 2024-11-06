@@ -9,10 +9,10 @@ spring:
     name: boardproject
 
   datasource:
-    url: jdbc:mariadb://localhost:3306/elice
+    url: jdbc:mariadb://localhost:3306/boardproject
     driver-class-name: org.mariadb.jdbc.Driver
-    username: elice
-    password: elice
+    username: root
+    password: passw0rd
 
 #  datasource:
 #    url: dbc:mysql://localhost:14.35.173.13/elice?useSSL=false&serverTimezone=UTC
@@ -54,3 +54,5 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

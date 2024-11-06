@@ -19,5 +19,5 @@ public class Post {
     private String postContent;
     private Instant regDate;
     private Instant modDate;
-    private Long view_count;
+    private Long viewCount;
 }

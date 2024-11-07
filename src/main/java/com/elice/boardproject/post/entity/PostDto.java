@@ -10,7 +10,7 @@ import lombok.*;
 public class PostDto {
     private Long postId;
     private String userId;
-//    private Long boardId;
+    private Long boardId;
     private String postTitle;
     private String postContent;
 //    private Instant regDate;
@@ -20,6 +20,7 @@ public class PostDto {
     public Post toPost() {
         return Post.builder()
                 .postId(postId)
+                .boardId(boardId)
                 .userId(userId)
                 .postTitle(postTitle)
                 .postContent(postContent)

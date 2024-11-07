@@ -5,6 +5,7 @@ import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,8 +15,21 @@ public class PostService {
     @Autowired
     private PostMapper postMapper;
 
-    public List<Post> findAll(String filter, String description) {
-        return postMapper.findAll(filter, description);
+//    public List<Post> findAll(long boardId) {
+//        return postMapper.findAll(boardId);
+//    }
+//    // 필터
+//    public List<Post> postFilter(String postTitle, String postContent, long boardId) {
+//        System.out.println("boardId");
+//        return postMapper.postFilter(postTitle, postContent, boardId);
+//    }
+
+    public List<Post> findAll(long boardId) {
+        return postMapper.findAll(boardId);
+    }
+    // 필터
+    public List<Post> postFilter(String filter, String description, long boardId) {
+        return postMapper.postFilter(filter, description, boardId);
     }
 
     public Post detail(Long postId) {
@@ -28,7 +42,7 @@ public class PostService {
 
     public int insert(Post post) {
         int exists = postMapper.insert(post);
-
+        System.out.println("exists : " + exists);
         if (exists == 0) {
             throw new RuntimeException();
         }
@@ -36,6 +50,7 @@ public class PostService {
         return exists;
     }
 
+    @Transactional
     public int update(Post post) {
         Post findPost = postMapper.detail(post.getPostId());
 
@@ -48,7 +63,7 @@ public class PostService {
         Optional.ofNullable(post.getPostContent())
                 .ifPresent(findPost::setPostContent);
     */
-        return postMapper.update(findPost);
+        return postMapper.update(post);
     }
 
     public void delete(Long postId) {

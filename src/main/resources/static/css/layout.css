@@ -32,10 +32,26 @@ header {
     width: 50px;
     height 50px;
     margin-right: 20px;
+    position: relative;
+    display: inline-block;
 }
 
 .loginIcon i {
     font-size: 50px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    min-width: 150px;
+    text-align: center;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
 }
 
 main {

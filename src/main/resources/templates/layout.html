@@ -15,10 +15,12 @@
         <div class="homeLogo">
 
         </div>
-        <div class="loginIcon">
-            <i class="bi bi-person"></i>
-<!--            로그인 상태일때-->
-<!--            <i class="bi bi-person-fill"></i>-->
+        <div class="loginIcon dropdown">
+            <i class="bi bi-person dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">회원정보</a></li>
+                <li><a class="dropdown-item" href="/activity">회원활동정보</a></li>
+            </ul>
         </div>
     </div>
 </header>

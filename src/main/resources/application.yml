@@ -1,5 +1,6 @@
 server:
-  port: 10000
+#  port: 10000
+  port: 33333
 
 spring:
   main:
@@ -9,23 +10,13 @@ spring:
     name: boardproject
 
   datasource:
-    url: jdbc:mariadb://localhost:3306/elice
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: elice
-    password: elice
-
-#  datasource:
-#    url: dbc:mysql://localhost:14.35.173.13/elice?useSSL=false&serverTimezone=UTC
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    username: root
-#    password: passw0rd
+    url: jdbc:mysql://14.35.173.14:26711/boardproject
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: passw0rd
   sql:
     init:
       mode: never
-
-  # CREATE USER 'elice'@'localhost' IDENTIFIED BY 'elice';
-  # GRANT ALL PRIVILEGES ON elice.* TO 'elice'@'localhost';
-
 
   #  mail:
   #    host: smtp.gmail.com
@@ -54,3 +45,5 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
     <title>예시 페이지</title>
 </head>
@@ -10,6 +11,11 @@
             <td><a th:href="'/post/list/'+${b.board_id}" th:text="${b.board_title}"></a></td>
         </tr>
     </table>
+    <button type="button" onclick="location.href='/board/register'">게시판 등록</button>
+<!--    <form th:action="@{/board/{boardId}(boardId=${board.boardId})}" th:method="delete">-->
+<!--        <button type="submit" class="button">삭제</button>-->
+<!--    </form>-->
+
 </main>
 </body>
 </html>

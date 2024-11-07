@@ -32,18 +32,18 @@
         , A.view_count AS view_count
         , B.user_name AS user_name
         FROM post A
-        JOIN users B
-        ON A.user_id = B.user_id
-        WHERE 1=1
-        ON A.user_id = B.user_id
-        AND A.board_id = ${boardId}
+        JOIN users B ON A.user_id = B.user_id
+        WHERE A.board_id = #{boardId}
         <if test="description != null and description != ''">
             AND
             <choose>
-                <when test="filter == 'post_title'">post_title</when>
-                <when test="filter == 'post_content'">post_content</when>
+                <when test="filter == 'post_title'">
+                    A.post_title LIKE CONCAT('%', #{description}, '%')
+                </when>
+                <when test="filter == 'post_content'">
+                    A.post_content LIKE CONCAT('%', #{description}, '%')
+                </when>
             </choose>
-            LIKE CONCAT('%', #{description}, '%')
         </if>
     </select>
 

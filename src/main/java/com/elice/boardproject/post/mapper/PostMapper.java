@@ -10,7 +10,7 @@ import java.util.List;
 public interface PostMapper {
     List<Post> findAll(long boardId);
 
-    List<Post> postFilter(String postTitle, String postContent, long boardId);
+    List<Post> postFilter(String filter, String description, long boardId);
 
     Post detail(Long postId);
 

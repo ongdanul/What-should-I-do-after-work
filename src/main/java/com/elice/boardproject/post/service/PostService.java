@@ -15,14 +15,22 @@ public class PostService {
     @Autowired
     private PostMapper postMapper;
 
+//    public List<Post> findAll(long boardId) {
+//        return postMapper.findAll(boardId);
+//    }
+//    // 필터
+//    public List<Post> postFilter(String postTitle, String postContent, long boardId) {
+//        System.out.println("boardId");
+//        return postMapper.postFilter(postTitle, postContent, boardId);
+//    }
+
     public List<Post> findAll(long boardId) {
         return postMapper.findAll(boardId);
     }
     // 필터
-    public List<Post> postFilter(String postTitle, String postContent, long boardId) {
-        System.out.println("boardId");
-        return postMapper.postFilter(postTitle, postContent, boardId);
-    } 
+    public List<Post> postFilter(String filter, String description, long boardId) {
+        return postMapper.postFilter(filter, description, boardId);
+    }
 
     public Post detail(Long postId) {
         Post findPost = postMapper.detail(postId);

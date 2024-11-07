@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>예시 페이지</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <form th:action="@{/board/{boardId}(boardId=${boardId})}" th:method="patch">
+        <table border="1">
+            <tr>
+<!--                <td th:text="|No.${boardId}|">default value</td>-->
+                <td>게시판명 : <input type="text" name="boardTitle" th:value="${board.boardTitle}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="button">확인</button>
+                </td>
+                <td>
+                    <a th:href="'/post/list/'+${boardId}">취소</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</main>
+</body>
+</html>

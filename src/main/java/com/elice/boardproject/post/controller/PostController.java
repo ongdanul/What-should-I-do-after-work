@@ -16,22 +16,39 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+//    // 게시글 전체 목록
+//    @GetMapping("/list/{boardId}")
+//    public String lists(@PathVariable Long boardId, Model model) {
+//        List<Post> posts = postService.findAll(boardId);
+//        model.addAttribute("posts", posts);
+//        return "post/list";
+//    }
+//
+//    // 게시글 필터 목록
+//    @GetMapping("/list")
+//    public String postFilter(String filter, String description, String aaa, Model model) {
+//        System.out.println("@@@@@@@@@@@@@@@@ controller filter : " + filter);
+//        System.out.println("@@@@@@@@@@@@@@@@ controller description : " + description);
+//        System.out.println("@@@@@@@@@@@@@@@@ controller boardId : " + aaa);
+//       model.addAttribute("posts", posts);
+//        return "post/list";
+//    }
+
     // 게시글 전체 목록
     @GetMapping("/list/{boardId}")
     public String lists(@PathVariable Long boardId, Model model) {
         List<Post> posts = postService.findAll(boardId);
         model.addAttribute("posts", posts);
+        model.addAttribute("boardId", boardId);
         return "post/list";
     }
 
     // 게시글 필터 목록
     @GetMapping("/list")
-    public String postFilter(String filter, String description, String aaa, Model model) {
-        System.out.println("@@@@@@@@@@@@@@@@ controller filter : " + filter);
-        System.out.println("@@@@@@@@@@@@@@@@ controller description : " + description);
-        System.out.println("@@@@@@@@@@@@@@@@ controller boardId : " + aaa);
-//        List<Post> posts = postService.postFilter(filter, description, boardId);
-//        model.addAttribute("posts", posts);
+    public String postFilter(String filter, String description, Long board_id, Model model) {
+        List<Post> posts = postService.postFilter(filter, description, board_id);
+        model.addAttribute("posts", posts);
+        model.addAttribute("boardId", board_id);
         return "post/list";
     }
 
@@ -57,7 +74,7 @@ public class PostController {
         Post post = postDto.toPost();
         int newPost = postService.insert(post);
 
-        return "redirect:/post/list";
+        return "redirect:/post/list/" + postDto.getBoardId();
     }
 
     // 게시글 수정 화면 호출
@@ -81,7 +98,8 @@ public class PostController {
     // 게시글 삭제
     @DeleteMapping("/{postId}")
     public String delete(@PathVariable Long postId) {
+        Post post = postService.detail(postId);
         postService.delete(postId);
-        return "redirect:/post/list";
+        return "redirect:/post/list/" + post.getBoardId();
     }
 }

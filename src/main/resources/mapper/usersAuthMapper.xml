@@ -5,4 +5,9 @@
         insert into users_auth (user_id)
         values (#{userId})
     </insert>
+
+    <select id="findByUserId" resultType="com.elice.boardproject.usersAuth.entity.UsersAuth">
+        SELECT * FROM users_auth
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

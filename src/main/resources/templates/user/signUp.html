@@ -62,12 +62,15 @@
     function checkUserId() {
         const userId = document.getElementById('userId').value;
         const feedback = document.getElementById('idFeedback');
+        const userIdInput = document.getElementById('userId');
+
 
         if (userId.trim() === '') {
             feedback.textContent = '';
             feedback.style.visibility = 'hidden';
             feedback.classList.remove('text-success', 'text-success');
-            return
+            userIdInput.classList.remove('is-invalid');
+            return;
         }
 
         if (userId.length < 4 || userId.length > 10) {
@@ -75,6 +78,8 @@
             feedback.style.visibility = 'visible';
             feedback.classList.add('text-danger');
             feedback.classList.remove('text-success');
+            userIdInput.classList.add('is-invalid');
+            return;
         }
 
         // 서버로 아이디 중복 체크 요청

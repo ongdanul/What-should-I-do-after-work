@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>예시 페이지</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <table border="1">
+        <tr th:each="b : ${board}">
+            <td><a th:href="'/post/list/'+${b.board_id}" th:text="${b.board_title}"></a></td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

@@ -17,6 +17,8 @@
                 <td th:text="${post.post_id}">default value</td>
                 <td><a th:href="'/post/'+${post.post_id}" th:text="${post.post_title}"></a></td>
                 <td th:text="${post.post_content}">default value</td>
+                <input th:name="boardId" th:value="${post.board_id}"/>
+<!--                <input type="hidden" name="boardId" th:value="${post.board_id}">-->
             </tr>
         </table>
         <button type="button" onclick="location.href='/post/register'">글쓰기</button>

@@ -17,10 +17,21 @@ public class PostController {
     private PostService postService;
 
     // 게시글 전체 목록
-    @GetMapping("/list")
-    public String lists(String filter, String description, Model model) {
-        List<Post> posts = postService.findAll(filter, description);
+    @GetMapping("/list/{boardId}")
+    public String lists(@PathVariable Long boardId, Model model) {
+        List<Post> posts = postService.findAll(boardId);
         model.addAttribute("posts", posts);
+        return "post/list";
+    }
+
+    // 게시글 필터 목록
+    @GetMapping("/list")
+    public String postFilter(String filter, String description, String aaa, Model model) {
+        System.out.println("@@@@@@@@@@@@@@@@ controller filter : " + filter);
+        System.out.println("@@@@@@@@@@@@@@@@ controller description : " + description);
+        System.out.println("@@@@@@@@@@@@@@@@ controller boardId : " + aaa);
+//        List<Post> posts = postService.postFilter(filter, description, boardId);
+//        model.addAttribute("posts", posts);
         return "post/list";
     }
 

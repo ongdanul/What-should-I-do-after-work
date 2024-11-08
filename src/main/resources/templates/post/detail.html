@@ -33,6 +33,49 @@
             </td>
         </tr>
     </table>
+    <div id="commentSection">
+        <!-- 댓글 목록 -->
+        <ul id="commentList">
+            <!-- 댓글은 FETCH로 조회됩니다 -->
+        </ul>
+
+        <!-- 댓글 작성 폼 -->
+        <div>
+            <input type="text" id="commentContent" placeholder="댓글을 입력하세요">
+            <button onclick="addComment()">댓글 추가</button>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // 댓글 목록 조회
+        function loadComments() {
+            fetch('/api/comment/[[${post.postId}]]', {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                const commentList = document.getElementById('commentList');
+                commentList.innerHTML = ''; // 기존 목록 초기화
+                data.forEach(comment => {
+                    const listItem = document.createElement('li');
+                    listItem.id = `comment-${comment.id}`;
+                    listItem.innerHTML = `
+                        <span>${comment.user_id}: ${comment.comment_content} 등록일시 : ${comment.reg_date}</span>
+                        <button onclick="editComment(${comment.comment_id})">수정</button>
+                        <button onclick="deleteComment(${comment.comment_id})">삭제</button>
+                    `;
+                    commentList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // 초기 로딩 시 댓글 목록 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            loadComments();
+        });
+    </script>
+
 </main>
 </body>
 </html>

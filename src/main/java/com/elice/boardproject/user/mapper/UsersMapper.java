@@ -1,6 +1,6 @@
-package com.elice.boardproject.users.mapper;
+package com.elice.boardproject.user.mapper;
 
-import com.elice.boardproject.users.entity.Users;
+import com.elice.boardproject.user.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -9,5 +9,9 @@ public interface UsersMapper {
     public void registerUser(Users user);
     Users findByUserId(String userId);
     void loginLock (Users user);
+
+    String findUser(String name, String contact);
+
     String findPasswordHash(String userId);
+
 }

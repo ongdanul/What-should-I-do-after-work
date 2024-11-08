@@ -1,8 +1,8 @@
-package com.elice.boardproject.users.service;
+package com.elice.boardproject.user.service;
 
-import com.elice.boardproject.users.dto.SignUpDTO;
-import com.elice.boardproject.users.entity.Users;
-import com.elice.boardproject.users.mapper.UsersMapper;
+import com.elice.boardproject.user.dto.SignUpDTO;
+import com.elice.boardproject.user.entity.Users;
+import com.elice.boardproject.user.mapper.UsersMapper;
 import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,10 +48,18 @@ public class UserService {
 
         return usersMapper.existsByUserId(userId);
     }
+
+    public String findUser(String name, String contact) {
+
+        return usersMapper.findUser(name, contact);
+
+    }
     public boolean checkPassword(String userId, String inputPassword) {
 
         String storedPasswordHash = usersMapper.findPasswordHash(userId);
         return bCryptPasswordEncoder.matches(inputPassword, storedPasswordHash);
 
     }
+
+
 }

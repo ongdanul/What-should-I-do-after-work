@@ -1,10 +1,15 @@
-package com.elice.boardproject.users.controller;
+package com.elice.boardproject.user.controller;
 
-import com.elice.boardproject.users.dto.SignUpDTO;
-import com.elice.boardproject.users.service.UserService;
+import com.elice.boardproject.user.dto.SignUpDTO;
+import com.elice.boardproject.user.entity.Users;
+import com.elice.boardproject.user.service.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model, HttpServletRequest request) {
         return "user/login";
     }
 
@@ -42,4 +47,22 @@ public class UserController {
         return "redirect:/user/login";
     }
 
+    @GetMapping("/find-id")
+    public void findId() {
+    }
+
+    @PostMapping("/find-id")
+    public ResponseEntity<String> findId(HttpServletRequest request) {
+
+        String name = request.getParameter("name");
+        String contact = request.getParameter("contact");
+
+        String userId = userService.findUser(name, contact);
+
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 }

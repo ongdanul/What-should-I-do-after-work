@@ -22,11 +22,9 @@ public class CommentRestController {
     @GetMapping("/comment/{postId}")
     public ResponseEntity<List<Comment>> getComment(@PathVariable Long postId){
         List<Comment> comments =  commentService.findComment(postId);
-        System.out.println("@@@@@@@@@@@@@@@@@@comments : " + comments);
         if(comments.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
-
 }

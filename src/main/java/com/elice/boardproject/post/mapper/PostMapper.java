@@ -8,15 +8,21 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<Post> findAll(long boardId);
+    // 전체 조회
+    List<PostDto> findAll(long boardId);
 
-    List<Post> postFilter(String filter, String description, long boardId);
+    // 필터
+    List<PostDto> postFilter(String filter, String description, long boardId);
 
-    Post detail(Long postId);
+    // 단건 조회
+    PostDto detail(Long postId);
 
-    int insert(Post post);      // 등록
+    //등록
+    int insert(PostDto post);
 
-    int update(Post post);      // 수정
+    // 수정
+    int update(PostDto post);
 
-    void delete(Post post);      // 삭제
+    // 삭제
+    void delete(PostDto post);
 }

@@ -7,12 +7,11 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class BoardDto {
-    private Long boardId;
+public class BoardRequestDto {
     private String boardTitle;
 
-    public BoardResponseDto toBoardResponseDto() {
-        return BoardResponseDto.builder()
+    public BoardDto toBoardDto() {
+        return BoardDto.builder()
                 .boardTitle(boardTitle)
                 .build();
     }

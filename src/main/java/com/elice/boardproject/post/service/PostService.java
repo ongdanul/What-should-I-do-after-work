@@ -1,23 +1,29 @@
 package com.elice.boardproject.post.service;
 
-import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.mapper.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @Service
 public class PostService {
     @Autowired
     private PostMapper postMapper;
 
-    // 게시글 전체 목록 조회
-    public List<PostDto> findAll(long boardId) {
-        return postMapper.findAll(boardId);
+    // 게시글 전체 목록 조회 page
+    public List<PostDto> findAll(Long boardId, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        Map<String, Object> params = new HashMap<>();
+        params.put("boardId", boardId);
+        params.put("pageSize", pageSize);
+        params.put("offset", offset);
+
+        return postMapper.findAll(params);
     }
 
     // 게시글 필터

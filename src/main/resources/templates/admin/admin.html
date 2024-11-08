@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>관리자 페이지</title>
+    <!--<script>
+        function toggleLoginLock(userId) {
+            var button = document.getElementById('lock-' + userId);
+            var newLockStatus = button.innerText === 'Yes' ? 'No' : 'Yes';
+            button.innerText = newLockStatus;
+
+            // Ajax 요청을 통해 서버에 상태 업데이트
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/profile/toggleLock', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('userId=' + userId + '&loginLock=' + (newLockStatus === 'Yes' ? 1 : 0));
+        }
+    </script>-->
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h1>관리자 페이지</h1>
+        <br>
+        <table class="table">
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>전화번호</th>
+                <th>가입일자</th>
+                <th>로그인 락</th>
+                <th>관리자 여부</th>
+                <th>회원삭제</th>
+
+            </tr>
+            <tr th:each="users : ${users}">
+                <td th:text="${users.userId}"></td>
+                <td th:text="${users.userName}"></td>
+                <td th:text="${users.email}"></td>
+                <td th:text="${users.contact}"></td>
+                <td th:text="${users.regDate}"></td>
+                <td th:text="${users.loginLock ? 'Yes' : 'No'}"></td>
+                <!--<td>
+                    <button id="lock-${users.userId}" th:text="${users.loginLock ? 'Yes' : 'No'}" onclick="toggleLoginLock('${users.userId}')"></button>
+                </td>-->
+                <td th:text="미구현"></td>
+<!--                <td th:text="${users.isAdmin ? 'Yes' : 'No'}"></td>-->
+                <td>
+                    <form th:action="@{/admin/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" th:value="${users.userId}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div class="button-group">
+            <button onclick="location.href='/sample'">돌아가기</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>

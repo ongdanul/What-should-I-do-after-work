@@ -15,10 +15,11 @@
         <div class="homeLogo">
         </div>
         <div class="loginIcon">
-            <i class="bi bi-person dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"></i>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="#">회원 정보</a></li>
-                <li><a class="dropdown-item" href="#">회원 활동 정보</a></li>
+            <i class="bi bi-person dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">회원정보</a></li>
+                <li><a class="dropdown-item" href="/activity">회원활동정보</a></li>
+                <li><a class="dropdown-item" href="/admin">관리자페이지</a></li>
                 <li><a class="dropdown-item" href="javascript:void(0);" onclick="logout()">로그아웃</a></li>
             </ul>
         </div>
@@ -45,14 +46,5 @@
 
 <!-- bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    function logout() {
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = '/logout';
-        document.body.appendChild(form);
-        form.submit();
-    }
-</script>
 </body>
 </html>

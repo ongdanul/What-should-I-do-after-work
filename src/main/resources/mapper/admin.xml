@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.profile.mapper.AdminMapper">
+
+    <!-- 전체 회원 조회 (어드민 권한 조회 미완성)-->
+    <!--<select id="findAllProfiles" resultType="com.elice.boardproject.admin.entity.Admin">
+        SELECT u.user_id, u.user_name, u.contact, u.email, u.reg_date, u.login_lock,
+               CASE WHEN ua.authorities = 'ROLE_ADMIN' THEN true ELSE false END AS isAdmin
+        FROM users u
+                 LEFT JOIN users_auth ua ON u.user_id = ua.user_id
+    </select>-->
+
+    <!--전체 회원 조회-->
+    <select id="findAllProfiles" resultType="com.elice.boardproject.admin.entity.Admin">
+        SELECT *
+        FROM users
+    </select>
+
+    <!-- 프로필 삭제 -->
+    <delete id="deleteProfileByUserId">
+        DELETE
+        FROM users
+        WHERE user_id = #{userId}
+    </delete>
+
+    <!--로그인 잠금 토글 미완성-->
+    <!-- 로그인 잠금 토글 -->
+    <!--<update id="toggleLoginLock">
+        UPDATE users
+        SET login_lock = #{loginLock}
+        WHERE user_id = #{userId}
+    </update>-->
+</mapper>

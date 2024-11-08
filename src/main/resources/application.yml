@@ -1,5 +1,6 @@
 server:
-  port: 10000
+#  port: 10000
+  port: 33333
 
 spring:
   main:

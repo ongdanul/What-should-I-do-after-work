@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>프로필 수정 페이지</title>
+
+    <!--비밀번호 확인 불일치 경고
+    컨트롤러에서 조건문으로 에러메세지 넘기는 방식으로 대체-->
+    <!--<script>
+        function validatePassword() {
+            var userPw = document.getElementById("userPw").value;
+            var confirmPw = document.getElementById("confirmPw").value;
+            if (userPw !== confirmPw) {
+                alert("비밀번호 불일치");
+                return false;
+            }
+            return true;
+        }
+    </script>-->
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h1>회원정보 수정</h1>
+        <form action="/profile/edit" method="post">
+            <div class="form-group">
+                <label for="userId">아이디(수정불가)</label>
+                <input type="text" id="userId" name="userId" th:value="${profile.userId}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="userName">이름(수정불가)</label>
+                <input type="text" id="userName" name="userName" th:value="${profile.userName}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="contact">전화번호</label>
+                <input type="text" id="contact" name="contact" th:value="${profile.contact}">
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" th:value="${profile.email}">
+            </div>
+            <div class="form-group">
+                <label for="userPw">새로운 비밀번호</label>
+                <input type="password" id="userPw" name="userPw">
+            </div>
+            <div class="form-group">
+                <label for="userPw">새로운 비밀번호 확인</label>
+                <input type="password" id="confirmPw" name="confirmPw">
+            </div>
+            <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+            <div class="button-group">
+                <button type="submit">수정</button>
+                <button type="button" onclick="location.href='/profile'">취소</button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

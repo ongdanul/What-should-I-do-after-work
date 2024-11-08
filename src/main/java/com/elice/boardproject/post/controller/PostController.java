@@ -1,6 +1,5 @@
 package com.elice.boardproject.post.controller;
 
-import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.entity.PostRequestDto;
 import com.elice.boardproject.post.service.PostService;
@@ -19,9 +18,18 @@ public class PostController {
 
     // 게시글 전체 목록
     @GetMapping("/list/{boardId}")
-    public String lists(@PathVariable Long boardId, Model model) {
-        List<PostDto> posts = postService.findAll(boardId);
+    public String lists(@PathVariable Long boardId, @RequestParam(defaultValue = "1") int page,
+                        @RequestParam(defaultValue = "10") int pageSize, Model model) {
+
+        System.out.println("boardId: " + boardId);
+        System.out.println("page: " + page);
+        System.out.println("pageSize: " + pageSize);
+
+        List<PostDto> posts = postService.findAll(boardId, page, pageSize);
         model.addAttribute("posts", posts);
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("page", page);
+
         return "post/list";
     }
 
@@ -31,6 +39,7 @@ public class PostController {
         List<PostDto> posts = postService.postFilter(filter, description, board_id);
         model.addAttribute("posts", posts);
         model.addAttribute("boardId", board_id);
+
         return "post/list";
     }
 
@@ -64,9 +73,10 @@ public class PostController {
 
     // 게시글 수정 화면 호출
     @GetMapping("/edit/{postId}")
-    public String updateForm(@PathVariable Long postId,Model model) {
+    public String updateForm(@PathVariable Long postId, Model model) {
         PostDto findPost = postService.detail(postId);
         model.addAttribute("post", findPost);
+
         return "post/edit";
     }
 
@@ -85,6 +95,7 @@ public class PostController {
     public String delete(@PathVariable Long postId) {
         PostDto post = postService.detail(postId);
         postService.delete(postId);
+
         return "redirect:/post/list/" + post.getBoardId();
     }
 }

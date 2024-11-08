@@ -12,7 +12,7 @@ public interface PostMapper {
     List<PostDto> findAll(Map<String, Object> params);
 
     // 필터
-    List<PostDto> postFilter(String filter, String description, long boardId);
+    List<PostDto> postFilter(Map<String, Object> params);
 
     // 단건 조회
     PostDto detail(Long postId);

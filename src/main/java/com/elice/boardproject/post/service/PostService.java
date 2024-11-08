@@ -27,8 +27,16 @@ public class PostService {
     }
 
     // 게시글 필터
-    public List<PostDto> postFilter(String filter, String description, long boardId) {
-        return postMapper.postFilter(filter, description, boardId);
+    public List<PostDto> postFilter(String filter, String description, Long boardId, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        Map<String, Object> params = new HashMap<>();
+        params.put("boardId", boardId);
+        params.put("filter", filter);
+        params.put("description", description);
+        params.put("pageSize", pageSize);
+        params.put("offset", offset);
+
+        return postMapper.postFilter(params);
     }
 
     // 게시글 단건 조회

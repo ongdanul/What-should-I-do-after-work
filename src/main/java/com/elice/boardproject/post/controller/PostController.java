@@ -3,6 +3,8 @@ package com.elice.boardproject.post.controller;
 import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.entity.PostRequestDto;
 import com.elice.boardproject.post.service.PostService;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/post")
 @Controller
 public class PostController {
@@ -20,11 +23,6 @@ public class PostController {
     @GetMapping("/list/{boardId}")
     public String lists(@PathVariable Long boardId, @RequestParam(defaultValue = "1") int page,
                         @RequestParam(defaultValue = "10") int pageSize, Model model) {
-
-        System.out.println("boardId: " + boardId);
-        System.out.println("page: " + page);
-        System.out.println("pageSize: " + pageSize);
-
         List<PostDto> posts = postService.findAll(boardId, page, pageSize);
         model.addAttribute("posts", posts);
         model.addAttribute("boardId", boardId);
@@ -35,10 +33,12 @@ public class PostController {
 
     // 게시글 필터 목록
     @GetMapping("/list")
-    public String postFilter(String filter, String description, Long board_id, Model model) {
-        List<PostDto> posts = postService.postFilter(filter, description, board_id);
+    public String postFilter(String filter, String description, Long boardId, @RequestParam(defaultValue = "1") int page,
+                             @RequestParam(defaultValue = "10") int pageSize, Model model) {
+        List<PostDto> posts = postService.postFilter(filter, description, boardId, page, pageSize);
         model.addAttribute("posts", posts);
-        model.addAttribute("boardId", board_id);
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("page", page);
 
         return "post/list";
     }

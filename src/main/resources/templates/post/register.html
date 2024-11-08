@@ -9,21 +9,21 @@
     <form th:action="@{/post/register}" th:object="${post}" method="post">
         <div>
             <label for="userId">UserID:</label>
-            <input type="text" id="userId" th:field="*{userId}" required/>
+            <input type="text" id="userId" th:field="*{userId}" required />
         </div>
         <div>
-            <label for="boardId">BoardID:</label>
-            <input type="text" id="boardId" th:field="*{boardId}" required/>
+            <input type="hidden" name="boardId" th:value="${boardId}" />
         </div>
         <div>
             <label for="postTitle">Title:</label>
-            <input type="text" id="postTitle" th:field="*{postTitle}" required/>
+            <input type="text" id="postTitle" th:field="*{postTitle}" required />
         </div>
         <div>
             <label for="postContent">Content:</label>
             <input type="text" id="postContent" th:field="*{postContent}"/>
         </div>
         <button type="submit" class="button">등록</button>
+        <button type="button" th:onclick="'location.href=\'/post/list/' + ${boardId} + '\''">취소</button>
     </form>
 </main>
 </body>

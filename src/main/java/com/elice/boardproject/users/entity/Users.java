@@ -1,29 +1,20 @@
-package com.elice.boardproject.users.entity;
+package com.elice.boardproject.user.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Users {
-
     private String userId;
-
     private String userPw;
-
     private String userName;
-
     private String contact;
-
     private String email;
-
     private Instant regDate;
-
     private Instant modDate;
-
     private boolean loginLock;
 }

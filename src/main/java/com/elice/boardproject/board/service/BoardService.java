@@ -1,5 +1,7 @@
 package com.elice.boardproject.board.service;
 
+import com.elice.boardproject.board.entity.BoardDto;
+import com.elice.boardproject.board.entity.BoardResponseDto;
 import com.elice.boardproject.board.mapper.BoardMapper;
 import com.elice.boardproject.board.entity.Board;
 import com.elice.boardproject.post.entity.Post;
@@ -14,24 +16,26 @@ public class BoardService {
     @Autowired
     private BoardMapper boardMapper;
 
-    // 게시판 전체 목록
-    public List<Board> findAll() {
+    // 게시판 전체 목록 조회
+    public List<BoardDto> findAll() {
         return  boardMapper.findAll();
     }
 
     //게시판 단건 조회
-    public Board detail(Long boardId) {
-        Board findBoard = boardMapper.detail(boardId);
+    public BoardDto detail(Long boardId) {
+        BoardDto findBoard = boardMapper.detail(boardId);
+
         if (findBoard == null) {
             throw new RuntimeException();
         }
+
         return findBoard;
     }
 
     // 게시판 등록
-    public int insert(Board board) {
+    public int insert(BoardDto board) {
         int exists = boardMapper.insert(board);
-        System.out.println("exists : " + exists);
+
         if (exists == 0) {
             throw new RuntimeException();
         }
@@ -41,13 +45,19 @@ public class BoardService {
 
     // 게시판 수정
     @Transactional
-    public int update(Board board) {
-        return boardMapper.update(board);
+    public int update(BoardDto board) {
+        int exists = boardMapper.update(board);
+
+        if (exists == 0) {
+            throw new RuntimeException();
+        }
+
+        return exists;
     }
 
     // 게시판 삭제
     public void delete(Long boardId) {
-        Board findBoard = boardMapper.detail(boardId);
+        BoardDto findBoard = boardMapper.detail(boardId);
 
         if (findBoard == null) {
             throw new RuntimeException();

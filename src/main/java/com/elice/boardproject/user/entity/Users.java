@@ -1,7 +1,13 @@
 package com.elice.boardproject.user.entity;
 
+import lombok.*;
+
 import java.time.Instant;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Users {
     private String userId;
     private String userPw;

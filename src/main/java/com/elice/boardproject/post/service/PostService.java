@@ -15,34 +15,31 @@ public class PostService {
     @Autowired
     private PostMapper postMapper;
 
-//    public List<Post> findAll(long boardId) {
-//        return postMapper.findAll(boardId);
-//    }
-//    // 필터
-//    public List<Post> postFilter(String postTitle, String postContent, long boardId) {
-//        System.out.println("boardId");
-//        return postMapper.postFilter(postTitle, postContent, boardId);
-//    }
-
-    public List<Post> findAll(long boardId) {
+    // 게시글 전체 목록 조회
+    public List<PostDto> findAll(long boardId) {
         return postMapper.findAll(boardId);
     }
-    // 필터
-    public List<Post> postFilter(String filter, String description, long boardId) {
+
+    // 게시글 필터
+    public List<PostDto> postFilter(String filter, String description, long boardId) {
         return postMapper.postFilter(filter, description, boardId);
     }
 
-    public Post detail(Long postId) {
-        Post findPost = postMapper.detail(postId);
+    // 게시글 단건 조회
+    public PostDto detail(Long postId) {
+        PostDto findPost = postMapper.detail(postId);
+
         if (findPost == null) {
             throw new RuntimeException();
         }
+
         return findPost;
     }
 
-    public int insert(Post post) {
+    // 게시글 등록
+    public int insert(PostDto post) {
         int exists = postMapper.insert(post);
-        System.out.println("exists : " + exists);
+
         if (exists == 0) {
             throw new RuntimeException();
         }
@@ -50,24 +47,21 @@ public class PostService {
         return exists;
     }
 
+    // 게시글 수정
     @Transactional
-    public int update(Post post) {
-        Post findPost = postMapper.detail(post.getPostId());
+    public int update(PostDto post) {
+        PostDto findPost = postMapper.detail(post.getPostId());
 
         if (findPost == null) {
             throw new RuntimeException();
         }
-    /*
-        Optional.ofNullable(post.getPostTitle())
-                .ifPresent(findPost::setPostTitle);
-        Optional.ofNullable(post.getPostContent())
-                .ifPresent(findPost::setPostContent);
-    */
+
         return postMapper.update(post);
     }
 
+    // 게시글 삭제
     public void delete(Long postId) {
-        Post findPost = postMapper.detail(postId);
+        PostDto findPost = postMapper.detail(postId);
 
         if (findPost == null) {
             throw new RuntimeException();

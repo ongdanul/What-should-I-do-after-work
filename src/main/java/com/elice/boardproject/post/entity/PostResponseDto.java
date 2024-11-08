@@ -9,10 +9,8 @@ import java.time.Instant;
 @Getter
 @Setter
 @Builder
-public class Post {
-    private Long postId;
+public class PostResponseDto {
     private String userId;
-    private Long boardId;
     private String postTitle;
     private String postContent;
     private Instant regDate;

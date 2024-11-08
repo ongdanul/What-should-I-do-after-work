@@ -2,6 +2,7 @@ package com.elice.boardproject.post.controller;
 
 import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.entity.PostDto;
+import com.elice.boardproject.post.entity.PostRequestDto;
 import com.elice.boardproject.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,37 +17,18 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-//    // 게시글 전체 목록
-//    @GetMapping("/list/{boardId}")
-//    public String lists(@PathVariable Long boardId, Model model) {
-//        List<Post> posts = postService.findAll(boardId);
-//        model.addAttribute("posts", posts);
-//        return "post/list";
-//    }
-//
-//    // 게시글 필터 목록
-//    @GetMapping("/list")
-//    public String postFilter(String filter, String description, String aaa, Model model) {
-//        System.out.println("@@@@@@@@@@@@@@@@ controller filter : " + filter);
-//        System.out.println("@@@@@@@@@@@@@@@@ controller description : " + description);
-//        System.out.println("@@@@@@@@@@@@@@@@ controller boardId : " + aaa);
-//       model.addAttribute("posts", posts);
-//        return "post/list";
-//    }
-
     // 게시글 전체 목록
     @GetMapping("/list/{boardId}")
     public String lists(@PathVariable Long boardId, Model model) {
-        List<Post> posts = postService.findAll(boardId);
+        List<PostDto> posts = postService.findAll(boardId);
         model.addAttribute("posts", posts);
-        model.addAttribute("boardId", boardId);
         return "post/list";
     }
 
     // 게시글 필터 목록
     @GetMapping("/list")
     public String postFilter(String filter, String description, Long board_id, Model model) {
-        List<Post> posts = postService.postFilter(filter, description, board_id);
+        List<PostDto> posts = postService.postFilter(filter, description, board_id);
         model.addAttribute("posts", posts);
         model.addAttribute("boardId", board_id);
         return "post/list";
@@ -55,24 +37,27 @@ public class PostController {
     // 게시글 상세 페이지
     @GetMapping("/{postId}")
     public String list(@PathVariable Long postId, Model model) {
-        Post findPost = postService.detail(postId);
-
+        PostDto findPost = postService.detail(postId);
         model.addAttribute("post", findPost);
+
         return "post/detail";
     }
 
     // 게시글 등록 화면 호출
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm(@RequestParam Long boardId, Model model) {
+        model.addAttribute("boardId", boardId);
         model.addAttribute("post", new PostDto());
+
         return "post/register";
     }
 
     // 게시글 등록
     @PostMapping("/register")
-    public String register(PostDto postDto) {
-        Post post = postDto.toPost();
-        int newPost = postService.insert(post);
+    public String register(@RequestParam Long boardId, PostRequestDto postRequestDto) {
+        PostDto postDto = postRequestDto.toPostDto();
+        postDto.setBoardId(boardId);
+        postService.insert(postDto);
 
         return "redirect:/post/list/" + postDto.getBoardId();
     }
@@ -80,15 +65,15 @@ public class PostController {
     // 게시글 수정 화면 호출
     @GetMapping("/edit/{postId}")
     public String updateForm(@PathVariable Long postId,Model model) {
-        Post findPost = postService.detail(postId);
+        PostDto findPost = postService.detail(postId);
         model.addAttribute("post", findPost);
         return "post/edit";
     }
 
     // 게시글 수정
     @PatchMapping("/{postId}")
-    public String update(@PathVariable Long postId, @ModelAttribute PostDto postDto) {
-        Post post = postDto.toPost();
+    public String update(@PathVariable Long postId, @ModelAttribute PostRequestDto postRequestDto) {
+        PostDto post = postRequestDto.toPostDto();
         post.setPostId(postId);
         postService.update(post);
 
@@ -98,7 +83,7 @@ public class PostController {
     // 게시글 삭제
     @DeleteMapping("/{postId}")
     public String delete(@PathVariable Long postId) {
-        Post post = postService.detail(postId);
+        PostDto post = postService.detail(postId);
         postService.delete(postId);
         return "redirect:/post/list/" + post.getBoardId();
     }

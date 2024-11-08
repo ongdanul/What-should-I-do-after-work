@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>예시 페이지</title>
+    <title>Post List</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -14,18 +14,16 @@
         <input type="text" name="description">
         <input type="submit" value="검색">
         <input type="hidden" th:name="board_id" th:value="${boardId}"/>
+        <a th:href="'/post/list/' + ${boardId}">게시글 목록</a>
         <table border="1">
             <tr th:each="post : ${posts}">
-                <td th:text="${post.post_id}">default value</td>
-                <td><a th:href="'/post/'+${post.post_id}" th:text="${post.post_title}"></a></td>
-                <td th:text="${post.post_content}">default value</td>
-                <!--                <input th:name="boardId" th:value="${post.board_id}"/>-->
-                <!--                <input type="hidden" name="boardId" th:value="${post.board_id}">-->
+                <td th:text="${post.user.userName}">default value</td>
+                <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
+                <td th:text="${post.postContent}">default value</td>
             </tr>
         </table>
-        <button type="button" onclick="location.href='/post/register'">글쓰기</button>
+        <a th:href="@{/post/register(boardId=${boardId})}">글쓰기</a>
         <a th:href="'/board/list'">게시판 목록</a>
-        <a th:href="'/post/list/' + ${boardId}">게시글 목록</a>
         <a th:href="'/board/edit/'+${boardId}">게시판 수정</a>
     </form>
     <form th:action="@{/board/{boardId}(boardId=${boardId})}" th:method="delete">

@@ -7,7 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class Board {
-    private Long boardId;
+public class BoardResponseDto {
     private String boardTitle;
 }

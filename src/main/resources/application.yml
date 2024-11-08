@@ -9,8 +9,8 @@ spring:
     name: boardproject
 
   datasource:
-    url: jdbc:mariadb://localhost:3306/boardproject
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://14.35.173.14:26711/boardproject
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: passw0rd
 

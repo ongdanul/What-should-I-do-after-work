@@ -15,8 +15,21 @@ public class PostService {
     @Autowired
     private PostMapper postMapper;
 
-    public List<Post> findAll(String filter, String description) {
-        return postMapper.findAll(filter, description);
+//    public List<Post> findAll(long boardId) {
+//        return postMapper.findAll(boardId);
+//    }
+//    // 필터
+//    public List<Post> postFilter(String postTitle, String postContent, long boardId) {
+//        System.out.println("boardId");
+//        return postMapper.postFilter(postTitle, postContent, boardId);
+//    }
+
+    public List<Post> findAll(long boardId) {
+        return postMapper.findAll(boardId);
+    }
+    // 필터
+    public List<Post> postFilter(String filter, String description, long boardId) {
+        return postMapper.postFilter(filter, description, boardId);
     }
 
     public Post detail(Long postId) {
@@ -29,7 +42,7 @@ public class PostService {
 
     public int insert(Post post) {
         int exists = postMapper.insert(post);
-
+        System.out.println("exists : " + exists);
         if (exists == 0) {
             throw new RuntimeException();
         }

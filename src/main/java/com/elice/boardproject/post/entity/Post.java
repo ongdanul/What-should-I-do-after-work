@@ -23,6 +23,7 @@ public class Post {
     public PostDto toPostDto() {
         return PostDto.builder()
                 .userId(userId)
+                .boardId(boardId)
                 .postTitle(postTitle)
                 .postContent(postContent)
                 .build();

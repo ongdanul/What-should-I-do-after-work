@@ -8,7 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface PostMapper {
-    List<Post> findAll(String filter, String description);
+    List<Post> findAll(long boardId);
+
+    List<Post> postFilter(String filter, String description, long boardId);
 
     Post detail(Long postId);
 

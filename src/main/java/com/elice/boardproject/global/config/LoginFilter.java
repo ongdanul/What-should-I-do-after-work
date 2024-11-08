@@ -65,7 +65,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         Boolean rememberId = loginDetails.get("rememberId");
         String userId = authentication.getName();
-        String role = getAuthoritiesByUserId(userId);
+//        String role = getAuthoritiesByUserId(userId);
 
         Users user = usersMapper.findByUserId(userId);
 
@@ -81,8 +81,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         }
 
         if (rememberId) {
-            Cookie cookie = new Cookie("remember-id", userId);
+            Cookie cookie = new Cookie("rememberId", userId);
             cookie.setMaxAge(7 * 24 * 60 * 60);
+            cookie.setPath("/");
+//            cookie.setHttpOnly(true);
+            response.addCookie(cookie);
+        } else {
+            Cookie cookie = new Cookie("rememberId", null);
+            cookie.setMaxAge(0);
             cookie.setPath("/");
 //            cookie.setHttpOnly(true);
             response.addCookie(cookie);

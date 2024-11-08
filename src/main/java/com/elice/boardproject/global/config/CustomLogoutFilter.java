@@ -56,13 +56,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         rememberMeCookie.setMaxAge(0);
         rememberMeCookie.setPath("/");
 
-        // 아이디 저장 쿠키 삭제
-//        Cookie rememberIdCookie = new Cookie("rememberId", null);
-//        rememberIdCookie.setMaxAge(0);
-//        rememberIdCookie.setPath("/");
-
         response.addCookie(rememberMeCookie);
-//        response.addCookie(rememberIdCookie);
     }
 
     // 홈 화면으로 리다이렉트

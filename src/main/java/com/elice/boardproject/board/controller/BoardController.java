@@ -1,11 +1,10 @@
 package com.elice.boardproject.board.controller;
 
-import com.elice.boardproject.board.entity.Board;
 import com.elice.boardproject.board.entity.BoardDto;
+import com.elice.boardproject.board.entity.BoardRequestDto;
+import com.elice.boardproject.board.entity.BoardResponseDto;
 import com.elice.boardproject.board.service.BoardService;
 
-import com.elice.boardproject.post.entity.Post;
-import com.elice.boardproject.post.entity.PostDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,22 +21,23 @@ public class BoardController {
     // 게시판 전체 목록
     @GetMapping("/list")
     public String lists(Model model) {
-        List<Board> list = boardService.findAll();
-        model.addAttribute("board", list);
+        List<BoardDto> boardLists = boardService.findAll();
+        model.addAttribute("boards", boardLists);
         return "board/list";
     }
 
     // 게시판 등록 화면 호출
     @GetMapping("/register")
-    public String registerForm(@PathVariable Long boardId, Model model) {
-        Board findBoard = boardService.detail(boardId);
-        model.addAttribute("board", findBoard);
+    public String registerForm(Model model) {
+        model.addAttribute("board", new BoardDto());
+
         return "board/register";
     }
 
     // 게시판 등록
     @PostMapping("/register")
-    public String register(Board board) {
+    public String register(@ModelAttribute BoardRequestDto boardRequestDto) {
+        BoardDto board = boardRequestDto.toBoardDto();
         boardService.insert(board);
 
         return "redirect:/board/list";
@@ -46,18 +46,19 @@ public class BoardController {
      // 게시판 수정 화면 호출
     @GetMapping("/edit/{boardId}")
     public String updateForm(@PathVariable Long boardId, Model model) {
-        System.out.println(boardId);
-        Board findBoard = boardService.detail(boardId);
+        BoardDto findBoard = boardService.detail(boardId);
         model.addAttribute("board", findBoard);
-        System.out.println(findBoard);
+
         return "board/edit";
     }
 
      // 게시판 수정
     @PatchMapping("/{boardId}")
-    public String update(@ModelAttribute Board board) {
-        System.out.println(board.toString());
+    public String update(@ModelAttribute BoardRequestDto boardRequestDto, @PathVariable Long boardId) {
+        BoardDto board = boardRequestDto.toBoardDto();
+        board.setBoardId(boardId);
         boardService.update(board);
+
         return "redirect:/board/list";
     }
 
@@ -65,6 +66,7 @@ public class BoardController {
     @DeleteMapping("/{boardId}")
     public String delete(@PathVariable Long boardId) {
         boardService.delete(boardId);
+
         return "redirect:/board/list";
     }
 }

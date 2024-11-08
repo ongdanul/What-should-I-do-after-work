@@ -2,6 +2,7 @@ package com.elice.boardproject.comment.controller;
 
 import com.elice.boardproject.comment.service.CommentService;
 import com.elice.boardproject.comment.entity.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,8 @@ import java.util.List;
 @RestController
 public class CommentRestController {
 
-    private final CommentService commentService;
-
-    public CommentRestController (CommentService commentService) {
-        this.commentService = commentService;
-    }
+    @Autowired
+    private CommentService commentService;
 
     @GetMapping("/comment/{postId}")
     public ResponseEntity<List<Comment>> getComment(@PathVariable Long postId){

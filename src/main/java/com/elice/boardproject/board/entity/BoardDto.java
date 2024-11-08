@@ -7,8 +7,14 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@ToString
-public class Board {
+public class BoardDto {
     private Long boardId;
     private String boardTitle;
+
+    public Board toBoard() {
+        return Board.builder()
+                .boardTitle(boardTitle)
+                .build();
+    }
+
 }

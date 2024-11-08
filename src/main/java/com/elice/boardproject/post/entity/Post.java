@@ -1,9 +1,6 @@
 package com.elice.boardproject.post.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.Instant;
 
@@ -11,6 +8,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
+@ToString
 public class Post {
     private Long postId;
     private String userId;
@@ -20,4 +19,13 @@ public class Post {
     private Instant regDate;
     private Instant modDate;
     private Long viewCount;
+
+    public PostDto toPostDto() {
+        return PostDto.builder()
+                .userId(userId)
+                .boardId(boardId)
+                .postTitle(postTitle)
+                .postContent(postContent)
+                .build();
+    }
 }

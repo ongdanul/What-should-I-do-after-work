@@ -1,6 +1,6 @@
-package com.elice.boardproject.users.controller;
+package com.elice.boardproject.user.controller;
 
-import com.elice.boardproject.users.service.UserService;
+import com.elice.boardproject.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

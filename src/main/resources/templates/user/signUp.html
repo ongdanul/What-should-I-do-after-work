@@ -47,7 +47,7 @@
                        oninput="formatContactInput()" required>
             </div>
             <div id="contactFeedback" class="feedback"></div>
-            <input type="hidden" name="contact" id="contact" required>
+            <input type="hidden" name="contact" id="contact">
             <div class="email">
                 <label for="email">이메일</label>
                 <input name="email" id="email" onkeyup="checkEmail()" required>
@@ -57,8 +57,10 @@
             <button class="cancelBtn">취소</button>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
     function checkUserId() {
         const userId = document.getElementById('userId').value;
         const feedback = document.getElementById('idFeedback');
@@ -206,9 +208,8 @@
 
     document.querySelector(".cancelBtn").addEventListener("click", (e) => {
         e.preventDefault();
-        location.href = '/';
+        location.href = '/user/login';
     });
-    </script>
-</div>
+</script>
 </body>
 </html>

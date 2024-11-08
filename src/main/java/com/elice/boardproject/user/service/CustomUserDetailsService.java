@@ -1,19 +1,15 @@
-package com.elice.boardproject.users.service;
+package com.elice.boardproject.user.service;
 
-import com.elice.boardproject.users.dto.CustomUserDetails;
-import com.elice.boardproject.users.entity.Users;
-import com.elice.boardproject.users.mapper.UsersMapper;
+import com.elice.boardproject.user.dto.CustomUserDetails;
+import com.elice.boardproject.user.entity.Users;
+import com.elice.boardproject.user.mapper.UsersMapper;
 import com.elice.boardproject.usersAuth.entity.UsersAuth;
 import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Slf4j
 @Service
@@ -29,10 +25,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        log.info("loadUserByUsername: {}", username);
+        log.info("--------------------------------- CustomUserDetailsService loadUserByUsername: {}", username);
 
         // DB에서 사용자 정보 찾기
         Users user = usersMapper.findByUserId(username);
+
+        log.info("--------------------------------- CustomUserDetailsService user: {}", user);
+
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -40,6 +39,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 사용자에 대한 권한 정보 찾기
         UsersAuth usersAuth = usersAuthMapper.findByUserId(user.getUserId());
+
+        log.info("--------------------------------- CustomUserDetailsService usersAuth: {}", usersAuth);
+
 
         if (usersAuth == null) {
             throw new UsernameNotFoundException("User authorities not found");

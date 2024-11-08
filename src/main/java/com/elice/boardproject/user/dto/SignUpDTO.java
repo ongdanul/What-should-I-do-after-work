@@ -1,6 +1,6 @@
-package com.elice.boardproject.users.dto;
+package com.elice.boardproject.user.dto;
 
-import com.elice.boardproject.users.entity.Users;
+import com.elice.boardproject.user.entity.Users;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

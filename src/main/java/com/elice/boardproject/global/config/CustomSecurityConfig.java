@@ -1,15 +1,13 @@
 package com.elice.boardproject.global.config;
 
-import com.elice.boardproject.users.mapper.UsersMapper;
-import com.elice.boardproject.users.service.CustomUserDetailsService;
+import com.elice.boardproject.user.mapper.UsersMapper;
+import com.elice.boardproject.user.service.CustomUserDetailsService;
 import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -56,29 +54,26 @@ public class CustomSecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**", "/login/**", "/check/**", "/error/**").permitAll()
-                .requestMatchers("/post/**", "/user-activity/**", "/board/**").permitAll()
-                .requestMatchers("/comment/**", "/notice/**").permitAll()
                 .requestMatchers("/home", "/").permitAll()
                 .anyRequest().authenticated())
                 //로그인 설정
                 .formLogin(form -> form
-                    .loginPage("/user/login")
-                    .loginProcessingUrl("/user/loginProcess")
-                    .defaultSuccessUrl("/")
-                    .failureHandler(customAuthenticationFailureHandler)
-                    .permitAll())
+                            .loginPage("/user/login")
+                            .loginProcessingUrl("/user/loginProcess")
+                            .failureHandler(customAuthenticationFailureHandler)
+                            .permitAll())
                 // LoginFilter 추가
                 .addFilterAt(new LoginFilter(authenticationManager(configuration), usersAuthMapper,
-                                usersMapper, customAuthenticationFailureHandler),
-                                UsernamePasswordAuthenticationFilter.class)
+                                        usersMapper, customAuthenticationFailureHandler),
+                                        UsernamePasswordAuthenticationFilter.class)
                 // LogoutFilter 추가
                 .addFilterBefore(new CustomLogoutFilter(), LogoutFilter.class)
                 // 자동 로그인 설정
                 .rememberMe(rememberMe -> rememberMe
-                        .key("security")
-                        .rememberMeParameter("rememberMe")
-                        .userDetailsService(userDetailsService)
-                        .tokenValiditySeconds(604800));
+                                .key("security")
+                                .rememberMeParameter("rememberMe")
+                                .userDetailsService(userDetailsService)
+                                .tokenValiditySeconds(604800));
 
         //세션 필요한 경우에만 만들어서 사용
         http.sessionManagement(session -> session

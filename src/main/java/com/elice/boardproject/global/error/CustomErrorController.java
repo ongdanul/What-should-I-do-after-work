@@ -1,6 +1,6 @@
 package com.elice.boardproject.global.error;
 
-import com.elice.boardproject.users.service.UserService;
+import com.elice.boardproject.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;

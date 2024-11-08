@@ -34,9 +34,6 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
-	//mariaDB
-//	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-
 	// MySQL
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
@@ -45,9 +42,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	//security
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-//	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-//	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	//임시 비밀번호 발급 (메일)
 	implementation 'org.springframework.boot:spring-boot-starter-mail'

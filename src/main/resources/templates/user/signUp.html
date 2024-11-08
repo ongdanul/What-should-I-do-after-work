@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/user/signUp.css">
+    <title>회원가입 페이지</title>
+</head>
+<body>
+<div class="signUpContainer">
+    <div class="signUpTitle">
+        <h1>회원가입</h1>
+    </div>
+    <div class="signUpContent">
+        <form action="/user/sign-up" method="post" >
+            <label for="userId">아이디</label>
+            <input type="text" name="userId" id="userId" onkeyup="checkUserId()" maxlength="10" required>
+            <div id="idFeedback" class="feedback"></div>
+
+            <label for="userPw">비밀번호</label>
+            <input type="password" name="userPw" id="userPw" onkeyup="checkPassword()" required>
+            <div id="pwFeedback" class="feedback"></div>
+
+            <label for="confirmPw">비밀번호확인</label>
+            <input type="password" id="confirmPw" onkeyup="checkPasswordMatch()" required>
+            <div id="confirmPwFeedback" class="feedback"></div>
+
+            <label for="userName">이름</label>
+            <input type="text" name="userName" id="userName" required>
+            <div class="feedback"></div>
+
+            <label for="contact">연락처</label>
+            <div class="contactContainer">
+                <label for="contactPrefix"></label>
+                <select name="contactPrefix" id="contactPrefix" class="contactWidth">
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">012</option>
+                    <option value="016">013</option>
+                    <option value="017">016</option>
+                </select>
+                <span>-</span>
+                <label for="contactMiddle"></label>
+                <input type="text" id="contactMiddle" maxlength="4"
+                       oninput="formatContactInput()" required>
+                <span>-</span>
+                <label for="contactSuffix"></label>
+                <input type="text" id="contactSuffix" maxlength="4"
+                       oninput="formatContactInput()" required>
+            </div>
+            <div id="contactFeedback" class="feedback"></div>
+            <input type="hidden" name="contact" id="contact">
+            <div class="email">
+                <label for="email">이메일</label>
+                <input name="email" id="email" onkeyup="checkEmail()" required>
+                <div type="email" id="emailFeedback" class="feedback"></div>
+            </div>
+            <button class="signUpBtn" onclick="showWelcomeMessage()">회원가입</button>
+            <button class="cancelBtn">취소</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function checkUserId() {
+        const userId = document.getElementById('userId').value;
+        const feedback = document.getElementById('idFeedback');
+        const userIdInput = document.getElementById('userId');
+
+
+        if (userId.trim() === '') {
+            feedback.textContent = '';
+            feedback.style.visibility = 'hidden';
+            feedback.classList.remove('text-success', 'text-success');
+            userIdInput.classList.remove('is-invalid');
+            return;
+        }
+
+        if (userId.length < 4 || userId.length > 10) {
+            feedback.textContent = '4자 이상 10자 이하로 입력해주세요.';
+            feedback.style.visibility = 'visible';
+            feedback.classList.add('text-danger');
+            feedback.classList.remove('text-success');
+            userIdInput.classList.add('is-invalid');
+            return;
+        }
+
+        // 서버로 아이디 중복 체크 요청
+        axios.post('/check/userId', {userId: userId}, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })  .then(response => {
+                if (userId.trim() === '') {
+                    // 아이디 입력값이 없는 경우 메시지 숨김
+                    feedback.textContent = '';
+                    feedback.style.visibility = 'hidden';
+                } else if (response.data.exists) {
+                    feedback.textContent = '이미 등록된 아이디입니다.';
+                    feedback.classList.add('text-danger');
+                    feedback.classList.remove('text-success');
+                    feedback.style.visibility = 'visible';
+                    document.getElementById('userId').classList.add('is-invalid');
+                } else {
+                    feedback.textContent = '사용 가능한 아이디입니다.';
+                    feedback.classList.add('text-success');
+                    feedback.classList.remove('text-danger');
+                    feedback.style.visibility = 'visible';
+                    document.getElementById('userId').classList.remove('is-invalid');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    function formatContactInput() {
+        const regex = /^[0-9]*$/; // 숫자만 입력받기 위한 정규식
+        const contactMiddle = document.getElementById('contactMiddle');
+        const contactSuffix = document.getElementById('contactSuffix');
+
+        // 숫자가 아닌 경우 제거
+        if (!regex.test(contactMiddle.value)) {
+            contactMiddle.value = contactMiddle.value.replace(/[^0-9]/g, '');
+        }
+        if (!regex.test(contactSuffix.value)) {
+            contactSuffix.value = contactSuffix.value.replace(/[^0-9]/g, '');
+        }
+
+        // 세 입력 칸 합쳐서 hidden input 에 저장
+        const contactPrefix = document.getElementById('contactPrefix').value;
+        const contact = document.getElementById('contact');
+        contact.value = `${contactPrefix}-${contactMiddle.value}-${contactSuffix.value}`;
+    }
+
+    document.getElementById('contactPrefix').addEventListener('change', formatContactInput);
+    document.getElementById('contactMiddle').addEventListener('input', formatContactInput);
+    document.getElementById('contactSuffix').addEventListener('input', formatContactInput);
+
+    function checkPassword() {
+        const pw = document.getElementById('userPw').value;
+        const feedback = document.getElementById('pwFeedback');
+        const regx = /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/;
+
+        if (pw.trim() === '') {
+            feedback.textContent = '';
+            feedback.style.visibility = 'hidden';
+        } else if (!regx.test(pw)) {
+            feedback.textContent = '비밀번호는 영문+숫자 8~10자입니다';
+            feedback.style.visibility = 'visible';
+            feedback.classList.add('text-danger');
+            feedback.classList.remove('text-success');
+        } else {
+            feedback.textContent = '';
+            feedback.style.visibility = 'hidden';
+        }
+
+        // 비밀번호 길이 검증 후 비밀번호 확인도 같이 검증
+        checkPasswordMatch();
+    }
+
+    function checkPasswordMatch() {
+        const pw = document.getElementById('userPw').value;
+        const confirmPw = document.getElementById('confirmPw').value;
+        const feedback = document.getElementById('confirmPwFeedback');
+
+        if (confirmPw.trim() === '') {
+            feedback.textContent = '';
+            feedback.style.visibility = 'hidden';
+        } else if (pw === confirmPw) {
+            feedback.textContent = '비밀번호 일치합니다.';
+            feedback.style.visibility = 'visible';
+            feedback.classList.add('text-success');
+            feedback.classList.remove('text-danger');
+        } else {
+            feedback.textContent = '비밀번호 불일치';
+            feedback.style.visibility = 'visible';
+            feedback.classList.add('text-danger');
+            feedback.classList.remove('text-success');
+        }
+    }
+
+    function checkEmail() {
+
+        const email = document.getElementById('email').value;
+        const feedback = document.getElementById('emailFeedback');
+
+        // 이메일 형식을 검증하는 함수
+        function isValidEmail(email) {
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return regex.test(email);
+        }
+
+        // 입력값이 이메일 형식이 아닌 경우 메시지를 업데이트
+        if (email.trim() !== '' && !isValidEmail(email)) {
+            feedback.textContent = '이메일 형식으로 입력해주세요.';
+            feedback.style.visibility = 'visible';
+            feedback.classList.add('text-danger');
+            feedback.classList.remove('text-success');
+            document.getElementById('userId').classList.add('is-invalid');
+        }
+    }
+
+    // 입력 폼의 값이 변경될 때마다 체크
+    document.getElementById('userId').addEventListener('input', function () {
+        checkUserId();
+    });
+
+    document.querySelector(".cancelBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        location.href = '/user/login';
+    });
+</script>
+</body>
+</html>

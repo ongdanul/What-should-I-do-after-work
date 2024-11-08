@@ -7,44 +7,30 @@
 body, html {
     width: 100%;
     height: 100%;
-}
-
-.loginContainer{
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10%;
 }
 
 .logo {
-    flex: 4;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.loginContent {
-    flex: 6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.img{
+.img {
     width: 400px;
     height: 400px;
     object-fit: contain;
     background: yellow;
 }
 
-.loginContent {
-    width: 100%;
-    height: 100%;
+.loginContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 10px;
 }
 
@@ -72,12 +58,11 @@ body, html {
 
 .loginOption {
     display: flex;
-    gap: 10px;
     font-size: 12px;
 }
 
-.loginButton,
-.signUpButton {
+.loginBtn,
+.signUpBtn {
     width: 200px;
     height: 40px;
 }

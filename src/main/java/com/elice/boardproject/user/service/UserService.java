@@ -49,9 +49,9 @@ public class UserService {
         return usersMapper.existsByUserId(userId);
     }
 
-    public String findUser(String name, String contact) {
+    public String findUser(String userName, String contact) {
 
-        return usersMapper.findUser(name, contact);
+        return usersMapper.findUser(userName, contact);
 
     }
     public boolean checkPassword(String userId, String inputPassword) {

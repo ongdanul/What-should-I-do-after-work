@@ -24,7 +24,7 @@
 
     <select id="findUser" resultType="String">
         SELECT user_id FROM users
-        WHERE user_name = #{user_name}
+        WHERE user_name = #{userName}
         AND contact = #{contact}
     </select>
 

@@ -25,13 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        log.info("--------------------------------- CustomUserDetailsService loadUserByUsername: {}", username);
-
         // DB에서 사용자 정보 찾기
         Users user = usersMapper.findByUserId(username);
-
-        log.info("--------------------------------- CustomUserDetailsService user: {}", user);
-
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -39,9 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 사용자에 대한 권한 정보 찾기
         UsersAuth usersAuth = usersAuthMapper.findByUserId(user.getUserId());
-
-        log.info("--------------------------------- CustomUserDetailsService usersAuth: {}", usersAuth);
-
 
         if (usersAuth == null) {
             throw new UsernameNotFoundException("User authorities not found");

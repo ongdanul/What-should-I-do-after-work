@@ -9,7 +9,7 @@
         <h1>아이디 찾기</h1>
     </div>
     <div class="findIdContent">
-        <form action="/user/find-id" method="post" >
+        <form>
             <label for="userName">이름</label>
             <input type="text" name="userName" id="userName" required>
             <div class="feedback"></div>
@@ -33,13 +33,13 @@
                 <input type="text" id="contactSuffix" maxlength="4"
                        oninput="formatContactInput()" required>
             </div>
-            <div id="contactFeedback" class="feedback"></div>
             <input type="hidden" name="contact" id="contact">
             <button class="signUpBtn" onclick="findId()">아이디 찾기</button>
             <button class="cancelBtn">로그인페이지로 이동</button>
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function formatContactInput() {
         const regex = /^[0-9]*$/; // 숫자만 입력받기 위한 정규식
@@ -63,7 +63,6 @@
     document.getElementById('contactPrefix').addEventListener('change', formatContactInput);
     document.getElementById('contactMiddle').addEventListener('input', formatContactInput);
     document.getElementById('contactSuffix').addEventListener('input', formatContactInput);
-
 
     document.querySelector(".cancelBtn").addEventListener("click", (e) => {
         e.preventDefault();

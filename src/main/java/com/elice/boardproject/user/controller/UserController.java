@@ -48,16 +48,17 @@ public class UserController {
     }
 
     @GetMapping("/find-id")
-    public void findId() {
+    public String findId() {
+        return "user/findId";
     }
 
     @PostMapping("/find-id")
     public ResponseEntity<String> findId(HttpServletRequest request) {
 
-        String name = request.getParameter("name");
+        String userName = request.getParameter("userName");
         String contact = request.getParameter("contact");
 
-        String userId = userService.findUser(name, contact);
+        String userId = userService.findUser(userName, contact);
 
         if (userId != null) {
             return ResponseEntity.ok(userId);

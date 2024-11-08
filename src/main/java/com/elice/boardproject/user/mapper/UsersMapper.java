@@ -10,7 +10,7 @@ public interface UsersMapper {
     Users findByUserId(String userId);
     void loginLock (Users user);
 
-    String findUser(String name, String contact);
+    String findUser(String userName, String contact);
 
     String findPasswordHash(String userId);
 

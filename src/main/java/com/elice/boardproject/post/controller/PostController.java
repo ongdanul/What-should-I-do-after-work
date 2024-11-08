@@ -45,7 +45,8 @@ public class PostController {
 
     // 게시글 등록 화면 호출
     @GetMapping("/register")
-    public String registerForm(Model model) {
+    public String registerForm(@RequestParam Long boardId, Model model) {
+        model.addAttribute("boardId", boardId);
         model.addAttribute("post", new PostDto());
 
         return "post/register";
@@ -53,8 +54,9 @@ public class PostController {
 
     // 게시글 등록
     @PostMapping("/register")
-    public String register(PostRequestDto postRequestDto) {
+    public String register(@RequestParam Long boardId, PostRequestDto postRequestDto) {
         PostDto postDto = postRequestDto.toPostDto();
+        postDto.setBoardId(boardId);
         postService.insert(postDto);
 
         return "redirect:/post/list/" + postDto.getBoardId();

@@ -22,7 +22,7 @@
                 <td th:text="${post.postContent}">default value</td>
             </tr>
         </table>
-        <button type="button" onclick="location.href='/post/register'">글쓰기</button>
+        <a th:href="@{/post/register(boardId=${boardId})}">글쓰기</a>
         <a th:href="'/board/list'">게시판 목록</a>
         <a th:href="'/board/edit/'+${boardId}">게시판 수정</a>
     </form>

@@ -1,15 +1,15 @@
 package com.elice.boardproject.post.mapper;
 
-import com.elice.boardproject.post.entity.Post;
 import com.elice.boardproject.post.entity.PostDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PostMapper {
     // 전체 조회
-    List<PostDto> findAll(long boardId);
+    List<PostDto> findAll(Map<String, Object> params);
 
     // 필터
     List<PostDto> postFilter(String filter, String description, long boardId);

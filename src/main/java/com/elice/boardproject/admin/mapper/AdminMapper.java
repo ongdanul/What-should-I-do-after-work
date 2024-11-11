@@ -10,7 +10,7 @@ public interface AdminMapper {
 
     List<Admin> findAllProfiles();
 
-    void deleteProfileByUserId(@Param("userId") String userId); // XML 매핑 파일에서 프로필 삭제
+    /*void deleteProfileByUserId(@Param("userId") String userId); // XML 매핑 파일에서 프로필 삭제*/
 }
 
 //로그인 잠금 토글 미완성

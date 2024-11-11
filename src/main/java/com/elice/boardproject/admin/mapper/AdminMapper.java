@@ -9,10 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface AdminMapper {
-
-    @Select("SELECT * FROM users")
     List<Admin> findAllProfiles(); // 전체 회원 조회 메서드 추가
-
     void deleteProfileByUserId(@Param("userId") String userId);
 
     //로그인 잠금 토글 미완성

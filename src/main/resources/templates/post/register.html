@@ -7,10 +7,10 @@
 <body>
 <main layout:fragment="content">
     <form th:action="@{/post/register}" th:object="${post}" method="post">
-        <div>
-            <label for="userId">UserID:</label>
-            <input type="text" id="userId" th:field="*{userId}" required />
-        </div>
+<!--        <div>-->
+<!--            <label for="userId">UserID:</label>-->
+<!--            <input type="text" id="userId" th:field="*{userId}" required />-->
+<!--        </div>-->
         <div>
             <input type="hidden" name="boardId" th:value="${boardId}" />
         </div>

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Mapper
 public interface PostMapper {
@@ -15,7 +16,7 @@ public interface PostMapper {
     List<PostDto> postFilter(Map<String, Object> params);
 
     // 단건 조회
-    PostDto detail(Long postId);
+    Optional<PostDto> detail(Long postId);
 
     //등록
     int insert(PostDto post);
@@ -24,5 +25,8 @@ public interface PostMapper {
     int update(PostDto post);
 
     // 삭제
-    void delete(PostDto post);
+    int delete(PostDto post);
+
+    // 조회수 업데이트
+    int updateViewCount(Long postId);
 }

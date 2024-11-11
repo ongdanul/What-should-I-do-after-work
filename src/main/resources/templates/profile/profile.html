@@ -27,7 +27,9 @@
       <button onclick="location.href='/sample'">취소</button>
 
       <!--임시로 샘플화면으로 보내놈. 실 로그인 사용자 데이터 삭제와 동시에 로그인 화면으로 넘기기-->
-      <button onclick="location.href='/sample'">회원탈퇴</button>
+      <form th:action="@{/user/delete}" method="post" style="display:inline;">
+        <button type="submit">회원탈퇴</button>
+      </form>
     </div>
   </div>
 </main>

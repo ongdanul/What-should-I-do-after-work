@@ -57,7 +57,9 @@
     <!-- post 목록 단건 조회 -->
     <select id="detail" resultMap="Post">
         SELECT *
-        FROM post
+        FROM post A
+        JOIN users B
+        ON A.user_id = B.user_id
         WHERE post_id = #{postId}
     </select>
 
@@ -77,9 +79,6 @@
             <if test="postContent != null">
                 post_content = #{postContent},
             </if>
-            <if test="modDate != null">
-                mod_date = NOW()
-            </if>
         </set>
         WHERE post_id = #{postId}
     </update>
@@ -90,4 +89,10 @@
         FROM post
         WHERE post_id = #{postId}
     </delete>
+
+    <update id="updateViewCount">
+        UPDATE post
+        SET view_count = view_count + 1
+        WHERE post_id = #{postId}
+    </update>
 </mapper>

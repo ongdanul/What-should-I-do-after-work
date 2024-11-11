@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.elice.boardproject.profile.mapper.AdminMapper">
+<mapper namespace="com.elice.boardproject.admin.mapper.AdminMapper">
 
     <!-- 전체 회원 조회 (어드민 권한 조회 미완성)-->
     <!--<select id="findAllProfiles" resultType="com.elice.boardproject.admin.entity.Admin">

@@ -32,18 +32,4 @@ public class SignUpVerificationController {
         return ResponseEntity.ok(response);
 
     }
-
-    @PostMapping("/password")
-    public ResponseEntity<Map<String, Boolean>> checkPassword(@RequestBody Map<String, String> requestBody) {
-
-        String userId = requestBody.get("userId");
-        String inputPassword = requestBody.get("password");
-        boolean valid = userService.checkPassword(userId, inputPassword);
-
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("valid", valid);
-
-        return ResponseEntity.ok(response);
-
-    }
 }

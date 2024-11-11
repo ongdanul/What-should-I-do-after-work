@@ -18,8 +18,31 @@ body, html {
     justify-content: center;
 }
 
+.signUpTitle {
+    font-size: 30px;
+}
+
 .signUpContent {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+label {
+    display: block;
+}
+
+#contactPrefix {
+    width: 80px;
+}
+
+#contactMiddle,
+#contactSuffix {
+    width: 100px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
 }

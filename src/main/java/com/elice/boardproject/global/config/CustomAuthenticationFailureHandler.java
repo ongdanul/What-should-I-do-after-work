@@ -37,12 +37,10 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         int attempts = loginAttempts.getOrDefault(userId, 0) + 1;
 
         //유저가 존재하는 경우에만 실패 횟수 추가
-        if(user != null) {
+        if (user != null) {
             loginAttempts.put(userId, attempts);
-        }
 
-        if (attempts >= MAX_ATTEMPTS) {
-            if (user != null) {
+            if (attempts >= MAX_ATTEMPTS) {
                 user.setLoginLock(true);
                 usersMapper.loginLock(user);
                 loginAttempts.remove(userId); // 잠금 처리 후 실패 횟수 초기화
@@ -52,14 +50,14 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                 response.getWriter().write("LOGIN_LOCKED");
                 return;
             }
-        }
 
-        // 이미 잠금된 계정인 경우
-        if (user != null && user.isLoginLock()) {
-            response.setContentType("text/plain;charset=UTF-8");
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.getWriter().write("LOGIN_LOCKED");
-            return;
+            // 이미 잠금된 계정인 경우
+            if (user.isLoginLock()) {
+                response.setContentType("text/plain;charset=UTF-8");
+                response.setStatus(HttpStatus.FORBIDDEN.value());
+                response.getWriter().write("LOGIN_LOCKED");
+                return;
+            }
         }
 
         response.setContentType("text/plain;charset=UTF-8");

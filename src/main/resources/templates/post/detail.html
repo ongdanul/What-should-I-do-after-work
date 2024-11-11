@@ -80,7 +80,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ commentContent: content, userId: userId, postId: postId})
+                body: JSON.stringify({ commentContent: content, postId: postId})
             })
             .then(response => response.json())
             .then(data => {

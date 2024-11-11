@@ -63,7 +63,7 @@ public class CustomSecurityConfig {
                             .failureHandler(customAuthenticationFailureHandler)
                             .permitAll())
                 // LoginFilter 추가
-                .addFilterAt(new LoginFilter(authenticationManager(configuration), usersAuthMapper,
+                .addFilterAt(new LoginFilter(authenticationManager(configuration),
                                         usersMapper, customAuthenticationFailureHandler),
                                         UsernamePasswordAuthenticationFilter.class)
                 // LogoutFilter 추가

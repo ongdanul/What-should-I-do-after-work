@@ -12,17 +12,17 @@ body, html {
     align-items: center;
 }
 
-.signUpContainer {
+.findIdContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.signUpTitle {
+.findIdTitle {
     font-size: 30px;
 }
 
-.signUpContent {
+.findIdContent {
     display: flex;
     flex-direction: column;
     align-items: center;

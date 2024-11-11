@@ -17,17 +17,17 @@ spring:
     init:
       mode: never
 
-  #  mail:
-  #    host: smtp.gmail.com
-  #    port: 587
-  #    username:
-  #    password:
-  #    properties:
-  #      mail:
-  #        smtp:
-  #          auth: true
-  #          starttls:
-  #            enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "juhui9609@gmail.com"
+    password: "uqneoweewnysznvf"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   thymeleaf:
     cache: false

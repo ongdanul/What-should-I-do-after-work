@@ -28,10 +28,16 @@
         AND contact = #{contact}
     </select>
 
-    <select id="findPasswordHash" resultType="String">
-        SELECT userPw FROM users
-        WHERE user_id = #{userId}
+    <select id="findUserPw" resultType="com.elice.boardproject.user.entity.Users">
+        SELECT user_name, email, user_id, user_pw, login_lock FROM users
+        WHERE user_name = #{userName}
+        AND email = #{email}
     </select>
 
-
+    <update id="updatePassword">
+        UPDATE users
+        SET user_pw = #{userPw}, mod_date = #{modDate}
+        WHERE user_name = #{userName}
+        AND email = #{email}
+    </update>
 </mapper>

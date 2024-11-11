@@ -12,17 +12,17 @@ body, html {
     align-items: center;
 }
 
-.signUpContainer {
+.findPwContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.signUpTitle {
+.findPwTitle {
     font-size: 30px;
 }
 
-.signUpContent {
+.findPwContent {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,15 +30,6 @@ body, html {
 
 label {
     display: block;
-}
-
-#contactPrefix {
-    width: 80px;
-}
-
-#contactMiddle,
-#contactSuffix {
-    width: 100px;
 }
 
 .btn {

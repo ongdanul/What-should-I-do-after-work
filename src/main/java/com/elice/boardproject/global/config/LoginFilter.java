@@ -22,14 +22,12 @@ import java.util.Map;
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final UsersMapper usersMapper;
-    private final UsersAuthMapper usersAuthMapper;
     private final AuthenticationManager authenticationManager;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-    public LoginFilter(AuthenticationManager authenticationManager, UsersAuthMapper usersAuthMapper, UsersMapper usersMapper,
+    public LoginFilter(AuthenticationManager authenticationManager, UsersMapper usersMapper,
                        CustomAuthenticationFailureHandler customAuthenticationFailureHandler/*, TokenBasedRememberMeServices rememberMeServices*/) {
         this.authenticationManager = authenticationManager;
         this.usersMapper = usersMapper;
-        this.usersAuthMapper = usersAuthMapper;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 

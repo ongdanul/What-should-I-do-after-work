@@ -19,10 +19,10 @@ public class AdminService {
         return adminMapper.findAllProfiles();
     }
 
-    @Transactional
+  /*  @Transactional
     public void deleteProfileByUserId(String userId) { //어드민 회원삭제
         adminMapper.deleteProfileByUserId(userId);
-    }
+    }*/
 }
     //로그인 잠금 토글 미완성
     /*@Transactional

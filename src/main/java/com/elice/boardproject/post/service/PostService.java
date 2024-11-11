@@ -65,6 +65,7 @@ public class PostService {
     // 게시글 등록
     public void insert(PostDto post) {
         log.info("[insert 호출] 게시글 등록 : {}", post);
+        log.info("post userId : {}", post.getUserId());
 
         int exists = postMapper.insert(post);
 

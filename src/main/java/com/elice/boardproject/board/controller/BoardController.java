@@ -2,7 +2,6 @@ package com.elice.boardproject.board.controller;
 
 import com.elice.boardproject.board.entity.BoardDto;
 import com.elice.boardproject.board.entity.BoardRequestDto;
-import com.elice.boardproject.board.entity.BoardResponseDto;
 import com.elice.boardproject.board.service.BoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ public class BoardController {
     public String lists(Model model) {
         List<BoardDto> boardLists = boardService.findAll();
         model.addAttribute("boards", boardLists);
+
         return "board/list";
     }
 

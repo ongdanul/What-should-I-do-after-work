@@ -7,6 +7,7 @@ import com.elice.boardproject.post.entity.Post;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface BoardMapper {
@@ -14,7 +15,7 @@ public interface BoardMapper {
     List<BoardDto> findAll();
 
     // 단건 조회
-    BoardDto detail(Long boardId);
+    Optional<BoardDto> detail(Long boardId);
 
     // 등록
     int insert(BoardDto board);
@@ -23,5 +24,5 @@ public interface BoardMapper {
     int update(BoardDto board);
 
     // 삭제
-    void delete(BoardDto board);
+    int delete(BoardDto board);
 }

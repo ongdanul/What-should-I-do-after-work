@@ -20,11 +20,11 @@
                 <td th:text="${post.user.userName}">default value</td>
                 <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
                 <td th:text="${post.postContent}">default value</td>
+                <td th:text="${post.viewCount}">default value</td>
             </tr>
         </table>
         <a th:href="@{/post/register(boardId=${boardId})}">글쓰기</a>
         <a th:href="'/board/list'">게시판 목록</a>
-        <a th:href="'/board/edit/'+${boardId}">게시판 수정</a>
 
         <!-- 페이지 버튼 -->
         <div>
@@ -35,10 +35,6 @@
             <a th:href="@{/post/list/{boardId}(boardId=${boardId}, page=${page + 1}, pageSize=10)}">다음</a>
         </div>
     </form>
-    <form th:action="@{/board/{boardId}(boardId=${boardId})}" th:method="delete">
-        <button type="submit" class="button">게시판 삭제</button>
-    </form>
-
 
 </main>
 </body>

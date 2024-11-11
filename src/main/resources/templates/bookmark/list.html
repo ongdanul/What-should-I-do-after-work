@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>home</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <table border="1">
+    <tr th:each="scrap : ${scraps}">
+      <!-- 즐겨찾기 리스트 -->
+      <td>
+        <a th:href="'/post/'+${scrap.postId}" th:text="${scrap.post.postTitle}"></a>
+      </td>
+
+      <!-- 즐겨찾기 삭제 -->
+      <td>
+        <form th:action="@{/bookmark/{scrapId}(scrapId=${scrap.scrapId})}" th:method="delete">
+          <button type="submit" class="button">즐겨찾기 취소</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+</main>
+</body>
+</html>

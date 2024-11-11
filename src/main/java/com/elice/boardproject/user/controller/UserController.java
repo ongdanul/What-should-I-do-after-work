@@ -66,4 +66,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+
+    @GetMapping("/find-pw")
+    public String findPw() {
+        return "user/findPw";
+    }
+
+    @PostMapping("/find-pw")
+    public ResponseEntity<String> findPw(HttpServletRequest request) {
+
+        String userName = request.getParameter("userName");
+        String email = request.getParameter("email");
+
+        String resultMessage = userService.findPw(userName, email);
+
+        if ("비밀번호가 이메일로 발송되었습니다.".equals(resultMessage)) {
+            return ResponseEntity.ok(resultMessage);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resultMessage);
+        }
+    }
 }

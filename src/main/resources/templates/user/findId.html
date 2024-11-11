@@ -1,73 +1,94 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="/css/user/findId.css">
     <title>아이디 찾기 페이지</title>
 </head>
 <body>
 <div class="findIdContainer">
-    <div class="findIdTitle">
-        <h1>아이디 찾기</h1>
-    </div>
+    <p class="findIdTitle">아이디 찾기</p>
     <div class="findIdContent">
         <form>
             <label for="userName">이름</label>
             <input type="text" name="userName" id="userName" required>
-            <div class="feedback"></div>
 
-            <label for="contact">연락처</label>
+            <label>연락처</label>
             <div class="contactContainer">
-                <label for="contactPrefix"></label>
-                <select name="contactPrefix" id="contactPrefix" class="contactWidth">
+                <select id="contactPrefix">
                     <option value="010">010</option>
                     <option value="011">011</option>
-                    <option value="016">012</option>
-                    <option value="016">013</option>
-                    <option value="017">016</option>
                 </select>
                 <span>-</span>
-                <label for="contactMiddle"></label>
-                <input type="text" id="contactMiddle" maxlength="4"
-                       oninput="formatContactInput()" required>
+                <input type="text" id="contactMiddle" maxlength="4" required>
                 <span>-</span>
-                <label for="contactSuffix"></label>
-                <input type="text" id="contactSuffix" maxlength="4"
-                       oninput="formatContactInput()" required>
+                <input type="text" id="contactSuffix" maxlength="4" required>
             </div>
             <input type="hidden" name="contact" id="contact">
-            <button class="signUpBtn" onclick="findId()">아이디 찾기</button>
-            <button class="cancelBtn">로그인페이지로 이동</button>
+            <div id="userIdDisplay" class="blank"></div>
+            <div class="btn">
+                <button type="submit" class="findIdBtn" id="findIdBtn">아이디 찾기</button>
+                <button type="button" class="homeBtn">로그인페이지로 이동</button>
+            </div>
         </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function formatContactInput() {
-        const regex = /^[0-9]*$/; // 숫자만 입력받기 위한 정규식
+        const regex = /^[0-9]*$/;
         const contactMiddle = document.getElementById('contactMiddle');
         const contactSuffix = document.getElementById('contactSuffix');
 
-        // 숫자가 아닌 경우 제거
         if (!regex.test(contactMiddle.value)) {
             contactMiddle.value = contactMiddle.value.replace(/[^0-9]/g, '');
         }
         if (!regex.test(contactSuffix.value)) {
             contactSuffix.value = contactSuffix.value.replace(/[^0-9]/g, '');
         }
-
-        // 세 입력 칸 합쳐서 hidden input 에 저장
-        const contactPrefix = document.getElementById('contactPrefix').value;
-        const contact = document.getElementById('contact');
-        contact.value = `${contactPrefix}-${contactMiddle.value}-${contactSuffix.value}`;
+        document.getElementById('contact').value = `${document.getElementById('contactPrefix').value}-${contactMiddle.value}-${contactSuffix.value}`;
     }
 
-    document.getElementById('contactPrefix').addEventListener('change', formatContactInput);
-    document.getElementById('contactMiddle').addEventListener('input', formatContactInput);
-    document.getElementById('contactSuffix').addEventListener('input', formatContactInput);
-
-    document.querySelector(".cancelBtn").addEventListener("click", (e) => {
+    async function findId(e) {
         e.preventDefault();
-        location.href = '/user/login';
-    });
+
+        formatContactInput();
+
+        const userName = document.getElementById('userName').value;
+        const contact = document.getElementById('contact').value;
+
+        if (!userName || !contact) {
+            alert("이름과 연락처를 모두 입력해 주세요.");
+            return;
+        }
+
+        const data = { userName, contact };
+
+        try {
+            const response = await axios.post("/user/find-id", null, { params: data });
+
+            const userId = response.data;
+
+            if (userId) {
+                const userIdDisplay = document.getElementById('userIdDisplay');
+                userIdDisplay.style.display = 'flex';
+                userIdDisplay.style.height = '100px';
+                userIdDisplay.innerText = `아이디는 ${userId} 입니다.`;
+
+                const findIdBtn = document.getElementById('findIdBtn');
+                findIdBtn.innerHTML = '<span>비밀번호 찾기</span>';
+                findIdBtn.onclick = () => {
+                    window.location.href = '/user/find-pw';
+                };
+            }
+        } catch (error) {
+            console.error("아이디 찾기 에러 발생:", error.message);
+            alert('일치하는 아이디가 존재하지 않습니다.');
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', findId);
+
+    document.querySelector('.homeBtn').addEventListener('click', () => location.href = '/user/login');
 </script>
 </body>
 </html>

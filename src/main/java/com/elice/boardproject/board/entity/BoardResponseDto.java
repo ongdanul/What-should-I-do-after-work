@@ -8,5 +8,6 @@ import lombok.*;
 @Setter
 @Builder
 public class BoardResponseDto {
+    private Long boardId;
     private String boardTitle;
 }

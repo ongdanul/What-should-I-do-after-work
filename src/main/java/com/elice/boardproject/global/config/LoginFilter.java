@@ -1,11 +1,9 @@
 package com.elice.boardproject.global.config;
 
 import com.elice.boardproject.user.entity.Users;
-import com.elice.boardproject.usersAuth.entity.UsersAuth;
 import com.elice.boardproject.user.mapper.UsersMapper;
 import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

@@ -4,7 +4,6 @@ import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.entity.PostRequestDto;
 import com.elice.boardproject.post.service.PostService;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RequestMapping("/post")
 @Controller
 public class PostController {

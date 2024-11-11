@@ -2,22 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>예시 페이지</title>
+    <title>Post Detail</title>
 </head>
 <body>
 <main layout:fragment="content">
     <table border="1">
         <tr>
-<!--            <td th:text="|작성자${post.user.userName}|">default value</td>-->
-            <td>제목 :</td>
-            <td th:text="${post.postTitle}">default value</td>
+            <td th:text="|작성자 : ${post.user.userName}|">default value</td>
+        </tr>
+        <tr>
             <td th:text="|작성일시 : ${post.regDate}|">default value</td>
+            <td th:text="|조회수 : ${post.viewCount}|">default value</td>
             <!--            <td th:text="|수정일시 : ${post.modDate}|">default value</td>-->
         </tr>
         <tr>
-            <td th:text="${post.postContent}">default value</td>
+            <td th:text="|제목 : ${post.postTitle}|">default value</td>
+            <!-- 즐겨찾기 등록-->
+            <td>
+                <form th:action="@{/bookmark/{postId}(postId=${post.postId})}" th:method="post">
+                    <button type="submit" class="button">즐겨찾기 등록</button>
+                </form>
+            </td>
         </tr>
-
+        <tr>
+            <td th:text="|내용 : ${post.postContent}|">default value</td>
+        </tr>
         <tr>
             <td>
                 <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">

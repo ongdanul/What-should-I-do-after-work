@@ -5,13 +5,13 @@
     <!-- 프로필 조회 -->
     <select id="findProfileByUserId" resultType="com.elice.boardproject.profile.entity.Profile">
         SELECT user_id, user_name, contact, email
-        FROM logined
+        FROM users
         WHERE user_id = #{userId}
     </select>
 
     <!-- 프로필 수정 -->
     <update id="updateProfile">
-        UPDATE logined
+        UPDATE users
         SET user_name = #{userName},
         contact = #{contact},
         email = #{email},
@@ -22,7 +22,7 @@
     <!-- 프로필 삭제 (미완성) -->
     <delete id="deleteProfileByUserId">
         DELETE
-        FROM logined
+        FROM users
         WHERE user_id = #{userId}
     </delete>
 </mapper>

@@ -19,5 +19,9 @@ public class ProfileService {
     public void updateProfile(Profile profile) {
         profileMapper.updateProfile(profile);
     }
-}
 
+    @Transactional
+    public void deleteProfileByUserId(String userId) {
+        profileMapper.deleteProfileByUserId(userId);
+    }
+}

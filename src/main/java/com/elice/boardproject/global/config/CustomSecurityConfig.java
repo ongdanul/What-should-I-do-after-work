@@ -52,9 +52,10 @@ public class CustomSecurityConfig {
 
         //접근 권한 설정
         http.authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/css/**","/fonts/**", "/img/**", "/static/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**", "/login/**", "/check/**", "/error/**").permitAll()
-                .requestMatchers("/home", "/").permitAll()
+                .requestMatchers("/").permitAll()
                 .anyRequest().authenticated())
                 //로그인 설정
                 .formLogin(form -> form
@@ -81,11 +82,4 @@ public class CustomSecurityConfig {
 
         return http.build();
     }
-
-    @Bean //정적 리소스 보안 필터 체인에서 제외
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
-
 }

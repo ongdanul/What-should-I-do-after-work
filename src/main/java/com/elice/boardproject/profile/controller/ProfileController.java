@@ -2,6 +2,7 @@ package com.elice.boardproject.profile.controller;
 
 import com.elice.boardproject.profile.entity.Profile;
 import com.elice.boardproject.profile.service.ProfileService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/profile")

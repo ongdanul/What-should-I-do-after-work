@@ -90,6 +90,7 @@
         WHERE post_id = #{postId}
     </delete>
 
+    <!-- 조회수 업데이트 -->
     <update id="updateViewCount">
         UPDATE post
         SET view_count = view_count + 1

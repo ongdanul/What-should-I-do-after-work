@@ -65,11 +65,11 @@ public class PostController {
     // 게시글 등록
     @PostMapping("/register")
     public String register(@RequestParam Long boardId, PostRequestDto postRequestDto, HttpSession httpSession) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
         if (principal instanceof UserDetails) {
-           userId = ((UserDetails) principal).getUsername();
+            userId = ((UserDetails) principal).getUsername();
         } else {
             userId = principal.toString();
         }

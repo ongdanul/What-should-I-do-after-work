@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@EnableWebMvc
+@EnableWebMvc
 @Configuration
 public class CustomServletConfig implements WebMvcConfigurer {
 

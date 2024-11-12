@@ -13,6 +13,7 @@
 <header>
     <div class="headerContainer">
         <div class="homeLogo">
+            <a th:href="@{'/board/list'}"><img th:src="@{/img/homeLogo.png}"></a>
         </div>
         <div class="loginIcon">
             <i class="bi bi-person dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></i>
@@ -33,13 +34,12 @@
 <footer>
     <div class="footerContainer">
         <div class="project">
-            <p>프로젝트 이름</p>
-            <p>ⓒ프로젝트 팀 명</p>
-            <p>이메일 : 팀 리더 이메일</p>
-            <a th:href="@{'/notice'}">repository : 깃허브주소</a>
+            <p>ⓒ퇴근하고 뭐하지</p>
+            <p>Contact : star6910@naver.com</p>
+            <a th:href="${'https://kdt-gitlab.elice.io/cloud_track/class_05/web_project1/team06/team06'}">repository : https://kdt-gitlab.elice.io</a>
         </div>
         <div>
-            <p>공지사항</p>
+            <a th:href="@{'/notice'}">공지사항</a>
         </div>
     </div>
 </footer>

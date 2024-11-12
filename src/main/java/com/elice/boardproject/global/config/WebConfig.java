@@ -24,11 +24,4 @@ public class WebConfig implements WebMvcConfigurer {
         filterRegistrationBean.addUrlPatterns("/*"); // 모든 경로에 대해 적용
         return filterRegistrationBean;
     }
-
-    @Bean
-    public FilterRegistrationBean<HiddenHttpMethodFilter> hiddenHttpMethodFilter() {
-        FilterRegistrationBean<HiddenHttpMethodFilter> filterRegistrationBean = new FilterRegistrationBean<>(new HiddenHttpMethodFilter());
-        filterRegistrationBean.addUrlPatterns("/*"); // 모든 경로에 대해 적용
-        return filterRegistrationBean;
-    }
 }

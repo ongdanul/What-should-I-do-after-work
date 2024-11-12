@@ -22,22 +22,26 @@ header {
     align-items: center;
 }
 
-.homeLogo{
-    width: 150px;
+.homeLogo {
+    width: 100px;
     height: 100px;
-    background: yellow;
+}
+
+.homeLogo img {
+    width: 100%;
+    height: 100%;
 }
 
 .loginIcon{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-right: 20px;
     position: relative;
     display: inline-block;
 }
 
 .loginIcon i {
-    font-size: 50px;
+    font-size: 40px;
     cursor: pointer;
 }
 
@@ -67,10 +71,25 @@ footer {
 
 .footerContainer {
     display: flex;
-    align-items: top;
     gap: 30px
 }
 
+.footerContainer div {
+    min-width: 250px;
+}
+
+
 .project p {
     margin: 0;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+a:hover {
+    color: black;
 }

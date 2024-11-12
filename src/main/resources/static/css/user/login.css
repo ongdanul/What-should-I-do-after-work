@@ -14,16 +14,13 @@ body, html {
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.img {
     width: 400px;
     height: 400px;
-    object-fit: contain;
-    background: yellow;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
 }
 
 .loginContainer {

@@ -4,6 +4,7 @@ import com.elice.boardproject.board.entity.BoardDto;
 import com.elice.boardproject.board.entity.BoardRequestDto;
 import com.elice.boardproject.board.service.BoardService;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,7 +55,7 @@ public class BoardController {
 
      // 게시판 수정
     @PatchMapping("/{boardId}")
-    public String update(@ModelAttribute BoardRequestDto boardRequestDto, @PathVariable Long boardId) {
+    public String update(@RequestBody BoardRequestDto boardRequestDto, @PathVariable Long boardId) {
         BoardDto board = boardRequestDto.toBoardDto();
         board.setBoardId(boardId);
         boardService.update(board);

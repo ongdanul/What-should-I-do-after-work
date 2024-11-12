@@ -3,6 +3,8 @@ package com.elice.boardproject.scrap.controller;
 import com.elice.boardproject.scrap.entity.ScrapDto;
 import com.elice.boardproject.scrap.service.ScrapService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,11 +39,22 @@ public class ScrapController {
     // 즐겨찾기 등록
     @PostMapping("/{postId}")
     public String register(@PathVariable Long postId) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId;
+
+        if (principal instanceof UserDetails) {
+            userId = ((UserDetails) principal).getUsername();
+        } else {
+            userId = principal.toString();
+        }
+
         ScrapDto newScrap = new ScrapDto();
         newScrap.setPostId(postId);
+        newScrap.setUserId(userId);
+
         scrapService.insert(newScrap);
 
-        return "redirect:/bookmark/list/" + newScrap.getUserId();
+        return "redirect:/post/" + newScrap.getPostId();
     }
 
     // 즐겨찾기 삭제

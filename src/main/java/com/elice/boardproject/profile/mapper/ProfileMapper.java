@@ -12,6 +12,8 @@ public interface ProfileMapper {
     // MY 회언 정보 수정
     void updateProfile(Profile profile);
 
+    String findPassword(String userId);
+
     // MY 회원 탈퇴
     void deleteProfileByUserId(@Param("userId") String userId);
 }

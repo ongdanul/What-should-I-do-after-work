@@ -12,12 +12,16 @@
     <!--MY 회원 정보 수정-->
     <update id="updateProfile">
         UPDATE users
-        SET user_name = #{userName},
-        contact = #{contact},
+        SET contact = #{contact},
         email = #{email},
         user_pw = #{userPw}
         WHERE user_id = #{userId}
     </update>
+
+    <select id="findPassword" resultType="String">
+        SELECT user_pw FROM users
+        WHERE user_id = #{userId}
+    </select>
 
     <!--MY 회원 탈퇴-->
     <delete id="deleteProfileByUserId">

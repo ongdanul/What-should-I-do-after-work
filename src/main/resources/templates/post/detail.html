@@ -10,13 +10,9 @@
         <tr>
             <td th:text="|작성자 : ${post.user.userName}|">default value</td>
             <td>
-                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
-                    <button type="submit" class="button">즐겨찾기 등록</button>
-                </form>
-                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="button">즐겨찾기 삭제</button>
-                </form>
+                <button id="scrapButton" onclick="toggleScrap()">
+                    <i class="bi bi-bookmark"></i>
+                </button>
                 <button id="followButton" class="button" onclick="following()">팔로우</button>
             </td>
         </tr>
@@ -72,24 +68,18 @@
             })
             .then(response => response.json())
             .then(data => {
-                if(data.length === 0) {
+                const commentList = document.getElementById('commentList');
+                commentList.innerHTML = ''; // 기존 목록 초기화
+                data.forEach(comment => {
                     const listItem = document.createElement('li');
-                    listItem.innerHTML = `<span>등록된 댓글이 없습니다.</span>`;
+                    listItem.id = `comment-${comment.commentId}`;
+                    listItem.innerHTML = `
+                        <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
+                        <button onclick="editComment(${comment.commentId})">수정</button>
+                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                    `;
                     commentList.appendChild(listItem);
-                } else {
-                    const commentList = document.getElementById('commentList');
-                    commentList.innerHTML = ''; // 기존 목록 초기화
-                    data.forEach(comment => {
-                        const listItem = document.createElement('li');
-                        listItem.id = `comment-${comment.commentId}`;
-                        listItem.innerHTML = `
-                            <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
-                            <button onclick="editComment(${comment.commentId})">수정</button>
-                            <button onclick="deleteComment(${comment.commentId})">삭제</button>
-                        `;
-                        commentList.appendChild(listItem);
-                    });
-                }
+                });
             })
             .catch(error => console.error('Error:', error));
         }
@@ -157,47 +147,9 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // 팔로우 체크
-        function loadFollow() {
-            fetch('/api/follow/[[ ${post.user.userId} ]]', {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data === 1) {
-                    document.getElementById("followButton").textContent = "팔로우 취소";
-                } else {
-                    document.getElementById("followButton").textContent = "팔로우";
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-        function following() {
-            const userId = [[ ${post.user.userId} ]];
-
-            fetch('/api/follow', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ follow: userId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data === 0) {
-                    document.getElementById("followButton").textContent = "팔로우";
-                } else if(data === 1){
-                    document.getElementById("followButton").textContent = "팔로우 취소";
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-        // 초기 로딩 시 초기값 불러오기
+        // 초기 로딩 시 댓글 목록 불러오기
         document.addEventListener('DOMContentLoaded', function() {
             loadComments();
-            loadFollow();
         });
 
     </script>

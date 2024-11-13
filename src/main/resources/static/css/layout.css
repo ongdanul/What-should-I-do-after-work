@@ -1,12 +1,3 @@
-@font-face {
-    font-family: Noto Sans;
-    src: url('/fonts/NotoSansKR-VariableFont_wght.ttf');
-}
-
-body {
-    font-family: 'Noto Sans', sans-serif;
-}
-
 header, main, footer {
     max-width: 1280px;
     margin: auto;

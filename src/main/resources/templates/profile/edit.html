@@ -7,38 +7,50 @@
 <main layout:fragment="content">
     <div class="container">
         <h1>회원정보 수정</h1>
-        <form action="/profile/edit" method="post">
-            <div class="form-group">
-                <label for="userId">아이디(수정불가)</label>
-                <input type="text" id="userId" name="userId" th:value="${profile.userId}" readonly>
+        <form th:action="@{/profile/edit}" method="post">
+            <label for="userId">아이디(수정불가)</label>
+            <input type="text" id="userId" name="userId" th:value="${profile.userId}" readonly>
+
+            <label for="userName">이름(수정불가)</label>
+            <input type="text" id="userName" name="userName" th:value="${profile.userName}" readonly>
+
+            <label for="existingPw">기존 비밀번호</label>
+            <input type="password" id="existingPw" name="existingPw" required>
+            <div id="existingPwFeedback" class="feedback"></div>
+
+            <label for="userPw">새로운 비밀번호</label>
+            <input type="password" id="userPw" name="userPw">
+            <div id="pwFeedback" class="feedback"></div>
+
+            <label for="userPw">새로운 비밀번호 확인</label>
+            <input type="password" id="confirmPw" name="confirmPw">
+            <div id="confirmPwFeedback" class="feedback"></div>
+
+            <label>연락처</label>
+            <div class="contactContainer">
+                <select id="contactPrefix">
+                    <option value="010" th:selected="${profile.contact?.startsWith('010')}">010</option>
+                    <option value="011" th:selected="${profile.contact?.startsWith('011')}">011</option>
+                </select>
+                <span>-</span>
+                <input type="text" id="contactMiddle" maxlength="4" required th:value="${#strings.substring(profile.contact, 4, 8)}">
+                <span>-</span>
+                <input type="text" id="contactSuffix" maxlength="4" required th:value="${#strings.substring(profile.contact, 9, 13)}">
             </div>
-            <div class="form-group">
-                <label for="userName">이름(수정불가)</label>
-                <input type="text" id="userName" name="userName" th:value="${profile.userName}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="contact">전화번호</label>
-                <input type="text" id="contact" name="contact" th:value="${profile.contact}">
-            </div>
-            <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" id="email" name="email" th:value="${profile.email}">
-            </div>
-            <div class="form-group">
-                <label for="userPw">새로운 비밀번호</label>
-                <input type="password" id="userPw" name="userPw">
-            </div>
-            <div class="form-group">
-                <label for="userPw">새로운 비밀번호 확인</label>
-                <input type="password" id="confirmPw" name="confirmPw">
-            </div>
-            <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
-            <div class="button-group">
+            <input type="hidden" id="contact" name="contact" th:value="${profile.contact}">
+
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" th:value="${profile.email}">
+            <div id="emailFeedback" class="feedback"></div>
+
+            <div class="btnSection">
                 <button type="submit">수정</button>
-                <button type="button" onclick="location.href='/profile'">취소</button>
+                <button type="button" class="cancelBtn">취소</button>
             </div>
         </form>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script th:src="@{/js/profile/edit.js}"></script>
 </main>
 </body>
 </html>

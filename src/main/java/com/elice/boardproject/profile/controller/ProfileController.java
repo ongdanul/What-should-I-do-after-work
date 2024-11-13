@@ -3,13 +3,17 @@ package com.elice.boardproject.profile.controller;
 import com.elice.boardproject.profile.entity.Profile;
 import com.elice.boardproject.profile.service.ProfileService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/profile")
@@ -59,14 +63,19 @@ public class ProfileController {
 
     // MY 회원 정보 수정 (비밀번호, 비밀번호 확인 비교)
     @PostMapping("/edit")
-    public String updateProfile(Profile profile, String confirmPw, Model model) {
-        // 비밀번호와 비밀번호 확인 비교
-        if (!profile.getUserPw().equals(confirmPw)) {
-            model.addAttribute("errorMessage", "비밀번호 확인이 일치하지 않습니다.");
-            return "profile/edit";
+    public String updateProfile(@Valid Profile profile, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+
+        try {
+            profileService.updateProfile(profile);
+            new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+
+            redirectAttributes
+                    .addFlashAttribute("message", "회원수정이 완료되었습니다. 다시 로그인해주세요.");
+
+            return "redirect:/user/login";
+        } catch (Exception  e) {
+            return "redirect:/user/edit";
         }
-        profileService.updateProfile(profile);
-        return "redirect:/profile";
     }
 
     // MY 회원 탈퇴

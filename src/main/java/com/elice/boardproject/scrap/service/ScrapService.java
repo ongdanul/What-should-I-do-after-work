@@ -14,14 +14,21 @@ public class ScrapService {
     @Autowired
     private ScrapMapper scrapMapper;
 
-    // 즐겨찾기 등록
-    public int insert(String userId, Long postId) {
+    //즐겨찾기 확인
+    public boolean isScrap(String userId, Long postId) {
         Optional<ScrapDto> findScrap = scrapMapper.detail(userId, postId);
 
-        if (findScrap.isEmpty()) {
-            return scrapMapper.insert(userId, postId);
+        if (findScrap.isPresent()) {
+            return true;
         }
-           return 0;
+
+        return false;
+    }
+
+    // 즐겨찾기 등록
+    public void insert(String userId, Long postId) {
+        scrapMapper.insert(userId, postId);
+
     }
 
     // 즐겨찾기 삭제

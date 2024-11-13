@@ -1,44 +1,26 @@
 package com.elice.boardproject.scrap.controller;
 
-import com.elice.boardproject.scrap.entity.ScrapDto;
 import com.elice.boardproject.scrap.service.ScrapService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RequestMapping("/bookmark")
-@Controller
+@RestController
 public class ScrapController {
     @Autowired
     private ScrapService scrapService;
 
-    // 즐겨찾기 전체 목록 조회
-    @GetMapping("/list/{userId}")
-    public String getList(@PathVariable String userId, Model model) {
-        List<ScrapDto> scrapLists = scrapService.findAll(userId);
-        model.addAttribute("scraps", scrapLists);
-        model.addAttribute("userId", userId);
-
-        return "bookmark/list";
-    }
-
-    // 즐겨찾기 단건 조회
-    @GetMapping("/{scrapId}")
-    public String getDetail(@PathVariable Long scrapId, Model model) {
-        ScrapDto findScrap = scrapService.detail(scrapId);
-        model.addAttribute("scrap", findScrap);
-
-        return "bookmark/detail";
-    }
-
-    // 즐겨찾기 등록
+    // 즐겨찾기 등록/삭제
     @PostMapping("/{postId}")
-    public String register(@PathVariable Long postId) {
+    public ResponseEntity<?> insert(@PathVariable Long postId) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
@@ -48,22 +30,28 @@ public class ScrapController {
             userId = principal.toString();
         }
 
-        ScrapDto newScrap = new ScrapDto();
-        newScrap.setPostId(postId);
-        newScrap.setUserId(userId);
+        int success = scrapService.insert(userId, postId);
 
-        scrapService.insert(newScrap);
+        if (success == 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        return "redirect:/post/" + newScrap.getPostId();
+        return new ResponseEntity<>(success, HttpStatus.CREATED);
     }
 
-    // 즐겨찾기 삭제
-    @DeleteMapping("/{scrapId}")
-    public String delete(@PathVariable Long scrapId) {
-        ScrapDto removeScrap = scrapService.detail(scrapId);
-        String userId = removeScrap.getUserId();
-        scrapService.delete(removeScrap);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> delete(@PathVariable Long postId) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId;
 
-        return "redirect:/bookmark/list/" + userId;
+        if (principal instanceof UserDetails) {
+            userId = ((UserDetails) principal).getUsername();
+        } else {
+            userId = principal.toString();
+        }
+
+        scrapService.delete(userId, postId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

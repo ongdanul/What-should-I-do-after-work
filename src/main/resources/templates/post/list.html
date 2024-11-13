@@ -10,6 +10,9 @@
     <div class="container">
         <form action="/post/list">
             <div class="searchForm">
+                <!-- 정렬 -->
+                <a href="#" th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='reg_date')}">등록일</a>
+                <a href="#" th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='view_count')}">조회수</a>
                 <select name="filter" class="formSelect">
                     <option value="post_title">제목</option>
                     <option value="post_content">내용</option>

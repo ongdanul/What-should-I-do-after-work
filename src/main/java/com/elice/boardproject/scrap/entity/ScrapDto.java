@@ -1,6 +1,7 @@
 package com.elice.boardproject.scrap.entity;
 
 import com.elice.boardproject.post.entity.PostDto;
+import com.elice.boardproject.user.entity.Users;
 import lombok.*;
 
 @NoArgsConstructor
@@ -14,4 +15,5 @@ public class ScrapDto {
     private Long postId;
 
     private PostDto post;
+    private Users user;
 }

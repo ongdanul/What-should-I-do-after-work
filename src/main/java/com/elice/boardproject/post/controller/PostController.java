@@ -23,11 +23,12 @@ public class PostController {
     // 게시글 전체 목록
     @GetMapping("/list/{boardId}")
     public String lists(@PathVariable Long boardId, @RequestParam(defaultValue = "1") int page,
-                        @RequestParam(defaultValue = "10") int pageSize, Model model) {
-        List<PostDto> posts = postService.findAll(boardId, page, pageSize);
+                        @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "reg_date") String orderBy, Model model) {
+        List<PostDto> posts = postService.findAll(boardId, page, pageSize, orderBy);
         model.addAttribute("posts", posts);
         model.addAttribute("boardId", boardId);
         model.addAttribute("page", page);
+        model.addAttribute("orderBy", orderBy);
 
         return "post/list";
     }

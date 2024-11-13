@@ -100,7 +100,7 @@ public class UserService {
 
                 MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
                 mimeMessageHelper.setTo(toMailAddr);
-                mimeMessageHelper.setSubject("[퇴근하면 머하지] 새 비밀번호 안내입니다.");
+                mimeMessageHelper.setSubject("[퇴근하고 뭐하지?] 새 비밀번호 안내입니다.");
                 mimeMessageHelper.setText("새 비밀번호 : " + newPassword, true);
 
             };

@@ -3,15 +3,16 @@
 <mapper namespace="com.elice.boardproject.scrap.mapper.ScrapMapper">
 
     <!-- User ResultMap -->
-<!--    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">-->
-<!--        <id property="userId" column="user_id"/>-->
-<!--        <result property="userName" column="user_name"/>-->
-<!--    </resultMap>-->
+    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
 
     <!-- Post ResultMap -->
     <resultMap id="Post" type="com.elice.boardproject.post.entity.PostDto">
         <id property="postId" column="post_id"/>
         <result property="postTitle" column="post_title"/>
+        <result property="viewCount" column="view_count"/>
 
     </resultMap>
 
@@ -21,27 +22,21 @@
         <result property="userId" column="user_id"/>
         <result property="postId" column="post_id"/>
 
-<!--        <association property="user" resultMap="User" column="user_id"/>-->
+        <association property="user" resultMap="User" column="user_id"/>
         <association property="post" resultMap="Post" column="post_id"/>
     </resultMap>
 
-    <!-- Scrap 전체 목록 조회 -->
-    <select id="findAll" resultMap="Scrap">
-        SELECT A.scrap_id, A.user_id, A.post_id, B.post_title
-        FROM scrap A
-                 JOIN post B
-                      ON A.post_id = B.post_id
-        WHERE A.user_id = #{userId}
-        ORDER BY A.scrap_id DESC
-    </select>
-
-    <!-- Scrap 단건 조회-->
+    <!-- Scrap 유무 확인-->
     <select id="detail" resultMap="Scrap">
-        SELECT A.scrap_id, A.user_id, A.post_id, B.post_title
+        SELECT *
         FROM scrap A
                  JOIN post B
                       ON A.post_id = B.post_id
-        WHERE scrap_id = #{scrapId}
+                 JOIN users C
+                      ON A.user_id = C.user_id
+        WHERE A.user_id = #{userId}
+        AND A.post_id = #{postId}
+        LIMIT 1
     </select>
 
     <!-- Scrap 등록 -->
@@ -54,8 +49,7 @@
     <delete id="delete">
         DELETE
         FROM scrap
-        WHERE scrap_id = #{scrapId}
-        AND user_id = #{userId}
-        AND post_id = #{postId}
+        WHERE user_id = #{userId}
+          AND post_id = #{postId}
     </delete>
 </mapper>

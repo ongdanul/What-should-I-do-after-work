@@ -1,0 +1,150 @@
+.container {
+    width: 100%;
+}
+
+form {
+    width: 100%;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.searchForm{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.formSelect {
+    width: 60px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid #BCC0C0;
+    border-right: none;
+    outline: none;
+}
+
+.formContent {
+    width: 300px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 0;
+    border-top: 1px solid #BCC0C0;
+    border-bottom: 1px solid #BCC0C0;
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+
+.formSelect:focus,
+.formContent:focus {
+    outline: none;
+    border: 1px solid #BCC0C0;
+}
+
+.searchBtn {
+    width: 60px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 0 10px 10px 0;
+    border: 1px solid #BCC0C0;
+    border-left: none;
+    color: #000;
+    background-color: #FFFFFF;
+    margin-right: 10px;
+}
+
+.searchBtn:hover {
+    color: #000;
+    background-color: #B4D4FD;
+}
+
+.card {
+    min-width: 600px;
+    min-height: 400px;
+    padding: 10px;
+    table-layout: fixed;
+    font-size: 12px;
+}
+
+.card a {
+    font-size: 12px;
+}
+
+tr {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+td {
+    width: 550px;
+    padding: 8px;
+    border-bottom: 1px solid #BCC0C0;
+}
+
+.postContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.postInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.postStats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+.bi-eye {
+    margin-right: 5px;
+    color: #BCC0C0;
+}
+
+.sub {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+}
+
+.sub a {
+    padding 2px;
+}
+
+.listBtn,
+.registerBtn {
+    text-align: center;
+    width: 90px;
+    border-radius: 5px;
+    color: #667373;
+    background-color: #FFFFFF;
+    border: 1px solid #667373;
+}
+
+.listBtn:hover,
+.registerBtn:hover {
+    color: #FFFFFF;
+    background-color: #B4D4FD;
+    border: 1px solid #B4D4FD;
+}
+
+.paging {
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}

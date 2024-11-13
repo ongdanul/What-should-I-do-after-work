@@ -5,6 +5,7 @@ import com.elice.boardproject.user.entity.Users;
 import com.elice.boardproject.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,10 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model, HttpServletRequest request) {
+    public String login(HttpServletRequest request) {
+        if (request.getUserPrincipal() != null) {
+            return "redirect:/board/list";
+        }
         return "user/login";
     }
 
@@ -37,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public String signUpProcess(SignUpDTO dto, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String signUpProcess(@Valid SignUpDTO dto, RedirectAttributes redirectAttributes) {
 
         userService.signUpProcess(dto);
 

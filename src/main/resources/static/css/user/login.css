@@ -28,12 +28,14 @@ body, html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
+    font-size: 14px;
 }
 
 .loginTitle {
     display: flex;
     justify-content: center;
+    font-size: 40px;
 }
 
 .loginForm {
@@ -53,15 +55,41 @@ body, html {
     flex-direction: column;
 }
 
+.id input,
+.pw input {
+    width: 200px;
+    height: 25px;
+    border-radius: 5px;
+    border: 1px solid #667373;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
 .loginOption {
-    display: flex;
     font-size: 12px;
+}
+
+#rememberMe {
+    margin-right: 3px;
 }
 
 .loginBtn,
 .signUpBtn {
     width: 200px;
     height: 40px;
+    border-radius: 5px;
+    color: #000;
+    background-color: #FFFFFF;
+    border: 1px solid #667373;
+}
+
+.loginBtn:active,
+.signUpBtn:active {
+    color: #FFFFFF;
+    background-color: #B4D4FD;
+    border: 1px solid #B4D4FD;
 }
 
 .signUpFind {

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/profile")
 public class ProfileController {
     private final ProfileService profileService;
+
+    // 생성자를 통한 의존성 주입
     public ProfileController(ProfileService profileService) {
         this.profileService = profileService;
     }

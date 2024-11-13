@@ -10,4 +10,10 @@
         SELECT * FROM users_auth
         WHERE user_id = #{userId}
     </select>
+
+    <update id="updateUserRole">
+        UPDATE users_auth
+        SET authorities = #{newRole}
+        WHERE user_id = #{userId}
+    </update>
 </mapper>

@@ -29,13 +29,37 @@
         WHERE f.follow = #{userId}
     </select>
 
-    <select id="findFollower" resultMap="Post">
-        SELECT *
+    <select id="findFollower" resultMap="User">
+        SELECT u.user_id, u.user_name
         FROM post p
                  JOIN follow f
                       ON p.user_id = f.follow
                  JOIN users u
                       ON p.user_id = u.user_id
         WHERE f.follower = #{userId}
+        GROUP BY u.user_id
     </select>
+
+    <select id="checkFollow" resultType="int">
+        SELECT CASE WHEN EXISTS (
+                                SELECT 1
+                                FROM follow
+                                WHERE follow = #{myId}
+                                AND follower = #{userId}
+                                ) THEN 1
+                                ELSE 0
+                            END
+    </select>
+
+    <insert id="insert">
+        INSERT INTO follow (follow, follower)
+        VALUES (#{myId}, #{userId})
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM follow
+        WHERE follow = #{myId}
+        AND follower = #{userId}
+    </delete>
 </mapper>

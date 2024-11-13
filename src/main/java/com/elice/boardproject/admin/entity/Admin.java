@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
@@ -16,12 +18,19 @@ public class Admin {
     private String userName;
     private String contact;
     private String email;
-    private String userPw;  // 비밀번호 필드 추가
+    private String userPw;
     private Instant modDate;
-    private Instant regDate; // 가입일
-    private boolean loginLock; // 로그인 잠금 여부
+    private Instant regDate;
+    private boolean loginLock;
     @Setter
     private String authorities;
 
+    //가입날짜 포매팅
+    public String getRegDateFormatted() {
+        if (regDate == null) return "";
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(regDate, ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
+        return localDateTime.format(formatter);
+    }
 }
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
+    <link rel="stylesheet" href="/css/admin/admin.css">
     <title>관리자 페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script th:src="@{/js/admin/admin.js}"></script>
@@ -9,47 +10,59 @@
 <main layout:fragment="content">
     <div class="container">
         <h1>관리자 페이지</h1>
-        <br>
-        <table class="table">
-            <tr>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>전화번호</th>
-                <th>가입일자</th>
-                <th>로그인 락</th>
-                <th>관리자 여부</th>
-                <th>회원삭제</th>
-
-            </tr>
-            <tr th:each="users : ${users}">
-                <td th:text="${users.userId}"></td>
-                <td th:text="${users.userName}"></td>
-                <td th:text="${users.email}"></td>
-                <td th:text="${users.contact}"></td>
-                <td th:text="${users.regDate}"></td>
-                <td>
-                    <button th:text="${users.loginLock ? 'UNLOCK' : 'LOCK'}"
+        <div class="card">
+            <div class="card-content">
+                <div class="card-item-short"><strong>아이디</strong></div>
+                <div class="card-item-short"><strong>이름</strong></div>
+                <div class="card-item"><strong>이메일</strong></div>
+                <div class="card-item"><strong>연락처</strong></div>
+                <div class="card-item"><strong>가입일</strong></div>
+                <div class="card-item center"><strong>로그인 락</strong></div>
+                <div class="card-item center"><strong>관리자 여부</strong></div>
+                <div class="card-item center"><strong>회원 탈퇴</strong></div>
+                <div class="button-group-1">
+                    <button id="bulkDeleteButton" onclick="deleteSelected()">일괄</button>
+                </div>
+            </div>
+        </div>
+        <div th:each="users : ${users}" class="card">
+            <div class="card-content">
+                <div class="card-item-short" th:text="${users.userId}"></div>
+                <div class="card-item-short" th:text="${users.userName}"></div>
+                <div class="card-item" th:text="${users.email}"></div>
+                <div class="card-item" th:text="${users.contact}"></div>
+                <div class="card-item" th:text="${users.regDateFormatted}"></div>
+                <div class="card-item center">
+                    <button th:text="${users.loginLock ? '잠김' : '해제'}"
                             th:attr="onclick=|toggleLoginLock('${users.userId}', ${users.loginLock})|">
                     </button>
-                </td>
-                <td>
+                </div>
+                <div class="card-item center">
                     <button th:text="${users.authorities == 'ROLE_ADMIN' ? '관리자' : '사용자'}"
                             th:attr="onclick=|toggleAdmin('${users.userId}', '${users.authorities}')|">
                     </button>
-                </td>
-                <td>
+                </div>
+                <div class="card-item center">
                     <form th:action="@{/admin/delete}" method="post" style="display:inline;">
                         <input type="hidden" name="userId" th:value="${users.userId}">
-                        <button type="submit">Delete</button>
+                        <button type="submit">삭제</button>
                     </form>
-                </td>
-            </tr>
-        </table>
+                </div>
+                <div class="card-item checkbox">
+                    <input type="checkbox" class="delete-checkbox" name="select-user" th:value="${users.userId}">
+                </div>
+            </div>
+        </div>
         <div class="button-group">
-            <button onclick="location.href='/sample'">돌아가기</button>
+            <button onclick="history.back()">돌아가기</button>
         </div>
     </div>
 </main>
 </body>
 </html>
+
+
+
+
+
+

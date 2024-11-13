@@ -1,0 +1,97 @@
+.container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.card-content {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.card-item {
+    flex: 1 0 auto;
+    min-width: 150px;
+    max-width: 200px;
+    text-align: left;
+}
+
+.card-item-short {
+    flex: 1 0 auto;
+    min-width: 90px;
+    max-width: 90px;
+    text-align: left;
+}
+
+.card-item.center {
+    flex: 0 0 1; /* 기존 80px에서 1px으로 줄임 */
+    text-align: center;
+}
+
+/* 체크박스 위치 조정 */
+.card-item.checkbox {
+    flex: 0 0 30px;
+    /*text-align: center;*/
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: left; /* 가운데 정렬 */
+    margin-left: 10px; /* 오른쪽으로 이동 */
+}
+
+button {
+    padding: 7px 10px;
+    border: none;
+    border-radius: 3px;
+    color: #B4D4FD;
+    background-color: #7EA5C6;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.button-group {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-group-1 {
+    text-align: center;
+}
+
+.button-group button {
+    margin: 0 1px;
+}
+
+form {
+    display: inline;
+}
+
+.button-group button,
+form button {
+    text-align: center;
+    width: 70px; /* 기존 90px에서 70px으로 줄임 */
+    border-radius: 3px;
+    color: #7EA5C6;
+    background-color: #B4D4FD;
+    border: 1px solid #7EA5C6;
+}
+
+.button-group button:hover,
+form button:hover {
+    color: #B4D4FD;
+    background-color: #FFB6C1;
+    border: 1px solid #FFB6C1;
+}

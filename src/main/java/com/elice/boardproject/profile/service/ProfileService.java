@@ -17,10 +17,12 @@ public class ProfileService {
     private final UsersMapper usersMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // MY 회원 정보 조회
     public Profile getProfileByUserId(String userId) {
         return profileMapper.findProfileByUserId(userId);
     }
 
+    // MY 회원 정보 수정
     @Transactional
     public void updateProfile(Profile profile) {
 
@@ -52,6 +54,7 @@ public class ProfileService {
 
     }
 
+    // MY 회원 탈퇴
     @Transactional
     public void deleteProfileByUserId(String userId) {
         profileMapper.deleteProfileByUserId(userId);

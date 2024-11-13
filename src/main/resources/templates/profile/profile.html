@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="">
 <head>
+  <link rel="stylesheet" href="/css/profile/profile.css">
   <title>회원정보 페이지</title>
 </head>
 <body>
@@ -24,11 +25,9 @@
     </table>
     <div class="button-group">
       <button onclick="location.href='/profile/edit'">수정</button>
-      <button onclick="location.href='/board/list'">취소</button>
-
-      <!--임시로 샘플화면으로 보내놈. 실 로그인 사용자 데이터 삭제와 동시에 로그인 화면으로 넘기기-->
+      <button onclick="history.back()">취소</button>
       <form th:action="@{/profile/delete}" method="post" style="display:inline;">
-        <button type="submit">회원 탈퇴</button>
+        <button type="submit">탈퇴</button>
       </form>
     </div>
   </div>

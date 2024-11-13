@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" href="/css/board/list.css">
+    <title>홈 페이지</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <div class="tableContainer">
+            <div th:each="chunk : ${boards}" class="tableColumn">
+                <table>
+                    <tr th:each="board : ${chunk}">
+                        <!-- 게시판 리스트 -->
+                        <td class="firstColumn">
+                            <a th:href="'/post/list/'+${board.boardId}" th:text="${board.boardTitle}"></a>
+                        </td>
+                        <!-- 게시판 수정 -->
+                        <td sec:authorize="hasRole('ROLE_ADMIN')">
+                            <form th:action="@{/board/edit/{boardId}(boardId=${board.boardId})}" method="get">
+                                <button type="submit" class="editBtn"><i class="bi bi-pencil"></i></button>
+                            </form>
+                        </td>
+                        <!-- 게시판 삭제 -->
+                        <td sec:authorize="hasRole('ROLE_ADMIN')">
+                            <form th:action="@{/board/{boardId}(boardId=${board.boardId})}" th:method="delete">
+                                <button type="submit" class="deleteBtn"><i class="bi bi-eraser"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div  sec:authorize="hasRole('ROLE_ADMIN')" class="btnSection">
+            <button type="button" class="registerBtn" onclick="location.href='/board/register'">게시판 등록</button>
+        </div>
+    </div>
+</main>
+</body>
+</html>

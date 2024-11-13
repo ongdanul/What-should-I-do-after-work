@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+  <title>회원활동정보</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div>
+    <ul>
+      <li>
+        <a href="/activity">작성한 게시물</a>
+      </li>
+      <li>
+        <a href="/activity/bookmark">즐겨찾기한 게시물</a>
+      </li>
+      <li>
+        <a href="/activity/follow">팔로우한 유저 게시물</a>
+      </li>
+      <li>
+        <a href="/activity/follower">팔로워</a>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <h1>작성한 게시물</h1>
+    <br>
+    <table class="table">
+      <tr>
+        <th>No</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>조회</th>
+      </tr>
+      <tr th:each="post : ${posts}">
+        <td th:text="${post.postId}"></td>
+        <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
+        <td th:text="${post.regDate}"></td>
+        <td th:text="${post.viewCount}"></td>
+      </tr>
+    </table>
+  </div>
+  <!-- 페이지 버튼 -->
+  <div>
+    <a th:href="@{/activity(page=${page - 1}, pageSize=10)}" th:if="${page > 1}">이전</a>
+
+    <span>Page <span th:text="${page}">1</span></span>
+
+    <a th:href="@{/activity(page=${page + 1}, pageSize=10)}">다음</a>
+  </div>
+</main>
+</body>
+</html>

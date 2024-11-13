@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.profile.mapper.ProfileMapper">
+
+    <!--MY 회원 정보 조회-->
+    <select id="findProfileByUserId" resultType="com.elice.boardproject.profile.entity.Profile">
+        SELECT user_id, user_name, contact, email
+        FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--MY 회원 정보 수정-->
+    <update id="updateProfile">
+        UPDATE users
+        SET contact = #{contact},
+        email = #{email},
+        user_pw = #{userPw}
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="findPassword" resultType="String">
+        SELECT user_pw FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!--MY 회원 탈퇴-->
+    <delete id="deleteProfileByUserId">
+        DELETE
+        FROM users
+        WHERE user_id = #{userId}
+    </delete>
+</mapper>

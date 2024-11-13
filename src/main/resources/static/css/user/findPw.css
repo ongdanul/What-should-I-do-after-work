@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.findPwContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.findPwTitle {
+    font-size: 30px;
+}
+
+.findPwContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    display: block;
+}
+
+.btnSection {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.board.mapper.BoardMapper">
+
+    <!-- ResultMap -->
+    <resultMap id="Board" type="com.elice.boardproject.board.entity.BoardDto">
+        <result property="boardId" column="board_id" />
+        <result property="boardTitle" column="board_title" />
+    </resultMap>
+
+    <!-- board 목록 전체 조회 -->
+    <select id="findAll" resultMap="Board">
+        SELECT *
+        FROM board
+        WHERE 1=1
+    </select>
+
+    <!-- board 목록 단건 조회 -->
+    <select id="detail" resultMap="Board">
+        SELECT *
+        FROM board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <!-- board 등록 -->
+    <insert id="insert">
+        INSERT INTO board (board_title)
+        VALUES (#{boardTitle})
+    </insert>
+
+    <!-- board 수정 -->
+    <update id="update">
+        UPDATE board
+        <set>
+            <if test="boardTitle != null">
+                board_title = #{boardTitle},
+            </if>
+        </set>
+        WHERE board_id = #{boardId}
+    </update>
+
+    <!-- board 삭제 -->
+    <delete id="delete">
+        DELETE
+        FROM board
+        WHERE board_id = #{boardId}
+    </delete>
+</mapper>

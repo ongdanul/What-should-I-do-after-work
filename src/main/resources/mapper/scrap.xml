@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.scrap.mapper.ScrapMapper">
+
+    <!-- User ResultMap -->
+    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <!-- Post ResultMap -->
+    <resultMap id="Post" type="com.elice.boardproject.post.entity.PostDto">
+        <id property="postId" column="post_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="viewCount" column="view_count"/>
+
+    </resultMap>
+
+    <!-- Scrap resultMap -->
+    <resultMap id="Scrap" type="com.elice.boardproject.scrap.entity.ScrapDto">
+        <id property="scrapId" column="scrap_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="postId" column="post_id"/>
+
+        <association property="user" resultMap="User" column="user_id"/>
+        <association property="post" resultMap="Post" column="post_id"/>
+    </resultMap>
+
+    <!-- Scrap 유무 확인-->
+    <select id="detail" resultMap="Scrap">
+        SELECT *
+        FROM scrap A
+                 JOIN post B
+                      ON A.post_id = B.post_id
+                 JOIN users C
+                      ON A.user_id = C.user_id
+        WHERE A.user_id = #{userId}
+        AND A.post_id = #{postId}
+        LIMIT 1
+    </select>
+
+    <!-- Scrap 등록 -->
+    <insert id="insert">
+        INSERT INTO scrap (user_id, post_id)
+        VALUES (#{userId}, #{postId})
+    </insert>
+
+    <!-- Scrap 삭제 -->
+    <delete id="delete">
+        DELETE
+        FROM scrap
+        WHERE user_id = #{userId}
+          AND post_id = #{postId}
+    </delete>
+</mapper>

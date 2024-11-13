@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.post.mapper.PostMapper">
+
+    <!-- User ResultMap -->
+    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+
+    <!-- Post ResultMap -->
+    <resultMap id="Post" type="com.elice.boardproject.post.entity.PostDto">
+        <id property="postId" column="post_id"/>
+        <result property="boardId" column="board_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postContent" column="post_content"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="modDate" column="mod_date"/>
+        <result property="viewCount" column="view_count"/>
+
+        <association property="user" resultMap="User" column="user_id"/>
+    </resultMap>
+
+    <!-- Post 전체 목록 페이지 -->
+    <select id="findAll" resultMap="Post">
+        SELECT *
+        FROM post A
+        JOIN users B
+        ON A.user_id = B.user_id
+        WHERE A.board_id = #{boardId}
+        ORDER BY
+        <choose>
+            <when test="orderBy == 'reg_date'">
+                A.reg_date DESC
+            </when>
+            <when test="orderBy == 'view_count'">
+                A.view_count DESC
+            </when>
+            <otherwise>
+                A.reg_date DESC
+            </otherwise>
+        </choose>
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <!-- post 목록 필터 조회 -->
+    <select id="postFilter" resultMap="Post">
+        SELECT *
+        FROM post A
+        JOIN users B
+        ON A.user_id = B.user_id
+        WHERE A.board_id = #{boardId}
+        <if test="description != null and description != ''">
+            AND
+            <choose>
+                <when test="filter == 'post_title'">
+                    A.post_title LIKE CONCAT('%', #{description}, '%')
+                </when>
+                <when test="filter == 'post_content'">
+                    A.post_content LIKE CONCAT('%', #{description}, '%')
+                </when>
+            </choose>
+        </if>
+        ORDER BY A.reg_date DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <!-- post 목록 단건 조회 -->
+    <select id="detail" resultMap="Post">
+        SELECT *
+        FROM post A
+                 JOIN users B
+                      ON A.user_id = B.user_id
+        WHERE post_id = #{postId}
+    </select>
+
+    <!-- post 등록 -->
+    <insert id="insert">
+        INSERT INTO post (user_id, board_id, post_title, post_content)
+        VALUES (#{userId}, #{boardId}, #{postTitle}, #{postContent})
+    </insert>
+
+    <!-- post 수정 -->
+    <update id="update">
+        UPDATE post
+        <set>
+            <if test="postTitle != null">
+                post_title = #{postTitle},
+            </if>
+            <if test="postContent != null">
+                post_content = #{postContent},
+            </if>
+        </set>
+        WHERE post_id = #{postId}
+    </update>
+
+    <!-- post 삭제 -->
+    <delete id="delete">
+        DELETE
+        FROM post
+        WHERE post_id = #{postId}
+    </delete>
+
+    <!-- 조회수 업데이트 -->
+    <update id="updateViewCount">
+        UPDATE post
+        SET view_count = view_count + 1
+        WHERE post_id = #{postId}
+    </update>
+</mapper>

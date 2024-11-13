@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.comment.mapper.CommentMapper">
+    <!-- User ResultMap -->
+    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+    </resultMap>
+
+    <!-- Comment ResultMap -->
+    <resultMap id="Comment" type="com.elice.boardproject.comment.entity.CommentDto">
+        <id property="commentId" column="comment_id" />
+        <result property="postId" column="post_id" />
+        <result property="commentContent" column="comment_content" />
+        <result property="regDate" column="reg_date" />
+
+        <association property="user" resultMap="User" column="user_id"/>
+    </resultMap>
+
+    <!-- Comment 전체 목록 페이지 -->
+    <select id="findComment" resultMap="Comment">
+        SELECT *
+        FROM comment A
+        JOIN users B
+        ON A.user_id = B.user_id
+        WHERE A.post_id = #{postId}
+        ORDER BY A.reg_date ASC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <!-- Comment 단건 조회 -->
+    <select id="findCommentDetail" resultMap="Comment">
+        SELECT *
+        FROM comment A
+        JOIN users B
+        ON A.user_id = B.user_id
+        WHERE A.comment_id = #{commentId}
+    </select>
+
+    <!-- Comment 등록 -->
+    <insert id="insert">
+        INSERT INTO comment (user_id, post_id, comment_content)
+        VALUES (#{userId}, #{postId}, #{commentContent})
+    </insert>
+
+    <!-- Comment 수정 -->
+    <update id="update">
+        UPDATE comment
+        <set>
+            <if test="content != null">
+                comment_content = #{content},
+            </if>
+        </set>
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <!-- Comment 삭제 -->
+    <delete id="delete">
+        DELETE
+        FROM comment
+        WHERE comment_id = #{commentId}
+    </delete>
+</mapper>

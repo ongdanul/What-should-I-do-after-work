@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.follow.mapper.FollowMapper">
+
+    <resultMap id="User" type="com.elice.boardproject.user.entity.Users">
+        <id property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+    </resultMap>
+
+    <resultMap id="Post" type="com.elice.boardproject.post.entity.PostDto">
+        <id property="postId" column="post_id" />
+        <result property="boardId" column="board_id" />
+        <result property="postTitle" column="post_title" />
+        <result property="postContent" column="post_content" />
+        <result property="regDate" column="reg_date" />
+        <result property="modDate" column="mod_date" />
+        <result property="viewCount" column="view_count" />
+
+        <association property="user" resultMap="User" column="user_id"/>
+    </resultMap>
+
+    <select id="findFollow" resultMap="Post">
+        SELECT *
+        FROM post p
+                 JOIN follow f
+                      ON p.user_id = f.follower
+                 JOIN users u
+                      ON p.user_id = u.user_id
+        WHERE f.follow = #{userId}
+    </select>
+
+    <select id="findFollower" resultMap="User">
+        SELECT u.user_id, u.user_name
+        FROM post p
+                 JOIN follow f
+                      ON p.user_id = f.follow
+                 JOIN users u
+                      ON p.user_id = u.user_id
+        WHERE f.follower = #{userId}
+        GROUP BY u.user_id
+    </select>
+
+    <select id="checkFollow" resultType="int">
+        SELECT CASE WHEN EXISTS (
+                                SELECT 1
+                                FROM follow
+                                WHERE follow = #{myId}
+                                AND follower = #{userId}
+                                ) THEN 1
+                                ELSE 0
+                            END
+    </select>
+
+    <insert id="insert">
+        INSERT INTO follow (follow, follower)
+        VALUES (#{myId}, #{userId})
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM follow
+        WHERE follow = #{myId}
+        AND follower = #{userId}
+    </delete>
+</mapper>

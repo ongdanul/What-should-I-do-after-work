@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elice.boardproject.usersAuth.mapper.UsersAuthMapper">
+    <insert id="registerUserAuth">
+        insert into users_auth (user_id)
+        values (#{userId})
+    </insert>
+
+    <select id="findByUserId" resultType="com.elice.boardproject.usersAuth.entity.UsersAuth">
+        SELECT * FROM users_auth
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateUserRole">
+        UPDATE users_auth
+        SET authorities = #{newRole}
+        WHERE user_id = #{userId}
+    </update>
+</mapper>

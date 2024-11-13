@@ -6,10 +6,13 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface ProfileMapper {
+    // MY 회원 정보 조회
     Profile findProfileByUserId(String userId);
 
+    // MY 회언 정보 수정
     void updateProfile(Profile profile);
 
+    // MY 회원 탈퇴
     void deleteProfileByUserId(@Param("userId") String userId);
 }
 

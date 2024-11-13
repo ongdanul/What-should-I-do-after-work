@@ -38,4 +38,27 @@
                       ON p.user_id = u.user_id
         WHERE f.follower = #{userId}
     </select>
+
+    <select id="checkFollow" resultType="int">
+        SELECT CASE WHEN EXISTS (
+                                SELECT 1
+                                FROM follow
+                                WHERE follow = #{myId}
+                                AND follower = #{userId}
+                                ) THEN 1
+                                ELSE 0
+                            END
+    </select>
+
+    <insert id="insert">
+        INSERT INTO follow (follow, follower)
+        VALUES (#{myId}, #{userId})
+    </insert>
+
+    <delete id="delete">
+        DELETE
+        FROM follow
+        WHERE follow = #{myId}
+        AND follower = #{userId}
+    </delete>
 </mapper>

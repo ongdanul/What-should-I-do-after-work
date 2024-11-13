@@ -21,4 +21,10 @@ public class FollowService {
     public List<PostDto> findFollower(String userId) {
         return followMapper.findFollower(userId);
     }
+
+    public int checkFollow(String myId, String userId) { return followMapper.checkFollow(myId, userId); }
+
+    public int insert(String myId, String followId) { return followMapper.insert(myId, followId); }
+
+    public int delete(String myId, String followId) { return followMapper.delete(myId, followId); }
 }

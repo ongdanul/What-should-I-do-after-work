@@ -29,9 +29,8 @@ public class Admin {
     public String getRegDateFormatted() {
         if (regDate == null) return "";
         LocalDateTime localDateTime = LocalDateTime.ofInstant(regDate, ZoneId.systemDefault());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a h:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd a hh:mm");
         return localDateTime.format(formatter);
     }
-
 }
 

@@ -13,9 +13,12 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
-    @Autowired
     private AdminService adminService;
+
+    // 생성자를 통한 의존성 주입
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
     // 전체 회원 조회
     @GetMapping()
@@ -30,6 +33,15 @@ public class AdminController {
     public String deleteProfile(@RequestParam("userId") String userId) {
         adminService.deleteProfileByUserId(userId);
         return "redirect:/admin";
+    }
+
+    // 회원 선택 삭제
+    @PostMapping("/deleteSelected")
+    @ResponseBody
+    public String deleteSelected(@RequestBody Map<String, List<String>> request) {
+        List<String> userIds = request.get("userIds");
+        adminService.deleteProfilesByUserIds(userIds);
+        return "success";
     }
 
     // 관리자 권한 (부여/회수)

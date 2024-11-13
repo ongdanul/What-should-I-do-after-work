@@ -15,6 +15,15 @@
         WHERE user_id = #{userId}
     </delete>
 
+    <!--회원 선택 삭제-->
+    <delete id="deleteProfilesByUserIds">
+        DELETE
+        FROM users
+        WHERE user_id IN <foreach item="userId" collection="userIds" open="(" separator="," close=")">
+              #{userId}
+        </foreach>
+    </delete>
+
     <!--로그인 (잠금/잠금 해제)-->
     <update id="toggleLoginLock">
         UPDATE users

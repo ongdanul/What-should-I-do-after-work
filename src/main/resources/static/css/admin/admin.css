@@ -15,26 +15,45 @@
 
 .card-content {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: nowrap;
 }
+
 .card-item {
-    flex: 1;
+    flex: 1 0 auto;
     min-width: 150px;
     max-width: 200px;
     text-align: left;
 }
 
+.card-item-short {
+    flex: 1 0 auto;
+    min-width: 90px;
+    max-width: 90px;
+    text-align: left;
+}
+
 .card-item.center {
+    flex: 0 0 0px; /* 기존 80px에서 25px으로 줄임 */
     text-align: center;
 }
 
+/* 체크박스 위치 조정 */
+.card-item.checkbox {
+    flex: 0 0 30px;
+    /*text-align: center;*/
+    display: flex;
+    align-items: center; /* 세로 가운데 정렬 */
+    justify-content: left; /* 가운데 정렬 */
+    margin-left: 10px; /* 오른쪽으로 이동 */
+}
 
 button {
-    padding: 10px 15px;
+    padding: 7px 10px;
     border: none;
-    border-radius: 5px;
-    color:  #B4D4FD;
+    border-radius: 3px;
+    color: #B4D4FD;
     background-color: #7EA5C6;
     cursor: pointer;
 }
@@ -48,8 +67,12 @@ button:hover {
     margin-top: 20px;
 }
 
+.button-group-1 {
+    text-align: center;
+}
+
 .button-group button {
-    margin: 0 5px;
+    margin: 0 1px;
 }
 
 form {
@@ -59,7 +82,7 @@ form {
 .button-group button,
 form button {
     text-align: center;
-    width: 90px;
+    width: 70px; /* 기존 90px에서 70px으로 줄임 */
     border-radius: 3px;
     color: #7EA5C6;
     background-color: #B4D4FD;

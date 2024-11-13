@@ -12,21 +12,26 @@
         <h1>관리자 페이지</h1>
         <div class="card">
             <div class="card-content">
-                <div class="card-item"><strong>아이디</strong></div>
+                <div class="card-item-short"><strong>아이디</strong></div>
+                <div class="card-item-short"><strong>이름</strong></div>
                 <div class="card-item"><strong>이메일</strong></div>
-                <div class="card-item"><strong>전화번호</strong></div>
-                <div class="card-item"><strong>가입일자</strong></div>
+                <div class="card-item"><strong>연락처</strong></div>
+                <div class="card-item"><strong>가입일</strong></div>
                 <div class="card-item center"><strong>로그인 락</strong></div>
                 <div class="card-item center"><strong>관리자 여부</strong></div>
-                <div class="card-item center"><strong>삭제</strong></div>
+                <div class="card-item center"><strong>회원 탈퇴</strong></div>
+                <div class="button-group-1">
+                    <button id="bulkDeleteButton" onclick="deleteSelected()">일괄</button>
+                </div>
             </div>
         </div>
         <div th:each="users : ${users}" class="card">
             <div class="card-content">
-                <div class="card-item" th:text="${users.userId}"></div>
+                <div class="card-item-short" th:text="${users.userId}"></div>
+                <div class="card-item-short" th:text="${users.userName}"></div>
                 <div class="card-item" th:text="${users.email}"></div>
                 <div class="card-item" th:text="${users.contact}"></div>
-                <div class="card-item" th:text="${users.regDate}"></div>
+                <div class="card-item" th:text="${users.regDateFormatted}"></div>
                 <div class="card-item center">
                     <button th:text="${users.loginLock ? '잠김' : '해제'}"
                             th:attr="onclick=|toggleLoginLock('${users.userId}', ${users.loginLock})|">
@@ -43,15 +48,19 @@
                         <button type="submit">삭제</button>
                     </form>
                 </div>
+                <div class="card-item checkbox">
+                    <input type="checkbox" class="delete-checkbox" name="select-user" th:value="${users.userId}">
+                </div>
             </div>
         </div>
         <div class="button-group">
-            <button onclick="location.href='/sample'">돌아가기</button>
+            <button onclick="history.back()">돌아가기</button>
         </div>
     </div>
 </main>
 </body>
 </html>
+
 
 
 

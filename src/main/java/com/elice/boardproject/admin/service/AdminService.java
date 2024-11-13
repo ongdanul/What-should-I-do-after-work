@@ -37,6 +37,14 @@ public class AdminService {
         adminMapper.deleteProfileByUserId(userId);
     }
 
+    // 회원 선택 삭제
+    @Transactional
+    public void deleteProfilesByUserIds(List<String> userIds) {
+        for (String userId : userIds) {
+            adminMapper.deleteProfileByUserId(userId);
+        }
+    }
+
     // 관리자 권한 (부여/회수)
     @Transactional
     public void toggleAdmin(String userId, String newRole) {

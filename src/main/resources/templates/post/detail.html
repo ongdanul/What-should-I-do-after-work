@@ -9,6 +9,15 @@
     <table border="1">
         <tr>
             <td th:text="|작성자 : ${post.user.userName}|">default value</td>
+            <td>
+                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
+                    <button type="submit" class="button">즐겨찾기 등록</button>
+                </form>
+                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" class="button">즐겨찾기 삭제</button>
+                </form>
+            </td>
         </tr>
         <tr>
             <td th:text="|작성일시 : ${post.regDate}|">default value</td>
@@ -17,12 +26,6 @@
         </tr>
         <tr>
             <td th:text="|제목 : ${post.postTitle}|">default value</td>
-            <!-- 즐겨찾기 등록-->
-            <td>
-                <form th:action="@{/bookmark/{postId}(postId=${post.postId})}" th:method="post">
-                    <button type="submit" class="button">즐겨찾기 등록</button>
-                </form>
-            </td>
         </tr>
         <tr>
             <td th:text="|내용 : ${post.postContent}|">default value</td>
@@ -149,7 +152,6 @@
         });
 
     </script>
-
 </main>
 </body>
 </html>

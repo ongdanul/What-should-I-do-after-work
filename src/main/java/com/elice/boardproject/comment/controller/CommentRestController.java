@@ -26,9 +26,7 @@ public class CommentRestController {
     public ResponseEntity<List<CommentDto>> getComment(@PathVariable Long postId,
                                                     @RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10") int pageSize){
         List<CommentDto> comments =  commentService.findComment(postId, page, pageSize);
-        if(comments.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 

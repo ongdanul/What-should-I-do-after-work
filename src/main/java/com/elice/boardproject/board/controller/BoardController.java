@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/board")
@@ -22,7 +23,14 @@ public class BoardController {
     @GetMapping("/list")
     public String lists(Model model) {
         List<BoardDto> boardLists = boardService.findAll();
-        model.addAttribute("boards", boardLists);
+
+        List<List<BoardDto>> boardChunks = new ArrayList<>();
+        for (int i = 0; i < boardLists.size(); i += 10) {
+            int end = Math.min(i + 10, boardLists.size());
+            boardChunks.add(boardLists.subList(i, end));
+        }
+
+        model.addAttribute("boards", boardChunks);
 
         return "board/list";
     }

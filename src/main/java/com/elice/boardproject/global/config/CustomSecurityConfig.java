@@ -52,7 +52,7 @@ public class CustomSecurityConfig {
 
         //접근 권한 설정
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/css/**","/fonts/**", "/img/**", "/static/**").permitAll()
+                .requestMatchers("/css/**","/fonts/**", "/img/**", "/static/**", "/js/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/user/**", "/login/**", "/check/**", "/error/**").permitAll()
                 .requestMatchers("/").permitAll()

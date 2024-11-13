@@ -2,19 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
     <title>관리자 페이지</title>
-    <!--<script>
-        function toggleLoginLock(userId) {
-            var button = document.getElementById('lock-' + userId);
-            var newLockStatus = button.innerText === 'Yes' ? 'No' : 'Yes';
-            button.innerText = newLockStatus;
-
-            // Ajax 요청을 통해 서버에 상태 업데이트
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/profile/toggleLock', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('userId=' + userId + '&loginLock=' + (newLockStatus === 'Yes' ? 1 : 0));
-        }
-    </script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/js/admin/admin.js}"></script>
 </head>
 <body>
 <main layout:fragment="content">
@@ -39,12 +28,16 @@
                 <td th:text="${users.email}"></td>
                 <td th:text="${users.contact}"></td>
                 <td th:text="${users.regDate}"></td>
-                <td th:text="${users.loginLock ? 'Yes' : 'No'}"></td>
-                <!--<td>
-                    <button id="lock-${users.userId}" th:text="${users.loginLock ? 'Yes' : 'No'}" onclick="toggleLoginLock('${users.userId}')"></button>
-                </td>-->
-                <td th:text="미구현"></td>
-<!--                <td th:text="${users.isAdmin ? 'Yes' : 'No'}"></td>-->
+                <td>
+                    <button th:text="${users.loginLock ? 'UNLOCK' : 'LOCK'}"
+                            th:attr="onclick=|toggleLoginLock('${users.userId}', ${users.loginLock})|">
+                    </button>
+                </td>
+                <td>
+                    <button th:text="${users.authorities == 'ROLE_ADMIN' ? '관리자' : '사용자'}"
+                            th:attr="onclick=|toggleAdmin('${users.userId}', '${users.authorities}')|">
+                    </button>
+                </td>
                 <td>
                     <form th:action="@{/admin/delete}" method="post" style="display:inline;">
                         <input type="hidden" name="userId" th:value="${users.userId}">

@@ -8,24 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.util.List;
-/*
-@Controller
-@RequestMapping("/admin")
-public class AdminProfileController{
-
-    @GetMapping()
-    public String admin(Model model) {
-        return "profile/admin";
-    }
-}
-*/
-
-/*@GetMapping("/admin")
-    public String admin(Model model) {
-        List<AdminProfile> users = profileService.getAllProfiles();
-        model.addAttribute("users", users);
-        return "profile/admin";
-    }*/
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,19 +19,32 @@ public class AdminController {
 
     @GetMapping()
     public String admin(Model model) {
-        List<Admin> users = adminService.getAllProfiles();
+        List<Admin> users = adminService.getAllUsersWithAuth();
         model.addAttribute("users", users);
         return "admin/admin";
     }
 
-    /*@PostMapping("/delete")
+    @PostMapping("/delete")
     public String deleteProfile(@RequestParam("userId") String userId) {
-        profileService.deleteProfileByUserId(userId);
-        return "redirect:/profile/admin";
+        adminService.deleteProfileByUserId(userId);
+        return "redirect:/admin/admin";
     }
-*/
-    /*@PostMapping("/toggleLock")
-    public void toggleLoginLock(@RequestParam("userId") String userId, @RequestParam("loginLock") boolean loginLock) {
-        profileService.toggleLoginLock(userId, loginLock);
-    }*/
+
+    @PostMapping("/toggleAdmin")
+    @ResponseBody
+    public String toggleAdmin(@RequestBody Map<String, String> request) {
+        String userId = request.get("userId");
+        String newRole = request.get("newRole");
+        adminService.toggleAdmin(userId, newRole);
+        return "success";
+    }
+
+    @PostMapping("/toggleLoginLock")
+    @ResponseBody
+    public String toggleLoginLock(@RequestBody Map<String, String> request) {
+        String userId = request.get("userId");
+        boolean newLockStatus = Boolean.parseBoolean(request.get("newLockStatus"));
+        adminService.toggleLoginLock(userId, newLockStatus);
+        return "success";
+    }
 }

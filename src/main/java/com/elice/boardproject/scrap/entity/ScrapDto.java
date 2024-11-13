@@ -13,6 +13,7 @@ public class ScrapDto {
     private Long scrapId;
     private String userId;
     private Long postId;
+    private boolean exist;
 
     private PostDto post;
     private Users user;

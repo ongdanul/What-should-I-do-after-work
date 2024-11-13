@@ -97,19 +97,24 @@
             })
             .then(response => response.json())
             .then(data => {
-                const commentList = document.getElementById('commentList');
-                commentList.innerHTML = ''; // 기존 목록 초기화
-                data.forEach(comment => {
+                if(data.length === 0) {
                     const listItem = document.createElement('li');
-                    listItem.id = `comment-${comment.commentId}`;
-                    listItem.innerHTML = `
-                        <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
-                        <button onclick="editComment(${comment.commentId})">수정</button>
-                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
-                    `;
+                    listItem.innerHTML = `<span>등록된 댓글이 없습니다.</span>`;
                     commentList.appendChild(listItem);
-                    document.getElementById('commentContent').value = '';
-                });
+                } else {
+                    const commentList = document.getElementById('commentList');
+                    commentList.innerHTML = ''; // 기존 목록 초기화
+                    data.forEach(comment => {
+                        const listItem = document.createElement('li');
+                        listItem.id = `comment-${comment.commentId}`;
+                        listItem.innerHTML = `
+                            <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
+                            <button onclick="editComment(${comment.commentId})">수정</button>
+                            <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                        `;
+                        commentList.appendChild(listItem);
+                    });
+                }
             })
             .catch(error => console.error('Error:', error));
         }
@@ -151,6 +156,85 @@
         document.addEventListener('DOMContentLoaded', function() {
             loadComments();
         });
+
+        // 팔로우 체크
+        function loadFollow() {
+            fetch('/api/follow/[[ ${post.user.userId} ]]', {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data === 1) {
+                    document.getElementById("followButton").textContent = "팔로우 취소";
+                } else {
+                    document.getElementById("followButton").textContent = "팔로우";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function following() {
+            const userId = [[ ${post.user.userId} ]];
+
+            fetch('/api/follow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ follow: userId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data === 0) {
+                    document.getElementById("followButton").textContent = "팔로우";
+                } else if(data === 1){
+                    document.getElementById("followButton").textContent = "팔로우 취소";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        //즐겨찾기 버튼 업데이트 함수
+        function updateScrapBtn(isScrap) {
+            if (isScrap) {
+                $('#scrapButton i').removeClass('bi bi-bookmark').addClass('bi bi-bookmark-fill');
+            } else {
+                $('#scrapButton i').removeClass('bi bi-bookmark-fill').addClass('bi bi-bookmark');
+            }
+        }
+
+        // 디테일 페이지 진입 시 실행
+        $(document).ready(function() {
+            var postId = '[[${postId}]]';
+
+            // 즐겨찾기 상태
+            $.ajax({
+                url: `/bookmark/${postId}`,
+                type: 'GET',
+                success: function(response) {
+                    updateScrapBtn(response.exist);
+                },
+                error: function(error) {
+                    console.log('즐겨찾기 상태 확인 실패', error);
+                }
+            });
+        });
+
+        // 즐겨찾기 토글 함수
+        function toggleScrap() {
+            var postId = '[[${postId}]]';
+
+            $.ajax({
+                url: `/bookmark/${postId}`,
+                type: 'POST',
+                success: function(response) {
+                    updateScrapBtn(response === 1);
+                },
+                error: function(error) {
+                    console.log('즐겨찾기 토글 실패', error);
+                }
+            });
+        }
 
     </script>
 </main>

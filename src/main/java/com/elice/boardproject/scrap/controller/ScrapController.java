@@ -1,5 +1,6 @@
 package com.elice.boardproject.scrap.controller;
 
+import com.elice.boardproject.scrap.entity.ScrapDto;
 import com.elice.boardproject.scrap.service.ScrapService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @Slf4j
 @RequestMapping("/bookmark")
 @RestController
@@ -18,9 +17,9 @@ public class ScrapController {
     @Autowired
     private ScrapService scrapService;
 
-    // 즐겨찾기 등록/삭제
-    @PostMapping("/{postId}")
-    public ResponseEntity<?> insert(@PathVariable Long postId) {
+    // 즐겨찾기 상태
+    @GetMapping("/{postId}")
+    public ResponseEntity<ScrapDto> scrapStatus(@PathVariable("postId") Long postId) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
@@ -30,17 +29,17 @@ public class ScrapController {
             userId = principal.toString();
         }
 
-        int success = scrapService.insert(userId, postId);
+        ScrapDto findScrap = new ScrapDto();
+        findScrap.setPostId(postId);
+        findScrap.setUserId(userId);
+        findScrap.setExist(scrapService.isScrap(userId, postId));
 
-        if (success == 0) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(success, HttpStatus.CREATED);
+        return new ResponseEntity<>(findScrap, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{postId}")
-    public ResponseEntity<?> delete(@PathVariable Long postId) {
+    // 즐겨찾기 토글
+    @PostMapping("/{postId}")
+    public ResponseEntity<Integer> toggleScrap(@PathVariable("postId") Long postId) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
@@ -50,8 +49,14 @@ public class ScrapController {
             userId = principal.toString();
         }
 
-        scrapService.delete(userId, postId);
+        boolean isScrap = scrapService.isScrap(userId, postId);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (isScrap) {
+            scrapService.delete(userId, postId);
+            return new ResponseEntity<>(0, HttpStatus.NO_CONTENT);
+        } else {
+            scrapService.insert(userId, postId);
+            return new ResponseEntity<>(1, HttpStatus.CREATED);
+        }
     }
 }

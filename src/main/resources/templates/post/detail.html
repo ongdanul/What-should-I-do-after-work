@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
     <title>Post Detail</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--    <script th:src="@{/js/activity/scrap.js}"></script>-->
 </head>
 <body>
 <main layout:fragment="content">
@@ -10,13 +13,9 @@
         <tr>
             <td th:text="|작성자 : ${post.user.userName}|">default value</td>
             <td>
-                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
-                    <button type="submit" class="button">즐겨찾기 등록</button>
-                </form>
-                <form th:action="@{/bookmark/{postId}(postId=${postId})}" method="post">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" class="button">즐겨찾기 삭제</button>
-                </form>
+                <button id="scrapButton" onclick="toggleScrap()">
+                    <i class="bi bi-bookmark"></i>
+                </button>
                 <form th:action="@{/api/following}" th:method="post">
                     <button type="submit" class="button">팔로우</button>
                 </form>
@@ -158,6 +157,50 @@
             loadComments();
         });
 
+    </script>
+
+    <script>
+        //즐겨찾기 버튼 업데이트 함수
+        function updateScrapBtn(isScrap) {
+            if (isScrap) {
+                $('#scrapButton i').removeClass('bi bi-bookmark').addClass('bi bi-bookmark-fill');
+            } else {
+                $('#scrapButton i').removeClass('bi bi-bookmark-fill').addClass('bi bi-bookmark');
+            }
+        }
+
+        // 디테일 페이지 진입 시 실행
+        $(document).ready(function() {
+            var postId = '[[${postId}]]';
+
+            // 즐겨찾기 상태
+            $.ajax({
+                url: `/bookmark/${postId}`,
+                type: 'GET',
+                success: function(response) {
+                    updateScrapBtn(response.exist);
+                },
+                error: function(error) {
+                    console.log('즐겨찾기 상태 확인 실패', error);
+                }
+            });
+        });
+
+        // 즐겨찾기 토글 함수
+        function toggleScrap() {
+            var postId = '[[${postId}]]';
+
+            $.ajax({
+                url: `/bookmark/${postId}`,
+                type: 'POST',
+                success: function(response) {
+                    updateScrapBtn(response === 1);
+                },
+                error: function(error) {
+                    console.log('즐겨찾기 토글 실패', error);
+                }
+            });
+        }
     </script>
 </main>
 </body>

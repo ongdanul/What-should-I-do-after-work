@@ -2,6 +2,7 @@ package com.elice.boardproject.follow.service;
 
 import com.elice.boardproject.follow.mapper.FollowMapper;
 import com.elice.boardproject.post.entity.PostDto;
+import com.elice.boardproject.user.entity.Users;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class FollowService {
         return followMapper.findFollow(userId);
     }
 
-    public List<PostDto> findFollower(String userId) {
+    public List<Users> findFollower(String userId) {
         return followMapper.findFollower(userId);
     }
 

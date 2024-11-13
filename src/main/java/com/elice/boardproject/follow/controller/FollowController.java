@@ -3,6 +3,7 @@ package com.elice.boardproject.follow.controller;
 
 import com.elice.boardproject.follow.service.FollowService;
 import com.elice.boardproject.post.entity.PostDto;
+import com.elice.boardproject.user.entity.Users;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -50,9 +51,9 @@ public class FollowController {
             userId = principal.toString();
         }
 
-        List<PostDto> posts = followService.findFollower(userId);
+        List<Users> users = followService.findFollower(userId);
 
-        model.addAttribute("posts", posts);
+        model.addAttribute("users", users);
 
         return "activity/follower";
     }

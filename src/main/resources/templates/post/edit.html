@@ -22,7 +22,9 @@
                     <button type="submit" class="button">확인</button>
                 </td>
                 <td>
-                    <a th:href="'/post/'+${post.postId}">취소</a>
+                    <button class="button">
+                        <a th:href="'/post/'+${post.postId}">취소</a>
+                    </button>
                 </td>
             </tr>
         </table>

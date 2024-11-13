@@ -19,7 +19,6 @@ public class PostService {
 
     // 게시글 전체 목록 조회 page
     public List<PostDto> findAll(Long boardId, int page, int pageSize, String orderBy) {
-        log.info(orderBy);
 
         int offset = (page - 1) * pageSize;
         Map<String, Object> params = new HashMap<>();

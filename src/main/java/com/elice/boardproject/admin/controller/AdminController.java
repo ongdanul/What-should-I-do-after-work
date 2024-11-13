@@ -17,6 +17,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    // 전체 회원 조회
     @GetMapping()
     public String admin(Model model) {
         List<Admin> users = adminService.getAllUsersWithAuth();
@@ -24,12 +25,14 @@ public class AdminController {
         return "admin/admin";
     }
 
+    // 회원 삭제
     @PostMapping("/delete")
     public String deleteProfile(@RequestParam("userId") String userId) {
         adminService.deleteProfileByUserId(userId);
         return "redirect:/admin/admin";
     }
 
+    // 관리자 권한 (부여/회수)
     @PostMapping("/toggleAdmin")
     @ResponseBody
     public String toggleAdmin(@RequestBody Map<String, String> request) {
@@ -39,6 +42,7 @@ public class AdminController {
         return "success";
     }
 
+    // 로그인 (잠금/잠금 해제)
     @PostMapping("/toggleLoginLock")
     @ResponseBody
     public String toggleLoginLock(@RequestBody Map<String, String> request) {

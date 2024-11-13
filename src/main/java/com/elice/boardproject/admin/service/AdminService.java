@@ -19,11 +19,7 @@ public class AdminService {
     @Autowired
     private final UsersAuthMapper usersAuthMapper;
 
-    @Transactional
-    public void deleteProfileByUserId(String userId) {
-        adminMapper.deleteProfileByUserId(userId);
-    }
-
+    // 전체 회원 조회
     public List<Admin> getAllUsersWithAuth() {
         List<Admin> admins = adminMapper.findAllProfiles();
         for (Admin admin : admins) {
@@ -35,11 +31,19 @@ public class AdminService {
         return admins;
     }
 
+    // 회원 삭제
+    @Transactional
+    public void deleteProfileByUserId(String userId) {
+        adminMapper.deleteProfileByUserId(userId);
+    }
+
+    // 관리자 권한 (부여/회수)
     @Transactional
     public void toggleAdmin(String userId, String newRole) {
         usersAuthMapper.updateUserRole(userId, newRole);
     }
 
+    // 로그인 (잠금/잠금 해제)
     @Transactional
     public void toggleLoginLock(String userId, boolean newLockStatus) {
         adminMapper.toggleLoginLock(userId, newLockStatus);

@@ -1,5 +1,7 @@
 package com.elice.boardproject.post.entity;
 
+import com.elice.boardproject.follow.entity.Follow;
+import com.elice.boardproject.scrap.entity.Scrap;
 import com.elice.boardproject.user.entity.Users;
 import lombok.*;
 
@@ -21,15 +23,6 @@ public class PostDto {
     private Instant modDate;
     private Long viewCount;
     private Users user;
-
-    public PostResponseDto toPostResponseDto() {
-        return PostResponseDto.builder()
-                .userId(userId)
-                .postTitle(postTitle)
-                .postContent(postContent)
-                .regDate(regDate)
-                .modDate(modDate)
-                .viewCount(viewCount)
-                .build();
-    }
+    private Scrap scrap;
+    private Follow follow;
 }

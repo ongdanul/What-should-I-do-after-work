@@ -35,7 +35,7 @@
 }
 
 .card-item.center {
-    flex: 0 0 0px; /* 기존 80px에서 25px으로 줄임 */
+    flex: 0 0 1; /* 기존 80px에서 1px으로 줄임 */
     text-align: center;
 }
 

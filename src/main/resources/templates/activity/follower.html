@@ -22,8 +22,8 @@
   </ul>
   <div>
     <table border="1">
-      <tr th:each="post : ${posts}">
-        <td th:text="${post.user.userName}">default value</td>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.userName}">default value</td>
       </tr>
     </table>
   </div>

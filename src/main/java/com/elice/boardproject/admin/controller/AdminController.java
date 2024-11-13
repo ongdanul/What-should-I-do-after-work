@@ -29,7 +29,7 @@ public class AdminController {
     @PostMapping("/delete")
     public String deleteProfile(@RequestParam("userId") String userId) {
         adminService.deleteProfileByUserId(userId);
-        return "redirect:/admin/admin";
+        return "redirect:/admin";
     }
 
     // 관리자 권한 (부여/회수)

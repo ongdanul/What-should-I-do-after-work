@@ -18,4 +18,11 @@ public interface AdminMapper {
 
     // 로그인 (잠금/잠금 해제)
     void toggleLoginLock(@Param("userId") String userId, @Param("newLockStatus") boolean newLockStatus);
+
+    // 필터 및 검색 조건에 따른 회원 조회
+    List<Admin> findFilteredProfiles(
+            @Param("role") String role,
+            @Param("loginLock") Boolean loginLock,
+            @Param("keyword") String keyword
+    );
 }

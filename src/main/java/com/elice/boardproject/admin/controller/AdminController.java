@@ -12,7 +12,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private AdminService adminService;
+    public AdminService adminService;
 
     // 생성자를 통한 의존성 주입
     public AdminController(AdminService adminService) {
@@ -23,15 +23,22 @@ public class AdminController {
     @GetMapping()
     public String admin(Model model) {
         List<Admin> users = adminService.getAllUsersWithAuth();
+        int totalUsers = users.size();
+        long totalAdmins = users.stream().filter(user -> "ROLE_ADMIN".equals(user.getAuthorities())).count();
+
         model.addAttribute("users", users);
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalAdmins", totalAdmins);
+
         return "admin/admin";
     }
 
     // 회원 삭제
     @PostMapping("/delete")
-    public String deleteProfile(@RequestParam("userId") String userId) {
+    @ResponseBody
+    public String deleteUser(@RequestParam("userId") String userId) {
         adminService.deleteProfileByUserId(userId);
-        return "redirect:/admin";
+        return "success";
     }
 
     // 회원 선택 삭제
@@ -61,5 +68,29 @@ public class AdminController {
         boolean newLockStatus = Boolean.parseBoolean(request.get("newLockStatus"));
         adminService.toggleLoginLock(userId, newLockStatus);
         return "success";
+    }
+
+    // 필터 및 검색 적용된 회원 조회
+    @GetMapping("/filtered")
+    public String filteredAdmin(
+            @RequestParam(value = "filter", required = false) String filter,
+            @RequestParam(value = "keyword", required = false) String keyword,
+            Model model) {
+
+        String role = null;
+        Boolean loginLock = null;
+
+        // filter 값에 따라 role과 loginLock 설정
+        if (filter != null) {
+            switch (filter) {
+                case "ROLE_ADMIN", "ROLE_USER" -> role = filter;  // ROLE_ADMIN 또는 ROLE_USER로 설정
+                case "LOCKED_TRUE" -> loginLock = true;  // 잠김
+                case "LOCKED_FALSE" -> loginLock = false;  // 해제
+            }
+        }
+
+        List<Admin> users = adminService.getFilteredUsers(role, loginLock, keyword);
+        model.addAttribute("users", users);
+        return "admin/admin";
     }
 }

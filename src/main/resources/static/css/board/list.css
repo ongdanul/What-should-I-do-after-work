@@ -61,7 +61,7 @@ table td {
 }
 
 .firstColumn a {
-    width: 100%
+    width: 100%;
     overflow: hidden;
     white-space: nowrap;
 }

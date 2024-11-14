@@ -61,8 +61,6 @@ public class AdminService {
     public List<Admin> getFilteredUsers(String role, Boolean loginLock, String keyword) {
         return adminMapper.findFilteredProfiles(role, loginLock, keyword);
     }
-
-
 }
 
 

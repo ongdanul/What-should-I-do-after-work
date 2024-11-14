@@ -23,12 +23,19 @@ public class AdminController {
     @GetMapping()
     public String admin(Model model) {
         List<Admin> users = adminService.getAllUsersWithAuth();
-        int totalUsers = users.size();
-        long totalAdmins = users.stream().filter(user -> "ROLE_ADMIN".equals(user.getAuthorities())).count();
+        int totalUsers = (int) users.stream()
+                .filter(user -> "ROLE_USER".equals(user.getAuthorities()))
+                .count();
+        long totalAdmins = users.stream()
+                .filter(user -> "ROLE_ADMIN".equals(user.getAuthorities()))
+                .count();
 
         model.addAttribute("users", users);
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("totalAdmins", totalAdmins);
+
+        System.out.println("####" + totalUsers);
+        System.out.println("####" + totalAdmins);
 
         return "admin/admin";
     }
@@ -91,6 +98,16 @@ public class AdminController {
 
         List<Admin> users = adminService.getFilteredUsers(role, loginLock, keyword);
         model.addAttribute("users", users);
+
+        List<Admin> countUsers = adminService.getAllUsersWithAuth();
+        int totalUsers = (int) countUsers.stream()
+                .filter(user -> "ROLE_USER".equals(user.getAuthorities()))
+                .count();
+        long totalAdmins = countUsers.stream()
+                .filter(user -> "ROLE_ADMIN".equals(user.getAuthorities()))
+                .count();
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalAdmins", totalAdmins);
         return "admin/admin";
     }
 }

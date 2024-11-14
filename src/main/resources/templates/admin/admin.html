@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="">
 <head>
     <link rel="stylesheet" href="/css/admin/admin.css">
-    <title>관리자 페이지</title>
+    <title>회원 관리 페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script th:src="@{/js/admin/admin.js}"></script>
 </head>
 <body>
 <main layout:fragment="content">
     <div class="container">
-        <h1>관리자 페이지</h1>
+        <h1>회원 관리 페이지</h1>
         <div class="filter-container">
             <div class="panel">
                 <form th:action="@{/admin/filtered}" method="get">
@@ -17,71 +17,67 @@
                         <option value="">전체</option>
                         <option value="ROLE_ADMIN">관리자</option>
                         <option value="ROLE_USER">사용자</option>
-                        <option value="LOCKED_TRUE">잠김 상태</option>
-                        <option value="LOCKED_FALSE">해제 상태</option>
+                        <option value="LOCKED_TRUE">잠금</option>
+                        <option value="LOCKED_FALSE">해제</option>
                     </select>
                     <input type="text" name="keyword" class="formContent" placeholder="검색어">
                     <input type="submit" value="검색" class="searchBtn">
-                    <span>[ 일반유저 수: <span th:text="${totalUsers}-${totalAdmins}">0</span>명 ]</span>
-                    <span>[ 관리자 수: <span th:text="${totalAdmins}">0</span>명 ]</span>
                     <a th:href="'/admin'"><i class="bi bi-arrow-counterclockwise"></i></a>
+                    <span>[ 일반유저 수: <span th:text="${totalUsers}">0</span>명 ]</span>
+                    <span>[ 관리자 수: <span th:text="${totalAdmins}">0</span>명 ]</span>
                 </form>
             </div>
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="card-item id-name-email">
                     <div class="card-item id"><strong>아이디</strong></div>
                     <div class="card-item name"><strong>이름</strong></div>
                     <div class="card-item email"><strong>이메일</strong></div>
-                </div>
-                <div class="card-item contact-join">
                     <div class="card-item contact"><strong>연락처</strong></div>
                     <div class="card-item join-date"><strong>가입일</strong></div>
-                </div>
-                <div class="card-item status">
-                    <div class="card-item status"><strong>로그인 락</strong></div>
-                    <div class="card-item status"><strong>관리자여부</strong></div>
-                </div>
-                <div class="card-item actions">
-                    <div class="card-item actions"><strong>회원 탈퇴</strong></div>
-                    <div class="card-item actions">
-                        <button id="bulkDeleteButton" onclick="deleteSelected()"><strong>일괄</strong></button>
+                    <div class="card-item status">
+                        <strong>로그인 락</strong>
                     </div>
-                </div>
+                    <div class="card-item status">
+                        <strong>관리자여부</strong>
+                    </div>
+                    <div class="card-item status">
+                        <strong>회원 탈퇴</strong>
+                    </div>
+                    <div class="card-item status">
+                        <button id="bulkDeleteButton" onclick="deleteSelected()"><strong>선택삭제</strong></button>
+                    </div>
             </div>
         </div>
         <div th:each="users : ${users}" class="card">
             <div class="card-content">
-                <div class="card-item id-name-email">
                     <div class="card-item id" th:text="${users.userId}"></div>
                     <div class="card-item name" th:text="${users.userName}"></div>
                     <div class="card-item email" th:text="${users.email}"></div>
-                </div>
-                <div class="card-item contact-join">
                     <div class="card-item contact" th:text="${users.contact}"></div>
                     <div class="card-item join-date" th:text="${users.regDateFormatted}"></div>
-                </div>
-                <div class="card-item status">
-                    <button th:text="${users.loginLock ? '잠김' : '해제'}"
-                            th:style="${users.loginLock ? 'background-color: red;' : 'background-color: green;'}"
-                            th:attr="onclick=|toggleLoginLock('${users.userId}', ${users.loginLock})|">
-                    </button>
-                    <button th:text="${users.authorities == 'ROLE_ADMIN' ? '관리자' : '사용자'}"
-                            th:style="${users.authorities == 'ROLE_ADMIN' ? 'background-color: red;' : 'background-color: black;'}"
-                            th:attr="onclick=|toggleAdmin('${users.userId}', '${users.authorities}')|">
-                    </button>
-                </div>
-                <div class="card-item actions">
-                    <button th:attr="onclick=|deleteUser('${users.userId}')|">삭제</button>
-                    <input type="checkbox" class="delete-checkbox" name="select-user" th:value="${users.userId}">
-                </div>
+                    <div class="card-item status">
+                        <button th:text="${users.loginLock ? '잠김' : '해제'}"
+                                th:class="${users.loginLock ? 'locked' : 'unlocked'}"
+                                th:attr="onclick=|toggleLoginLock('${users.userId}', ${users.loginLock})|">
+                        </button>
+                    </div>
+                    <div class="card-item status">
+                        <button th:text="${users.authorities == 'ROLE_ADMIN' ? '관리자' : '사용자'}"
+                                th:class="${users.authorities == 'ROLE_ADMIN' ? 'admin' : 'user'}"
+                                th:attr="onclick=|toggleAdmin('${users.userId}', '${users.authorities}')|">
+                        </button>
+                    </div>
+                    <div class="card-item status">
+                        <button th:attr="onclick=|deleteUser('${users.userId}')|">삭제</button>
+                    </div>
+                    <div class="card-item status">
+                        <input type="checkbox" class="delete-checkbox" name="select-user" th:value="${users.userId}">
+                    </div>
             </div>
         </div>
         <!-- 최상단으로 이동 버튼 -->
-        <div class="button-group-go-up">
-            <button onclick="scrollToTop()">최상단으로 이동</button>
-        </div>
+        <button class="button-group-go-up" onclick="scrollToTop()">최상단으로 이동</button>
     </div>
 </main>
 </body>

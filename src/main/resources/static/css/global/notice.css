@@ -1,0 +1,20 @@
+.noticeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.accordion-button {
+    min-width: 800px;
+    width: 800px;
+}
+
+.accordion-item {
+    width: 800px;
+}
+
+.noticeTitle {
+    font-size: 45px;
+}

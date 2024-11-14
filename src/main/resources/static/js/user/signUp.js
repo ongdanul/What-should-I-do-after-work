@@ -38,7 +38,7 @@ function checkPasswordMatch() {
     const pw = document.getElementById('userPw').value;
     const confirmPw = document.getElementById('confirmPw').value;
     const feedback = document.getElementById('confirmPwFeedback');
-    showFeedback(feedback, pw === confirmPw ? '비밀번호 일치합니다.' : '비밀번호 불일치', pw === confirmPw);
+    showFeedback(feedback, pw === confirmPw ? '비밀번호가 일치합니다.' : '비밀번호 불일치', pw === confirmPw);
 }
 
 function formatContactInput() {

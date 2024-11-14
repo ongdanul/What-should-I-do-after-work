@@ -37,8 +37,6 @@
         FROM post A
                  JOIN users B
                       ON A.user_id = B.user_id
-                 JOIN scrap C
-                      ON A.user_id = C.user_id
         WHERE A.user_id = #{userId}
         ORDER BY A.reg_date DESC
         LIMIT #{pageSize} OFFSET #{offset}

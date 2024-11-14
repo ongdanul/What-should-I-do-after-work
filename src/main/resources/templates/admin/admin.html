@@ -22,6 +22,8 @@
                     </select>
                     <input type="text" name="keyword" class="formContent" placeholder="검색어">
                     <input type="submit" value="검색" class="searchBtn">
+                    <span>[ 일반유저 수: <span th:text="${totalUsers}-${totalAdmins}">0</span>명 ]</span>
+                    <span>[ 관리자 수: <span th:text="${totalAdmins}">0</span>명 ]</span>
                     <a th:href="'/admin'"><i class="bi bi-arrow-counterclockwise"></i></a>
                     <span>[ 일반유저 수: <span th:text="${totalUsers}">0</span>명 ]</span>
                     <span>[ 관리자 수: <span th:text="${totalAdmins}">0</span>명 ]</span>

@@ -1,4 +1,4 @@
-package com.elice.boardproject.home.controller;
+package com.elice.boardproject.global.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

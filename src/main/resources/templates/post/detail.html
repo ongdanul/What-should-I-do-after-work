@@ -2,99 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <link rel="stylesheet" href="/css/post/detail.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Post Detail</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <table border="1">
-        <tr>
-            <td th:text="|작성자 : ${post.user.userName}|">default value</td>
-            <td>
-                <button id="scrapButton" onclick="toggleScrap()">
-                    <i class="bi bi-bookmark"></i>
-                </button>
-                <button id="followButton" class="button" onclick="following()">팔로우</button>
-            </td>
-        </tr>
-        <tr>
-            <td th:text="|작성일시 : ${post.regDate}|">default value</td>
-            <td th:text="|조회수 : ${post.viewCount}|">default value</td>
-            <!--            <td th:text="|수정일시 : ${post.modDate}|">default value</td>-->
-        </tr>
-        <tr>
-            <td th:text="|제목 : ${post.postTitle}|">default value</td>
-        </tr>
-        <tr>
-            <td th:text="|내용 : ${post.postContent}|">default value</td>
-        </tr>
-        <tr>
-            <td>
-                <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">
-                    <button type="submit" class="button">삭제</button>
-                </form>
-            </td>
-            <td>
-                <button class="button">
-                    <a th:href="'/post/edit/'+${post.postId}">수정</a>
-                </button>
-            </td>
-            <td>
-                <button class="button">
-                    <a th:href="'/post/list/'+${post.boardId}">목록</a>
-                </button>
-            </td>
-
-        </tr>
-    </table>
-    <div id="commentSection">
-        <!-- 댓글 목록 -->
-        <ul id="commentList">
-            <!-- 댓글은 FETCH로 조회됩니다 -->
-        </ul>
-
-        <!-- 댓글 작성 폼 -->
+<!--    <div class="container">-->
+<!--        <table border="1" class="card">-->
+<!--            <tr>-->
+<!--                <td th:text="|작성자 : ${post.user.userName}|">default value</td>-->
+<!--                <td>-->
+<!--                    <button id="scrapButton" onclick="toggleScrap()">-->
+<!--                        <i class="bi bi-bookmark"></i>-->
+<!--                    </button>-->
+<!--                    <button id="followButton" class="button" onclick="following()">팔로우</button>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td th:text="|작성일시 : ${post.regDate}|">default value</td>-->
+<!--                <td th:text="|조회수 : ${post.viewCount}|">default value</td>-->
+<!--                &lt;!&ndash;            <td th:text="|수정일시 : ${post.modDate}|">default value</td>&ndash;&gt;-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td th:text="|제목 : ${post.postTitle}|">default value</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td th:text="|내용 : ${post.postContent}|">default value</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">-->
+<!--                        <button type="submit" class="button">삭제</button>-->
+<!--                    </form>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <button class="button">-->
+<!--                        <a th:href="'/post/edit/'+${post.postId}">수정</a>-->
+<!--                    </button>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <button class="button">-->
+<!--                        <a th:href="'/post/list/'+${post.boardId}">목록</a>-->
+<!--                    </button>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <div id="commentSection">-->
+<!--        &lt;!&ndash; 댓글 목록 &ndash;&gt;-->
+<!--        <ul id="commentList">-->
+<!--            &lt;!&ndash; 댓글은 FETCH로 조회됩니다 &ndash;&gt;-->
+<!--        </ul>-->
+<!--        &lt;!&ndash; 댓글 작성 폼 &ndash;&gt;-->
+<!--        <div>-->
+<!--            <input type="text" id="commentContent" placeholder="댓글을 입력하세요" required>-->
+<!--            <button onclick="addComment()">댓글 추가</button>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="container">
         <div>
-            <input type="text" id="commentContent" placeholder="댓글을 입력하세요">
-            <button onclick="addComment()">댓글 추가</button>
+            <div>
+                <div class="title">
+                    <div th:text="|제목 : ${post.postTitle}|">default value</div>
+                    <div th:text="|작성일시 : ${post.regDate}|">default value</div>
+                    <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">
+                        <button type="submit" class="button">삭제</button>
+                    </form>
+                    <button class="button">
+                        <a th:href="'/post/edit/'+${post.postId}">수정</a>
+                    </button>
+                    <button class="button_r" id="scrapButton" onclick="toggleScrap()">
+                        <i class="bi bi-bookmark"></i>
+                    </button>
+                </div>
+                <div class="content">
+                    <div th:text="|작성자 : ${post.user.userName}|">default value</div>
+                    <button id="followButton" class="button" onclick="following()">팔로우</button>
+                    <div class="view" th:text="|조회수 : ${post.viewCount}|">default value</div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <article>
+                <div th:text="${post.postContent}">default value</div>
+            </article>
+            <button class="button">
+                <a th:href="'/post/list/'+${post.boardId}">목록</a>
+            </button>
+        </div>
+        <div class="comment_container" id="commentSection">
+            <!-- 댓글 목록 -->
+            <ul id="commentList">
+                <!-- 댓글은 FETCH로 조회됩니다 -->
+            </ul>
+            <!-- 댓글 작성 폼 -->
+            <div>
+                <input type="text" id="commentContent" placeholder="댓글을 입력하세요" required>
+                <button onclick="addComment()">댓글 추가</button>
+            </div>
         </div>
     </div>
-
     <script th:inline="javascript">
         // 댓글 목록 조회
         function loadComments() {
             fetch('/api/comment/[[${post.postId}]]', {
 
                 method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                const commentList = document.getElementById('commentList');
-                commentList.innerHTML = ''; // 기존 목록 초기화
-                data.forEach(comment => {
-                    const listItem = document.createElement('li');
-                    listItem.id = `comment-${comment.commentId}`;
-                    listItem.innerHTML = `
-                        <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
-                        <button onclick="editComment(${comment.commentId})">수정</button>
-                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
-                    `;
-                    commentList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-        }
-
-        function addComment() {
-            const content = document.getElementById('commentContent').value;
-            const postId = [[ ${post.postId} ]];
-
-            fetch('/api/comment/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ commentContent: content, postId: postId})
             })
             .then(response => response.json())
             .then(data => {
@@ -110,12 +124,48 @@
                         listItem.id = `comment-${comment.commentId}`;
                         listItem.innerHTML = `
                             <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
-                            <button onclick="editComment(${comment.commentId})">수정</button>
-                            <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                            <button class="button_r" onclick="editComment(${comment.commentId})">수정</button>
+                            <button class="button_r" onclick="deleteComment(${comment.commentId})">삭제</button>
                         `;
                         commentList.appendChild(listItem);
+                        document.getElementById('commentContent').value = '';
                     });
                 }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function addComment() {
+            const content = document.getElementById('commentContent').value;
+
+            if (!content.trim()) {  // content가 비어 있거나 공백만 있을 경우
+                alert("댓글을 입력해주세요.");
+                return
+            }
+            const postId = [[ ${post.postId} ]];
+
+            fetch('/api/comment/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ commentContent: content, postId: postId})
+            })
+            .then(response => response.json())
+            .then(data => {
+                const commentList = document.getElementById('commentList');
+                commentList.innerHTML = ''; // 기존 목록 초기화
+                data.forEach(comment => {
+                    const listItem = document.createElement('li');
+                    listItem.id = `comment-${comment.commentId}`;
+                    listItem.innerHTML = `
+                        <span>${comment.user.userName}: ${comment.commentContent} 등록일시 : ${comment.regDate}</span>
+                        <button onclick="editComment(${comment.commentId})">수정</button>
+                        <button onclick="deleteComment(${comment.commentId})">삭제</button>
+                    `;
+                    commentList.appendChild(listItem);
+                    document.getElementById('commentContent').value = '';
+                });
             })
             .catch(error => console.error('Error:', error));
         }
@@ -149,6 +199,7 @@
             .then(() => {
                 const listItem = document.getElementById(`comment-${id}`);
                 listItem.remove();
+                loadComments();
             })
             .catch(error => console.error('Error:', error));
         }
@@ -156,6 +207,7 @@
         // 초기 로딩 시 댓글 목록 불러오기
         document.addEventListener('DOMContentLoaded', function() {
             loadComments();
+            loadFollow();
         });
 
         // 팔로우 체크
@@ -174,6 +226,7 @@
             .catch(error => console.error('Error:', error));
         }
 
+        // 팔로우 & 팔로우 취소
         function following() {
             const userId = [[ ${post.user.userId} ]];
 

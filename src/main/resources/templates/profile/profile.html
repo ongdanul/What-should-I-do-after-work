@@ -30,7 +30,7 @@
     <div class="button-group">
       <button onclick="location.href='/profile/edit'">수정</button>
       <button onclick="history.back()">취소</button>
-      <form th:action="@{/profile/delete}" method="post" style="display:inline;" onsubmit="return deleteUser(event);">
+      <form th:action="@{/profile/delete}" method="post" style="display:inline;" onsubmit="return deleteUser();">
         <button type="submit">탈퇴</button>
       </form>
     </div>

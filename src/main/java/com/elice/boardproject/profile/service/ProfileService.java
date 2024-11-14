@@ -47,11 +47,10 @@ public class ProfileService {
         profileMapper.updateProfile(profile);
     }
 
+    // 비밀번호 확인
     public boolean checkPassword(String userId, String inputPassword) {
-
         String storedPassword = profileMapper.findPassword(userId);
         return bCryptPasswordEncoder.matches(inputPassword, storedPassword);
-
     }
 
     // MY 회원 탈퇴

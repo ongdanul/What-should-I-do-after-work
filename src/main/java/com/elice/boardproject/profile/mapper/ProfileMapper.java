@@ -12,6 +12,7 @@ public interface ProfileMapper {
     // MY 회원 정보 수정
     void updateProfile(Profile profile);
 
+    // 비밀번호 찾기
     String findPassword(String userId);
 
     // MY 회원 탈퇴

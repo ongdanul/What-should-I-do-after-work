@@ -23,10 +23,15 @@ public class AdminController {
     @GetMapping()
     public String admin(Model model) {
         List<Admin> users = adminService.getAllUsersWithAuth();
-        int totalUsers = users.size();
-        long totalAdmins = users.stream().filter(user -> "ROLE_ADMIN".equals(user.getAuthorities())).count();
-
         model.addAttribute("users", users);
+
+        // 전체 사용자수, 관리자수 조회
+        int totalUsers = (int) users.stream()
+                .filter(user -> "ROLE_USER".equals(user.getAuthorities()))
+                .count();
+        long totalAdmins = users.stream()
+                .filter(user -> "ROLE_ADMIN".equals(user.getAuthorities()))
+                .count();
         model.addAttribute("totalUsers", totalUsers);
         model.addAttribute("totalAdmins", totalAdmins);
 
@@ -38,6 +43,7 @@ public class AdminController {
     @ResponseBody
     public String deleteUser(@RequestParam("userId") String userId) {
         adminService.deleteProfileByUserId(userId);
+
         return "success";
     }
 
@@ -47,6 +53,7 @@ public class AdminController {
     public String deleteSelected(@RequestBody Map<String, List<String>> request) {
         List<String> userIds = request.get("userIds");
         adminService.deleteProfilesByUserIds(userIds);
+
         return "success";
     }
 
@@ -57,16 +64,18 @@ public class AdminController {
         String userId = request.get("userId");
         String newRole = request.get("newRole");
         adminService.toggleAdmin(userId, newRole);
+
         return "success";
     }
 
-    // 로그인 (잠금/잠금 해제)
+    // 로그인 (잠금/해제)
     @PostMapping("/toggleLoginLock")
     @ResponseBody
     public String toggleLoginLock(@RequestBody Map<String, String> request) {
         String userId = request.get("userId");
         boolean newLockStatus = Boolean.parseBoolean(request.get("newLockStatus"));
         adminService.toggleLoginLock(userId, newLockStatus);
+
         return "success";
     }
 
@@ -91,6 +100,20 @@ public class AdminController {
 
         List<Admin> users = adminService.getFilteredUsers(role, loginLock, keyword);
         model.addAttribute("users", users);
+
+        // 필터 호출 시, 전체 사용자수, 관리자수 조회
+        List<Admin> countUsers = adminService.getAllUsersWithAuth();
+
+        int totalUsers = (int) countUsers.stream()
+                .filter(user -> "ROLE_USER".equals(user.getAuthorities()))
+                .count();
+        long totalAdmins = countUsers.stream()
+                .filter(user -> "ROLE_ADMIN".equals(user.getAuthorities()))
+                .count();
+
+        model.addAttribute("totalUsers", totalUsers);
+        model.addAttribute("totalAdmins", totalAdmins);
+
         return "admin/admin";
     }
 }

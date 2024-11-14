@@ -1,108 +1,162 @@
 /* 전체 컨테이너 스타일 */
 .container {
-    width: 100%;  /* 화면 전체 너비 */
-    padding: 20px;  /* 내부 여백 */
-    box-sizing: border-box;  /* padding과 border를 width에 포함 */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 검색 폼 스타일 */
+.searchForm, .filter-container {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
+
+/* 선택 필터 스타일 */
+.formSelect {
+    width: 120px;
+    height: 30px;
+    padding: 4px;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #BCC0C0;
+    outline: none;
+}
+
+.formContent {
+    width: 300px;
+    height: 30px;
+    padding: 4px;
+    border: 1px solid #BCC0C0;
+    outline: none;
+}
+
+.searchBtn {
+    width: 60px;
+    height: 30px;
+    border-radius: 0 8px 8px 0;
+    border: 1px solid #BCC0C0;
+    color: #000;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.searchBtn:hover {
+    background-color: #B4D4FD;
 }
 
 /* 카드 디자인 */
 .card {
-    background-color: #f9f9f9;  /* 배경색 */
-    border: 1px solid #ccc;  /* 테두리 */
-    border-radius: 10px;  /* 둥근 모서리 */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* 그림자 */
-    margin-bottom: 20px;  /* 카드 간격 */
-    padding: 20px;  /* 내부 여백 */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 7px;
+    margin-top : 3px;
+    padding: 20px;
 }
 
-/* 카드 내부 콘텐츠 배치 */
+/* 카드 콘텐츠 가로로 배치 */
 .card-content {
-    display: flex;  /* 플렉스 레이아웃 */
-    flex-wrap: wrap;  /* 넘칠 경우 줄바꿈 */
-    gap: 10px;  /* 간격 */
-    align-items: center;  /* 세로 중앙 정렬 */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
-/* 카드 항목 정렬 */
-.card-item {
-    display: flex;  /* 플렉스 레이아웃 */
-    align-items: center;  /* 세로 중앙 정렬 */
-    justify-content: center;  /* 가로 중앙 정렬 */
-}
+.card-item.id { width: 100px; text-align: left; }
+.card-item.name { width: 85px; text-align: left;}
+.card-item.email { width: 250px; text-align: left;}
 
-/* ID, 이름, 이메일 항목의 크기 설정 */
-.card-item.id-name-email {
-    flex: 1 1 auto;  /* 공간 비율 설정 */
-}
+/* 연락처, 가입일  */
+.card-item.contact { width: 130px; text-align: left; }
+.card-item.join-date { width: 165px; text-align: left; }
+.card-item.status { width: 80px; text-align: center; }
 
-/* ID, 이름, 이메일 항목 스타일 */
-.card-item.id,
-.card-item.name,
-.card-item.email {
-    width: 100px;  /* 너비 */
-    text-align: left;  /* 왼쪽 정렬 */
-    margin-right: 20px;  /* 간격 */
-}
-
-/* 연락처, 가입일, 상태 항목 정렬 */
-.card-item.contact-join,
-.card-item.status {
-    width: max-content;  /* 내용에 맞게 크기 설정 */
-    display: flex;  /* 플렉스 레이아웃 */
-    gap: 30px;  /* 간격 */
-    justify-content: flex-end;  /* 오른쪽 정렬 */
-}
-
-/* 연락처, 가입일, 로그인 잠금 등 항목의 최소 너비 설정 */
-.card-item.contact,
-.card-item.join-date,
-.card-item.login-lock,
-.card-item.admin-status,
-.card-item.delete,
-.card-item.deleteSelected {
-    min-width: 120px;  /* 최소 너비 */
-    text-align: right;  /* 오른쪽 정렬 */
-}
-
-/* 액션 버튼 스타일 */
-.card-item.actions {
-    flex: 0 1 auto;  /* 자동 크기 조절 */
-    justify-content: flex-end;  /* 오른쪽 정렬 */
-    display: flex;  /* 플렉스 레이아웃 */
-    gap: 10px;  /* 간격 */
-}
-
-/* 버튼 기본 스타일 */
-button {
-    padding: 7px 10px;  /* 여백 */
-    border: none;  /* 테두리 없음 */
-    border-radius: 3px;  /* 둥근 모서리 */
-    color: #ffffff;  /* 흰색 텍스트 */
-    background-color: #ff4d4d;  /* 빨간 배경 */
-    cursor: pointer;  /* 손 모양 커서 */
-}
-
-/* 버튼 마우스 오버 시 색상 변경 */
+/* 버튼 호버 시 색상 변경 */
 button:hover {
-    background-color: #e60000;  /* 진한 빨간 배경 */
+    background-color: #e8544f;
 }
 
 /* 체크박스 스타일 */
 input[type="checkbox"] {
-    width: 70px;  /* 크기 설정 */
-    height: 40px;  /* 높이 설정 */
-    cursor: pointer;  /* 손 모양 커서 */
+    width: 70px;
+    height: 32px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 2px;
 }
 
-/* 체크박스 선택 시 색상 변경 */
 input[type="checkbox"]:checked {
-    background-color: #007bff;  /* 파란 배경 */
-    border-color: #007bff;  /* 파란 테두리 */
+    background-color: #ff847a;
+    border-color: #ff847a;
 }
 
-/* 체크박스 포커스 시 테두리 제거 */
 input[type="checkbox"]:focus {
-    outline: none;  /* 테두리 제거 */
+    outline: none;
+}
+
+/* 기본 버튼 스타일 */
+.card-item button {
+    padding: 5px 17px;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* 버튼 기본 스타일 */
+button {
+    border: 3px solid #e8544f;
+    padding: 0 10px;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #ff847a;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* 잠김/해제 상태 버튼 색상 */
+.card-item button.locked { background-color: #ffb7ad; color: #dc4a46; font-weight: bold; border: 3px solid #ff847a;}
+.card-item button.unlocked { background-color: #bdecb6; color: #3d493b; font-weight: bold; border: 3px solid #93c08c;}
+
+/* 관리자/사용자 상태 버튼 색상 */
+.card-item button.admin { background-color: #ffb7ad; color: #dc4a46; font-weight: bold; border: 3px solid #ff847a;}
+.card-item button.user { background-color: #bcc2c8; color: #3c3c3d; font-weight: bold; border: 3px solid #b0b0b0;}
+
+/* 버튼 호버 시 색상 변경 */
+.card-item button:hover {
+    opacity: 0.8;
+}
+
+/* 상태 버튼 호버 시 색상 */
+.card-item button.locked:hover { background-color: #ff847a; }
+.card-item button.unlocked:hover { background-color: #93c08c; }
+.card-item button.admin:hover { background-color: #ff847a; }
+.card-item button.user:hover { background-color: #b0b0b0; }
+
+.button-group-go-up {
+    position: fixed;
+    bottom: 20px; /* 화면 아래에서 20px 떨어짐 */
+    right: 20px;  /* 화면 오른쪽에서 300px 떨어짐 */
+    padding: 10px 15px;
+    background-color: #7EA5C6;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 약간의 그림자 효과 */
+    z-index: 1000; /* 다른 요소들보다 위에 위치하도록 함 */
+}
+
+.button-group-go-up:hover {
+    background-color: #5A9FCF; /* 호버 시 색상 변경 */
 }
 
 

@@ -45,4 +45,10 @@
         FROM board
         WHERE board_id = #{boardId}
     </delete>
+
+    <select id="findBoardTitle" resultType="String">
+        SELECT board_title
+        FROM board
+        WHERE board_id = #{boardId}
+    </select>
 </mapper>

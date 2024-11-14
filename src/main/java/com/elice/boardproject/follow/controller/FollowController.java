@@ -36,6 +36,7 @@ public class FollowController {
         List<PostDto> posts = followService.findFollow(userId);
 
         model.addAttribute("posts", posts);
+        model.addAttribute("activeMenu", "follow");
 
         return "activity/follow";
     }
@@ -54,6 +55,7 @@ public class FollowController {
         List<Users> users = followService.findFollower(userId);
 
         model.addAttribute("users", users);
+        model.addAttribute("activeMenu", "follower");
 
         return "activity/follower";
     }

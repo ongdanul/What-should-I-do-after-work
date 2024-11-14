@@ -36,6 +36,7 @@ public class ActivityController {
         model.addAttribute("posts", posts);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
+        model.addAttribute("activeMenu", "posts");
 
         return "activity/posts";
     }
@@ -57,6 +58,7 @@ public class ActivityController {
         model.addAttribute("scraps", scraps);
         model.addAttribute("page", page);
         model.addAttribute("pageSize", pageSize);
+        model.addAttribute("activeMenu", "scraps");
 
         return "activity/bookmarks";
     }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <link rel="stylesheet" href="/css/global/notice.css">
+    <title>프로필 수정 페이지</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="noticeContainer">
+        <div>
+            <p class="noticeTitle">공지 사항</p>
+        </div>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        사이트 이용시 주의 사항
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        아래 항목에 해당하는 자료는 제재를 받을 수 있으며, 게시자는 활동에 제한을 받을 수 있습니다.<br>
+                        1) 음란물/혐오자료 등 부적절한 게시글<br>
+                        2) 타인의 자료를 무단으로 도용할 경우<br>
+                        3) 게시판의 성격에 맞지 않은 게시물<br>
+                        4) 타인에 대한 악성 비방글, 심한 욕설, 비하 발언, 격한 표현<br>
+                        5) 분란 야기, 갈등 조장, 정치 관련 게시글<br>
+                        6) 허위사실 유포
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                        문의
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        사이트 이용 시 불편한 점이나 문의사항은 아래 연락처로 연락바랍니다.<br>
+                        E-Mail : star6910@naver.com
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

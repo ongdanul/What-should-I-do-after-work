@@ -9,18 +9,26 @@
 <main layout:fragment="content">
     <div class="container">
         <form action="/post/list">
-            <div class="searchForm">
-                <!-- 정렬 -->
-                <a href="#" th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='reg_date')}">등록일</a>
-                <a href="#" th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='view_count')}">조회수</a>
-                <select name="filter" class="formSelect">
-                    <option value="post_title">제목</option>
-                    <option value="post_content">내용</option>
-                </select>
-                <input type="text" name="description" class="formContent">
-                <input type="submit" value="검색" class="searchBtn">
-                <a th:href="'/post/list/' + ${boardId}"><i class="bi bi-arrow-counterclockwise"></i></a>
+            <div class="top">
+                <div class="boardTitle">
+                    <p th:text="${boardTitle}"></p>
+                </div>
+                <div class="searchForm">
+                    <select name="filter" class="formSelect">
+                        <option value="post_title">제목</option>
+                        <option value="post_content">내용</option>
+                    </select>
+                    <input type="text" name="description" class="formContent">
+                    <input type="submit" value="검색" class="searchBtn">
+                </div>
+                <div class="filter">
+                    <a th:href="'/post/list/' + ${boardId}"><i class="bi bi-arrow-counterclockwise"></i></a>
+                    <!-- 정렬 -->
+                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='reg_date')}"><img class="filterNewest" th:src="@{/img/filterNewest.jpg}"></a>
+                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='view_count')}"><img class="filterPopular" th:src="@{/img/filterPopular.jpg}"></a>
+                </div>
             </div>
+
             <input type="hidden" th:name="boardId" th:value="${boardId}"/>
 
             <table class="card">

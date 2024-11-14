@@ -12,4 +12,9 @@ public class HomeController {
     public String home() {
         return "user/login";
     }
+
+    @GetMapping("/notice")
+    public String notice() {
+        return "global/notice";
+    }
 }

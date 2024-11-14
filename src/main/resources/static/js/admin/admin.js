@@ -34,6 +34,24 @@ function toggleLoginLock(userId, currentLockState) {
     });
 }
 
+function deleteUser(userId) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+        $.ajax({
+            url: '/admin/delete',
+            type: 'POST',
+            data: { userId: userId },
+            success: function(response) {
+                alert('삭제 성공');
+                location.reload();
+            },
+            error: function(error) {
+                alert('삭제 실패');
+                console.log(error);
+            }
+        });
+    }
+}
+
 function deleteSelected() {
     var selectedUsers = [];
     $("input[name='select-user']:checked").each(function() {
@@ -58,6 +76,11 @@ function deleteSelected() {
     } else {
         alert('삭제할 사용자를 선택하세요.');
     }
+}
+
+// 최상단으로 이동 함수
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 window.deleteSelected = deleteSelected;

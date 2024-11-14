@@ -1,97 +1,110 @@
+/* 전체 컨테이너 스타일 */
 .container {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+    width: 100%;  /* 화면 전체 너비 */
+    padding: 20px;  /* 내부 여백 */
+    box-sizing: border-box;  /* padding과 border를 width에 포함 */
 }
 
+/* 카드 디자인 */
 .card {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 20px;
+    background-color: #f9f9f9;  /* 배경색 */
+    border: 1px solid #ccc;  /* 테두리 */
+    border-radius: 10px;  /* 둥근 모서리 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* 그림자 */
+    margin-bottom: 20px;  /* 카드 간격 */
+    padding: 20px;  /* 내부 여백 */
 }
 
+/* 카드 내부 콘텐츠 배치 */
 .card-content {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    flex-wrap: nowrap;
+    display: flex;  /* 플렉스 레이아웃 */
+    flex-wrap: wrap;  /* 넘칠 경우 줄바꿈 */
+    gap: 10px;  /* 간격 */
+    align-items: center;  /* 세로 중앙 정렬 */
 }
 
+/* 카드 항목 정렬 */
 .card-item {
-    flex: 1 0 auto;
-    min-width: 150px;
-    max-width: 200px;
-    text-align: left;
+    display: flex;  /* 플렉스 레이아웃 */
+    align-items: center;  /* 세로 중앙 정렬 */
+    justify-content: center;  /* 가로 중앙 정렬 */
 }
 
-.card-item-short {
-    flex: 1 0 auto;
-    min-width: 90px;
-    max-width: 90px;
-    text-align: left;
+/* ID, 이름, 이메일 항목의 크기 설정 */
+.card-item.id-name-email {
+    flex: 1 1 auto;  /* 공간 비율 설정 */
 }
 
-.card-item.center {
-    flex: 0 0 1; /* 기존 80px에서 1px으로 줄임 */
-    text-align: center;
+/* ID, 이름, 이메일 항목 스타일 */
+.card-item.id,
+.card-item.name,
+.card-item.email {
+    width: 100px;  /* 너비 */
+    text-align: left;  /* 왼쪽 정렬 */
+    margin-right: 20px;  /* 간격 */
 }
 
-/* 체크박스 위치 조정 */
-.card-item.checkbox {
-    flex: 0 0 30px;
-    /*text-align: center;*/
-    display: flex;
-    align-items: center; /* 세로 가운데 정렬 */
-    justify-content: left; /* 가운데 정렬 */
-    margin-left: 10px; /* 오른쪽으로 이동 */
+/* 연락처, 가입일, 상태 항목 정렬 */
+.card-item.contact-join,
+.card-item.status {
+    width: max-content;  /* 내용에 맞게 크기 설정 */
+    display: flex;  /* 플렉스 레이아웃 */
+    gap: 30px;  /* 간격 */
+    justify-content: flex-end;  /* 오른쪽 정렬 */
 }
 
+/* 연락처, 가입일, 로그인 잠금 등 항목의 최소 너비 설정 */
+.card-item.contact,
+.card-item.join-date,
+.card-item.login-lock,
+.card-item.admin-status,
+.card-item.delete,
+.card-item.deleteSelected {
+    min-width: 120px;  /* 최소 너비 */
+    text-align: right;  /* 오른쪽 정렬 */
+}
+
+/* 액션 버튼 스타일 */
+.card-item.actions {
+    flex: 0 1 auto;  /* 자동 크기 조절 */
+    justify-content: flex-end;  /* 오른쪽 정렬 */
+    display: flex;  /* 플렉스 레이아웃 */
+    gap: 10px;  /* 간격 */
+}
+
+/* 버튼 기본 스타일 */
 button {
-    padding: 7px 10px;
-    border: none;
-    border-radius: 3px;
-    color: #B4D4FD;
-    background-color: #7EA5C6;
-    cursor: pointer;
+    padding: 7px 10px;  /* 여백 */
+    border: none;  /* 테두리 없음 */
+    border-radius: 3px;  /* 둥근 모서리 */
+    color: #ffffff;  /* 흰색 텍스트 */
+    background-color: #ff4d4d;  /* 빨간 배경 */
+    cursor: pointer;  /* 손 모양 커서 */
 }
 
+/* 버튼 마우스 오버 시 색상 변경 */
 button:hover {
-    background-color: #0056b3;
+    background-color: #e60000;  /* 진한 빨간 배경 */
 }
 
-.button-group {
-    text-align: center;
-    margin-top: 20px;
+/* 체크박스 스타일 */
+input[type="checkbox"] {
+    width: 70px;  /* 크기 설정 */
+    height: 40px;  /* 높이 설정 */
+    cursor: pointer;  /* 손 모양 커서 */
 }
 
-.button-group-1 {
-    text-align: center;
+/* 체크박스 선택 시 색상 변경 */
+input[type="checkbox"]:checked {
+    background-color: #007bff;  /* 파란 배경 */
+    border-color: #007bff;  /* 파란 테두리 */
 }
 
-.button-group button {
-    margin: 0 1px;
+/* 체크박스 포커스 시 테두리 제거 */
+input[type="checkbox"]:focus {
+    outline: none;  /* 테두리 제거 */
 }
 
-form {
-    display: inline;
-}
 
-.button-group button,
-form button {
-    text-align: center;
-    width: 70px; /* 기존 90px에서 70px으로 줄임 */
-    border-radius: 3px;
-    color: #7EA5C6;
-    background-color: #B4D4FD;
-    border: 1px solid #7EA5C6;
-}
 
-.button-group button:hover,
-form button:hover {
-    color: #B4D4FD;
-    background-color: #FFB6C1;
-    border: 1px solid #FFB6C1;
-}
+

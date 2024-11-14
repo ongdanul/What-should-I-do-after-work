@@ -9,7 +9,7 @@ public interface ProfileMapper {
     // MY 회원 정보 조회
     Profile findProfileByUserId(String userId);
 
-    // MY 회언 정보 수정
+    // MY 회원 정보 수정
     void updateProfile(Profile profile);
 
     String findPassword(String userId);

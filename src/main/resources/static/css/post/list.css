@@ -11,14 +11,34 @@ form {
     gap: 20px;
 }
 
+.top {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boardTitle {
+    width: 200px;
+    font-size: 20px;
+    margin-right: 10px;
+    text-align: end;
+}
+
+.boardTitle p{
+    margin: 0;
+}
+
 .searchForm{
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    max-width: 400px;
-    justify-content: center;
+    display: grid;
+    grid-auto-flow: column;
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
 }
 
 .formSelect {
@@ -32,7 +52,7 @@ form {
 }
 
 .formContent {
-    width: 300px;
+    width: 180px;
     height: 30px;
     padding: 4px;
     border-radius: 0;
@@ -58,12 +78,28 @@ form {
     border-left: none;
     color: #000;
     background-color: #FFFFFF;
-    margin-right: 10px;
 }
 
 .searchBtn:hover {
     color: #000;
     background-color: #B4D4FD;
+}
+
+.filter {
+    width: 200px;
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.bi-arrow-counterclockwise {
+    margin: 0 10px;
+}
+
+.filterPopular,
+.filterNewest {
+    width: 65px;
 }
 
 .card {
@@ -143,6 +179,7 @@ td {
 
 .paging {
     width: 100px;
+    min-width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;

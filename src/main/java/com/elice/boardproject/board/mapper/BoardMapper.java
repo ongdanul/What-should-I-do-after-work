@@ -25,4 +25,6 @@ public interface BoardMapper {
 
     // 삭제
     int delete(BoardDto board);
+
+    String findBoardTitle(Long boardId);
 }

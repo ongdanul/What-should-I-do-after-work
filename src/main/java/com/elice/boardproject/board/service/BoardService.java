@@ -65,4 +65,8 @@ public class BoardService {
             throw new RuntimeException("게시판 삭제에 실패했습니다.");
         }
     }
+
+    public String findBoardTitle(Long boardId) {
+        return boardMapper.findBoardTitle(boardId);
+    }
 }

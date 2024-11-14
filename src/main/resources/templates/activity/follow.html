@@ -45,6 +45,13 @@
                 <td><i class="bi bi-eye"></i><span th:text="${post.viewCount}"></span></td>
             </tr>
         </table>
+        <div class="paging">
+            <a th:href="@{/activity/follow(page=${page - 1}, pageSize=10)}" th:if="${page > 1}">이전</a>
+
+            <span><span th:text="${page}">1</span></span>
+
+            <a th:href="@{/activity/follow(page=${page + 1}, pageSize=10)}">다음</a>
+        </div>
     </div>
 </main>
 </body>

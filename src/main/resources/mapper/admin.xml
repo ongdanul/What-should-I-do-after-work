@@ -24,7 +24,7 @@
         </foreach>
     </delete>
 
-    <!--로그인 (잠금/잠금 해제)-->
+    <!--로그인 (잠금/해제)-->
     <update id="toggleLoginLock">
         UPDATE users
         SET login_lock = #{newLockStatus}

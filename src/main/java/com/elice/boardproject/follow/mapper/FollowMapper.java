@@ -5,12 +5,13 @@ import com.elice.boardproject.user.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface FollowMapper {
-    List<PostDto> findFollow(String userId);
+    List<PostDto> findFollow(Map<String, Object> params);
 
-    List<Users> findFollower(String userId);
+    List<Users> findFollower(Map<String, Object> params);
 
     int checkFollow(String myId, String userId);
 

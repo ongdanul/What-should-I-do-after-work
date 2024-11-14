@@ -27,6 +27,8 @@
                  JOIN users u
                       ON p.user_id = u.user_id
         WHERE f.follow = #{userId}
+        ORDER BY u.user_id DESC
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <select id="findFollower" resultMap="User">
@@ -37,6 +39,8 @@
         JOIN users u
           ON p.user_id = u.user_id
         WHERE f.follower = #{userId}
+        ORDER BY u.user_id DESC
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <select id="checkFollow" resultType="int">

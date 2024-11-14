@@ -51,7 +51,7 @@ public class AdminService {
         usersAuthMapper.updateUserRole(userId, newRole);
     }
 
-    // 로그인 (잠금/잠금 해제)
+    // 로그인 (잠금/해제)
     @Transactional
     public void toggleLoginLock(String userId, boolean newLockStatus) {
         adminMapper.toggleLoginLock(userId, newLockStatus);
@@ -61,8 +61,6 @@ public class AdminService {
     public List<Admin> getFilteredUsers(String role, Boolean loginLock, String keyword) {
         return adminMapper.findFilteredProfiles(role, loginLock, keyword);
     }
-
-
 }
 
 

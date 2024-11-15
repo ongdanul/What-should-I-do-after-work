@@ -11,9 +11,9 @@
 
 ## 팀원 소개
 
-|<img src="https://avatars.githubusercontent.com/u/156433565?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/183355547?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/100205358?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/" width="150" height="150"/>|
+|<img src="https://avatars.githubusercontent.com/u/156433565?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/183355547?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/100205358?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/106502150?v=4" width="150" height="150"/>|
 |:-:|:-:|:-:|:-:|
-|[@ongdanul](https://github.com/ongdanul)|[@rmlee95](https://github.com/rmlee95)|[@leejiminar](https://github.com/leejiminar)|[@gitId](https://github.com/gitId)|
+|[@ongdanul](https://github.com/ongdanul)|[@rmlee95](https://github.com/rmlee95)|[@leejiminar](https://github.com/leejiminar)|[@smoothyking](https://github.com/smoothyking)|
 
 ## Stacks
 ### Front End
@@ -57,7 +57,7 @@
 
 ## 3. 역할 분담
 
-| [@ongdanul](https://github.com/gitId) | [@rmlee95](https://github.com/rmlee95) | [@leejiminar](https://github.com/leejiminar) | [@gitId](https://github.com/gitId) |
+| [@ongdanul](https://github.com/gitId) | [@rmlee95](https://github.com/rmlee95) | [@leejiminar](https://github.com/leejiminar) | [@smoothyking](https://github.com/smoothyking) |
 |:-------------------------------------:|:----------------------------------:|:----------------------------------:|:----------------------------------:|
 |      팀 리더<br> 시큐리티       |               게시판              |               게시판               |            회원 정보 및 관리자             |
 

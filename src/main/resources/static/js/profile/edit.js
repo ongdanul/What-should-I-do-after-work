@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await axios.post('/check/password', { userId, pw });
-            showFeedback(feedback, response.data.valid ? '기존 비밀번호와 일치하지 않습니다.' : '비밀번호가 일치합니다.', !response.data.valid);
+            const isValid = response.data.valid === true;
+            showFeedback(feedback, isValid ? '비밀번호가 일치합니다.' : '기존 비밀번호와 일치하지 않습니다.', isValid);
         } catch (error) {
             showFeedback(feedback, '비밀번호 확인 중 오류가 발생했습니다.', false);
         }

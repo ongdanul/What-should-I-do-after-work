@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <link rel="stylesheet" href="/css/post/edit.css">
     <title>예시 페이지</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
             <input type="text" class="form-control" id="postTitle" name="postTitle" th:field="*{postTitle}"
                    required/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 box">
             <label for="postContent" class="form-label">내용</label>
             <textarea class="form-control" id="postContent" name="postContent" th:text="*{postContent}"
                       rows="5" required></textarea>

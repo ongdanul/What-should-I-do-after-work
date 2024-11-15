@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <link rel="stylesheet" href="/css/post/edit.css">
     <title>게시글 수정</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
             <input type="text" class="form-control" id="postTitle" name="postTitle" th:value="${post.postTitle}"
                    required/>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 box">
             <label for="postContent" class="form-label">내용</label>
             <textarea class="form-control" id="postContent" name="postContent" th:text="${post.postContent}"
                       rows="5" required></textarea>

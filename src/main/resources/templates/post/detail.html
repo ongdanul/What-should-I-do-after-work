@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 <head>
     <link rel="stylesheet" href="/css/post/detail.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Post Detail</title>
+    <title>게시글 상세</title>
 </head>
 <body>
 <main layout:fragment="content">
@@ -20,13 +21,13 @@
                 <div class="nameSpace">
                     <span class="username" th:text="|${post.user.userName} (${post.user.userId})|">default value</span>
                     <button id="followButton" class="btn followSize" onclick="following()"><i class="bi bi-person-check"></i></button>
-                    <div>
-                        <button type="button" class="btn"
-                                th:onclick="'location.href=\'/post/edit/' + ${post.postId} + '\''">
-                            <i class="bi bi-pencil"></i></button>
-                        <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">
-                            <button type="submit" class="btn"><i class="bi bi-eraser"></i></button>
-                        </form>
+                    <div sec:authorize="isAuthenticated()">
+                        <div th:if="${post.user.userId == authenticatedUserId}">
+                            <button type="button" class="btn"
+                                    th:onclick="'location.href=\'/post/edit/' + ${post.postId} + '\''">
+                                <i class="bi bi-pencil"></i></button>
+                            <button type="submit" onclick="confirmPostDelete()" class="btn"><i class="bi bi-eraser"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -58,101 +59,6 @@
             </div>
         </div>
     </div>
-<!--    <div class="container">-->
-<!--        <table border="1" class="card">-->
-<!--            <tr>-->
-<!--                <td th:text="|작성자 : ${post.user.userName}|">default value</td>-->
-<!--                <td>-->
-<!--                    <button id="scrapButton" onclick="toggleScrap()">-->
-<!--                        <i class="bi bi-bookmark"></i>-->
-<!--                    </button>-->
-<!--                    <button id="followButton" class="button" onclick="following()">팔로우</button>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="|작성일시 : ${post.regDate}|">default value</td>-->
-<!--                <td th:text="|조회수 : ${post.viewCount}|">default value</td>-->
-<!--                &lt;!&ndash;            <td th:text="|수정일시 : ${post.modDate}|">default value</td>&ndash;&gt;-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="|제목 : ${post.postTitle}|">default value</td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td th:text="|내용 : ${post.postContent}|">default value</td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">-->
-<!--                        <button type="submit" class="button">삭제</button>-->
-<!--                    </form>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <button class="button">-->
-<!--                        <a th:href="'/post/edit/'+${post.postId}">수정</a>-->
-<!--                    </button>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <button class="button">-->
-<!--                        <a th:href="'/post/list/'+${post.boardId}">목록</a>-->
-<!--                    </button>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </div>-->
-<!--    <div id="commentSection">-->
-<!--        &lt;!&ndash; 댓글 목록 &ndash;&gt;-->
-<!--        <ul id="commentList">-->
-<!--            &lt;!&ndash; 댓글은 FETCH로 조회됩니다 &ndash;&gt;-->
-<!--        </ul>-->
-<!--        &lt;!&ndash; 댓글 작성 폼 &ndash;&gt;-->
-<!--        <div>-->
-<!--            <input type="text" id="commentContent" placeholder="댓글을 입력하세요" required>-->
-<!--            <button onclick="addComment()">댓글 추가</button>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="container">-->
-<!--        <div>-->
-<!--            <div>-->
-<!--                <div class="title">-->
-<!--                    <div th:text="|제목 : ${post.postTitle}|">default value</div>-->
-<!--                    <div th:text="|작성일시 : ${post.regDate}|">default value</div>-->
-<!--                    <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="delete">-->
-<!--                        <button type="submit" class="button">삭제</button>-->
-<!--                    </form>-->
-<!--                    <button class="button">-->
-<!--                        <a th:href="'/post/edit/'+${post.postId}">수정</a>-->
-<!--                    </button>-->
-<!--                    <button class="button_r" id="scrapButton" onclick="toggleScrap()">-->
-<!--                        <i class="bi bi-bookmark"></i>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="content">-->
-<!--                    <div th:text="|작성자 : ${post.user.userName}|">default value</div>-->
-<!--                    <button id="followButton" class="button" onclick="following()">팔로우</button>-->
-<!--                    <div class="view" th:text="|조회수 : ${post.viewCount}|">default value</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <article>-->
-<!--                <div th:text="${post.postContent}">default value</div>-->
-<!--            </article>-->
-<!--            <button class="button">-->
-<!--                <a th:href="'/post/list/'+${post.boardId}">목록</a>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--        <div class="comment_container" id="commentSection">-->
-<!--            &lt;!&ndash; 댓글 목록 &ndash;&gt;-->
-<!--            <ul id="commentList">-->
-<!--                &lt;!&ndash; 댓글은 FETCH로 조회됩니다 &ndash;&gt;-->
-<!--            </ul>-->
-<!--            &lt;!&ndash; 댓글 작성 폼 &ndash;&gt;-->
-<!--            <div>-->
-<!--                <input type="text" id="commentContent" placeholder="댓글을 입력하세요" required>-->
-<!--                <button onclick="addComment()">댓글 추가</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <script th:inline="javascript">
         // 댓글 목록 조회
         function loadComments() {
@@ -179,7 +85,7 @@
                                 <div class="commentContent2">${comment.commentContent}</div>
                                 <div class="commentContentBtn">
                                     <button class="editBtn" onclick="editComment(${comment.commentId})"><i class="bi bi-pencil"></i></button>
-                                    <button class="deleteBtn" onclick="deleteComment(${comment.commentId})"><i class="bi bi-eraser"></i></button>
+                                    <button class="deleteBtn" onclick="confirmCommentDelete(${comment.commentId})"><i class="bi bi-eraser"></i></button>
                                 </div>
                             </div>
                             `;
@@ -221,7 +127,7 @@
                             <div class="commentContent2">${comment.commentContent}</div>
                             <div class="commentContentBtn">
                                 <button class="editBtn" onclick="editComment(${comment.commentId})"><i class="bi bi-pencil"></i></button>
-                                <button class="deleteBtn" onclick="deleteComment(${comment.commentId})"><i class="bi bi-eraser"></i></button>
+                                <button class="deleteBtn" onclick="confirmCommentDelete(${comment.commentId})"><i class="bi bi-eraser"></i></button>
                             </div>
                         </div>
                     `;
@@ -246,8 +152,16 @@
                     .then(response => response.json())
                     .then(updatedComment => {
                         const listItem = document.getElementById(`comment-${id}`);
-                        const span = listItem.querySelector('span');
-                        span.textContent = `${updatedComment.user.userName}: ${updatedComment.commentContent} 등록일시 : ${updatedComment.regDate}`;
+                        listItem.innerHTML = `
+                        <div class="commentContentSpan">
+                            <div class="commentContent1">${updatedComment.user.userName}<div>${updatedComment.user.userId}</div></div>
+                            <div class="commentContent2">${updatedComment.commentContent}</div>
+                            <div class="commentContentBtn">
+                                <button class="editBtn" onclick="editComment(${updatedComment.commentId})"><i class="bi bi-pencil"></i></button>
+                                <button class="deleteBtn" onclick="confirmCommentDelete(${updatedComment.commentId})"><i class="bi bi-eraser"></i></button>
+                            </div>
+                        </div>
+                    `;
                     })
                     .catch(error => console.error('Error:', error));
             }
@@ -354,6 +268,31 @@
                     console.log('즐겨찾기 토글 실패', error);
                 }
             });
+        }
+
+        // 댓글 삭제
+        function confirmCommentDelete(id) {
+            if (confirm("삭제하시겠습니까?")) {
+                deleteComment(id); //
+            }
+        }
+
+        // 게시글 삭제
+        function confirmPostDelete() {
+            if (confirm("삭제하시겠습니까?")) {
+                const postId = '[[ ${postId} ]]';
+                const boardId = '[[ ${post.boardId} ]]';
+                $.ajax({
+                    url: `/post/${postId}`,
+                    type: 'DELETE',
+                    success: function(response) {
+                        window.location.href = '/post/list/' + boardId;
+                    },
+                    error: function(error) {
+                        console.log('삭제 실패', error);
+                    }
+                });
+            }
         }
 
     </script>

@@ -1,32 +1,20 @@
 package com.elice.boardproject.comment.service;
 
-import com.elice.boardproject.comment.entity.Comment;
 import com.elice.boardproject.comment.entity.CommentDto;
 import com.elice.boardproject.comment.entity.CommentRequestDto;
 import com.elice.boardproject.comment.mapper.CommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class CommentService {
     @Autowired private CommentMapper commentMapper;
     // 댓글 전체 조회
-    public List<CommentDto> findComment(Long postId, int page, int pageSize) {
-        int offset = (page - 1) * pageSize;
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("postId", postId);
-        params.put("pageSize", pageSize);
-        params.put("offset", offset);
-
-        return commentMapper.findComment(params);
+    public List<CommentDto> findComment(Long postId) {
+        return commentMapper.findComment(postId);
     }
 
     // 댓글 단건 조회

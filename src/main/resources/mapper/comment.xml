@@ -25,7 +25,6 @@
         ON A.user_id = B.user_id
         WHERE A.post_id = #{postId}
         ORDER BY A.reg_date ASC
-        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <!-- Comment 단건 조회 -->

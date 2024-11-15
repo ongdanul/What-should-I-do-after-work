@@ -57,8 +57,17 @@ public class PostController {
     // 게시글 상세 페이지
     @GetMapping("/{postId}")
     public String list(@PathVariable Long postId, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String authenticatedUserId;
+
+        if (principal instanceof UserDetails) {
+            authenticatedUserId = ((UserDetails) principal).getUsername();
+        } else {
+            authenticatedUserId = principal.toString();
+        }
         PostDto findPost = postService.detail(postId);
         model.addAttribute("post", findPost);
+        model.addAttribute("authenticatedUserId", authenticatedUserId);
 
         return "post/detail";
     }

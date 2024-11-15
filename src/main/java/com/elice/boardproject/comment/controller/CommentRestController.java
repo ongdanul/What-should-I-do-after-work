@@ -3,13 +3,11 @@ package com.elice.boardproject.comment.controller;
 import com.elice.boardproject.comment.entity.CommentDto;
 import com.elice.boardproject.comment.entity.CommentRequestDto;
 import com.elice.boardproject.comment.service.CommentService;
-import com.elice.boardproject.comment.entity.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +21,8 @@ public class CommentRestController {
     private CommentService commentService;
 
     @GetMapping("/comment/{postId}")
-    public ResponseEntity<List<CommentDto>> getComment(@PathVariable Long postId,
-                                                    @RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10") int pageSize){
-        List<CommentDto> comments =  commentService.findComment(postId, page, pageSize);
+    public ResponseEntity<List<CommentDto>> getComment(@PathVariable Long postId){
+        List<CommentDto> comments =  commentService.findComment(postId);
 
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
@@ -49,7 +46,7 @@ public class CommentRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<CommentDto> comments =  commentService.findComment(commentRequestDto.getPostId(), 1, 10);
+        List<CommentDto> comments =  commentService.findComment(commentRequestDto.getPostId());
 
         if(comments.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

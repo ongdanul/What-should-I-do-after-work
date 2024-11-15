@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <link rel="stylesheet" href="/css/activity/activityFllow.css">
+    <link rel="stylesheet" href="/css/activity/activityFollow.css">
     <title>Post Detail</title>
 </head>
 <body>
@@ -39,9 +39,9 @@
                 <th>조회수</th>
             </tr>
             <tr th:each="post : ${posts}">
-                <td th:text="${post.user.userName}">default value</td>
-                <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
-                <td th:text="${post.postContent}">default value</td>
+                <td th:text="${post.user.userName.length() > 3 ? post.user.userName.substring(0, 3) + '...' : post.user.userName}">default value</td>
+                <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle.length() > 10 ? post.postTitle.substring(0, 10) + '...' : post.postTitle}"></a></td>
+                <td th:text="${post.postContent.length() > 40 ? post.postContent.substring(0, 40) + '...' : post.postContent}">default value</td>
                 <td><i class="bi bi-eye"></i><span th:text="${post.viewCount}"></span></td>
             </tr>
         </table>

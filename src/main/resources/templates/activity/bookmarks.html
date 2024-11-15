@@ -34,13 +34,13 @@
       <tr>
         <th>No</th>
         <th>제목</th>
-        <th>작성자</th>
+        <th></th>
         <th>조회수</th>
       </tr>
       <tr th:each="scrap : ${scraps}">
         <td th:text="${scrap.postId}"></td>
         <td><a th:href="'/post/'+${scrap.postId}" th:text="${scrap.post.postTitle}"></a></td>
-        <td th:text="${scrap.user.userName}"></td>
+        <td></td>
         <td><i class="bi bi-eye"></i><span th:text="${scrap.post.viewCount}"></span></td>
       </tr>
     </table>

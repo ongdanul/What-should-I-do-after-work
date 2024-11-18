@@ -1,13 +1,10 @@
 package com.elice.boardproject.profile.entity;
 
-import com.elice.boardproject.user.entity.Users;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.time.Instant;
 
 @Getter
 @Setter

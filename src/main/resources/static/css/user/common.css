@@ -1,0 +1,8 @@
+@font-face {
+    font-family: YANGJIN;
+    src: url('/fonts/YANGJIN_otf.otf');
+}
+
+body {
+    font-family: 'YANGJIN', sans-serif;
+}

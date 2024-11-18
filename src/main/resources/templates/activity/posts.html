@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
+  <link rel="stylesheet" href="/css/activity/activityPosts.css">
   <title>회원활동정보</title>
 </head>
 <body>
 <main layout:fragment="content">
-  <div>
+  <section>
     <ul>
       <li>
-        <a href="/activity">작성한 게시물</a>
+        <a th:href="@{/activity}"
+           th:classappend="${activeMenu == 'posts'} ? 'active'">작성한 게시물</a>
       </li>
       <li>
-        <a href="/activity/bookmark">즐겨찾기한 게시물</a>
+        <a th:href="@{/activity/bookmark}"
+           th:classappend="${activeMenu == 'scraps'} ? 'active'">즐겨찾기한 게시물</a>
       </li>
       <li>
-        <a href="/activity/follow">팔로우한 유저 게시물</a>
+        <a th:href="@{/activity/follow}"
+           th:classappend="${activeMenu == 'follow'} ? 'active'">팔로우한 유저 게시물</a>
       </li>
       <li>
-        <a href="/activity/follower">팔로워</a>
+        <a th:href="@{/activity/follower}"
+           th:classappend="${activeMenu == 'follower'} ? 'active'">팔로워</a>
       </li>
     </ul>
-  </div>
-  <div>
-    <h1>작성한 게시물</h1>
-    <br>
+  </section>
+  <div class="container">
+    <div  class="activityTitle">
+      <p>작성한 게시물</p>
+    </div>
     <table class="table">
       <tr>
         <th>No</th>
         <th>제목</th>
         <th>작성일</th>
-        <th>조회</th>
+        <th>조회수</th>
       </tr>
       <tr th:each="post : ${posts}">
         <td th:text="${post.postId}"></td>
         <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
-        <td th:text="${post.regDate}"></td>
-        <td th:text="${post.viewCount}"></td>
+        <td th:text="${#temporals.format(post.regDate, 'yyyy-MM-dd')}"></td>
+        <td><i class="bi bi-eye"></i><span th:text="${post.viewCount}"></span></td>
       </tr>
     </table>
-  </div>
-  <!-- 페이지 버튼 -->
-  <div>
-    <a th:href="@{/activity(page=${page - 1}, pageSize=10)}" th:if="${page > 1}">이전</a>
+    <!-- 페이지 버튼 -->
+    <div class="paging">
+      <a th:href="@{/activity(page=${page - 1}, pageSize=10)}" th:if="${page > 1}">이전</a>
 
-    <span>Page <span th:text="${page}">1</span></span>
+      <span><span th:text="${page}">1</span></span>
 
-    <a th:href="@{/activity(page=${page + 1}, pageSize=10)}">다음</a>
+      <a th:href="@{/activity(page=${page + 1}, pageSize=10)}">다음</a>
+    </div>
   </div>
 </main>
 </body>

@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-  <title>Board Register</title>
+    <title>게시판 등록</title>
 </head>
 <body>
 <main layout:fragment="content">
-  <form th:action="@{/board/register}" th:object="${board}" method="post">
-    <div>
-      <label for="boardTitle">BoardTitle:</label>
-      <input type="text" id="boardTitle" th:field="*{boardTitle}" required/>
-    </div>
-    <button type="submit" class="button">등록</button>
-  </form>
+    <form th:action="@{/board/register}" th:object="${board}" method="post">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="게시판 제목" th:field="*{boardTitle}" required/>
+            <button class="btn btn-outline-secondary" type="submit">등록</button>
+            <button class="btn btn-outline-secondary" type="button" onclick="history.back()">취소</button>
+        </div>
+    </form>
 </main>
 </body>
 </html>

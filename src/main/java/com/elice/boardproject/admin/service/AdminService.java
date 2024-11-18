@@ -41,7 +41,7 @@ public class AdminService {
     @Transactional
     public void deleteProfilesByUserIds(List<String> userIds) {
         for (String userId : userIds) {
-            adminMapper.deleteProfileByUserId(userId);
+            adminMapper.deleteProfilesByUserIds(userIds);
         }
     }
 
@@ -51,10 +51,15 @@ public class AdminService {
         usersAuthMapper.updateUserRole(userId, newRole);
     }
 
-    // 로그인 (잠금/잠금 해제)
+    // 로그인 (잠금/해제)
     @Transactional
     public void toggleLoginLock(String userId, boolean newLockStatus) {
         adminMapper.toggleLoginLock(userId, newLockStatus);
+    }
+
+    // 필터 및 검색 조건에 따른 회원 조회
+    public List<Admin> getFilteredUsers(String role, Boolean loginLock, String keyword) {
+        return adminMapper.findFilteredProfiles(role, loginLock, keyword);
     }
 }
 

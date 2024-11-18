@@ -37,8 +37,6 @@
         FROM post A
                  JOIN users B
                       ON A.user_id = B.user_id
-                 JOIN scrap C
-                      ON A.user_id = C.user_id
         WHERE A.user_id = #{userId}
         ORDER BY A.reg_date DESC
         LIMIT #{pageSize} OFFSET #{offset}
@@ -51,10 +49,10 @@
                  JOIN post B
                       ON A.post_id = B.post_id
                  JOIN users C
-                      ON A.user_id = C.user_id
+                      ON B.user_id = C.user_id
         WHERE A.user_id = #{userId}
         ORDER BY A.scrap_id DESC
-        LIMIT #{pageSize} OFFSET #{offset}
+            LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
 </mapper>

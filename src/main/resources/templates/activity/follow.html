@@ -2,35 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
+    <link rel="stylesheet" href="/css/activity/activityFollow.css">
     <title>Post Detail</title>
 </head>
 <body>
 <main layout:fragment="content">
-    <div>
+    <section>
         <ul>
             <li>
-                <a href="/activity">작성한 게시물</a>
+                <a th:href="@{/activity}"
+                   th:classappend="${activeMenu == 'posts'} ? 'active'">작성한 게시물</a>
             </li>
             <li>
-                <a href="/activity/bookmark">즐겨찾기한 게시물</a>
+                <a th:href="@{/activity/bookmark}"
+                   th:classappend="${activeMenu == 'scraps'} ? 'active'">즐겨찾기한 게시물</a>
             </li>
             <li>
-                <a href="/activity/follow">팔로우한 유저 게시물</a>
+                <a th:href="@{/activity/follow}"
+                   th:classappend="${activeMenu == 'follow'} ? 'active'">팔로우한 유저 게시물</a>
             </li>
             <li>
-                <a href="/activity/follower">팔로워</a>
+                <a th:href="@{/activity/follower}"
+                   th:classappend="${activeMenu == 'follower'} ? 'active'">팔로워</a>
             </li>
         </ul>
-    </div>
-    <div>
-        <table border="1">
+    </section>
+    <div class="container">
+        <div  class="activityTitle">
+            <p>팔로우한 유저 게시물</p>
+        </div>
+        <table class="table">
+            <tr>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>조회수</th>
+            </tr>
             <tr th:each="post : ${posts}">
-                <td th:text="${post.user.userName}">default value</td>
-                <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle}"></a></td>
-                <td th:text="${post.postContent}">default value</td>
-                <td th:text="${post.viewCount}">default value</td>
+                <td th:text="${post.user.userName.length() > 3 ? post.user.userName.substring(0, 3) + '...' : post.user.userName}">default value</td>
+                <td><a th:href="'/post/'+${post.postId}" th:text="${post.postTitle.length() > 10 ? post.postTitle.substring(0, 10) + '...' : post.postTitle}"></a></td>
+                <td th:text="${post.postContent.length() > 40 ? post.postContent.substring(0, 40) + '...' : post.postContent}">default value</td>
+                <td><i class="bi bi-eye"></i><span th:text="${post.viewCount}"></span></td>
             </tr>
         </table>
+        <div class="paging">
+            <a th:href="@{/activity/follow(page=${page - 1}, pageSize=10)}" th:if="${page > 1}">이전</a>
+
+            <span><span th:text="${page}">1</span></span>
+
+            <a th:href="@{/activity/follow(page=${page + 1}, pageSize=10)}">다음</a>
+        </div>
     </div>
 </main>
 </body>

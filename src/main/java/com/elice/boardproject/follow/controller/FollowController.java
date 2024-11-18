@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class FollowController {
     }
 
     @GetMapping("/follow")
-    public String follow(Model model) {
+    public String follow(@RequestParam(defaultValue = "1") int page,
+                         @RequestParam(defaultValue = "10") int pageSize, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
@@ -33,15 +35,19 @@ public class FollowController {
             userId = principal.toString();
         }
 
-        List<PostDto> posts = followService.findFollow(userId);
+        List<PostDto> posts = followService.findFollow(userId, page, pageSize);
 
         model.addAttribute("posts", posts);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("activeMenu", "follow");
 
         return "activity/follow";
     }
 
     @GetMapping("/follower")
-    public String follower(Model model) {
+    public String follower(@RequestParam(defaultValue = "1") int page,
+                           @RequestParam(defaultValue = "10") int pageSize, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId;
 
@@ -51,9 +57,12 @@ public class FollowController {
             userId = principal.toString();
         }
 
-        List<Users> users = followService.findFollower(userId);
+        List<Users> users = followService.findFollower(userId, page, pageSize);
 
         model.addAttribute("users", users);
+        model.addAttribute("page", page);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("activeMenu", "follower");
 
         return "activity/follower";
     }

@@ -1,0 +1,111 @@
+.editContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.editTitle {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.editContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+label {
+    display: none;
+}
+
+#userId,
+#userName {
+    width: 400px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #667373;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #f1f1f1;
+}
+
+#existingPw,
+#userPw,
+#confirmPw,
+#email {
+    width: 400px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #667373;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.contactContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.contactContainer span {
+    font-size: 20px;
+}
+
+#contactPrefix {
+    width: 100px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #667373;
+}
+
+#contactMiddle,
+#contactSuffix {
+    width: 130px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #667373;
+}
+
+.btnSection {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    margin-top: 20px
+}
+
+.editBtn,
+.cancelBtn {
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    color: #667373;
+    background-color: #FFFFFF;
+    border: 1px solid #667373;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.editBtn:active,
+.cancelBtn:active {
+    color: #FFFFFF;
+    background-color: #B4D4FD;
+    border: 1px solid #B4D4FD;
+}

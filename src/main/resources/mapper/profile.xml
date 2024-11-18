@@ -18,6 +18,7 @@
         WHERE user_id = #{userId}
     </update>
 
+    <!--MY 패스워드 찾기-->
     <select id="findPassword" resultType="String">
         SELECT user_pw FROM users
         WHERE user_id = #{userId}

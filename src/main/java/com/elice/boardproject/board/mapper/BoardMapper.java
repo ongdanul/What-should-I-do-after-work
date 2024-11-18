@@ -1,9 +1,6 @@
 package com.elice.boardproject.board.mapper;
 
-import com.elice.boardproject.board.entity.Board;
 import com.elice.boardproject.board.entity.BoardDto;
-import com.elice.boardproject.board.entity.BoardResponseDto;
-import com.elice.boardproject.post.entity.Post;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +22,6 @@ public interface BoardMapper {
 
     // 삭제
     int delete(BoardDto board);
+
+    String findBoardTitle(Long boardId);
 }

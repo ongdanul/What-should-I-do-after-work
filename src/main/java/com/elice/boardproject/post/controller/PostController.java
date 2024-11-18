@@ -1,5 +1,6 @@
 package com.elice.boardproject.post.controller;
 
+import com.elice.boardproject.board.service.BoardService;
 import com.elice.boardproject.post.entity.PostDto;
 import com.elice.boardproject.post.entity.PostRequestDto;
 import com.elice.boardproject.post.service.PostService;
@@ -20,13 +21,21 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    private final BoardService boardService;
+
+    public PostController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
     // 게시글 전체 목록
     @GetMapping("/list/{boardId}")
     public String lists(@PathVariable Long boardId, @RequestParam(defaultValue = "1") int page,
                         @RequestParam(defaultValue = "10") int pageSize, @RequestParam(defaultValue = "reg_date") String orderBy, Model model) {
         List<PostDto> posts = postService.findAll(boardId, page, pageSize, orderBy);
+        String boardTitle = boardService.findBoardTitle(boardId);
         model.addAttribute("posts", posts);
         model.addAttribute("boardId", boardId);
+        model.addAttribute("boardTitle", boardTitle);
         model.addAttribute("page", page);
         model.addAttribute("orderBy", orderBy);
 
@@ -48,8 +57,17 @@ public class PostController {
     // 게시글 상세 페이지
     @GetMapping("/{postId}")
     public String list(@PathVariable Long postId, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String authenticatedUserId;
+
+        if (principal instanceof UserDetails) {
+            authenticatedUserId = ((UserDetails) principal).getUsername();
+        } else {
+            authenticatedUserId = principal.toString();
+        }
         PostDto findPost = postService.detail(postId);
         model.addAttribute("post", findPost);
+        model.addAttribute("authenticatedUserId", authenticatedUserId);
 
         return "post/detail";
     }

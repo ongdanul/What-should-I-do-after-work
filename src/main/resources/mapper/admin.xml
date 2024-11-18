@@ -24,10 +24,24 @@
         </foreach>
     </delete>
 
-    <!--로그인 (잠금/잠금 해제)-->
+    <!--로그인 (잠금/해제)-->
     <update id="toggleLoginLock">
         UPDATE users
         SET login_lock = #{newLockStatus}
         WHERE user_id = #{userId}
     </update>
+
+    <!-- 필터 및 검색 조건에 따른 회원 조회 -->
+    <select id="findFilteredProfiles" resultType="com.elice.boardproject.admin.entity.Admin">
+        SELECT u.user_id, u.user_name, u.contact, u.email, u.user_pw, u.reg_date, u.mod_date, u.login_lock, ua.authorities
+        FROM users u
+                 LEFT JOIN users_auth ua ON u.user_id = ua.user_id
+        WHERE (#{role} IS NULL OR #{role} = '' OR ua.authorities = #{role})
+          AND (#{loginLock} IS NULL OR u.login_lock = #{loginLock})
+          AND (u.user_id LIKE CONCAT('%', #{keyword}, '%')
+            OR u.user_name LIKE CONCAT('%', #{keyword}, '%')
+            OR u.contact LIKE CONCAT('%', #{keyword}, '%')
+            OR u.email LIKE CONCAT('%', #{keyword}, '%')
+            OR #{keyword} IS NULL)
+    </select>
 </mapper>

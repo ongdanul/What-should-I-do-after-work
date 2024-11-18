@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout}">
 <head>
     <link rel="stylesheet" href="/css/board/list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>홈 페이지</title>
 </head>
 <body>
@@ -25,9 +26,7 @@
                         </td>
                         <!-- 게시판 삭제 -->
                         <td sec:authorize="hasRole('ROLE_ADMIN')">
-                            <form th:action="@{/board/{boardId}(boardId=${board.boardId})}" th:method="delete">
-                                <button type="submit" class="deleteBtn"><i class="bi bi-eraser"></i></button>
-                            </form>
+                            <button type="submit" th:onclick="confirmBoardDelete([[ ${board.boardId} ]])" class="deleteBtn"><i class="bi bi-eraser"></i></button>
                         </td>
                     </tr>
                 </table>
@@ -37,6 +36,24 @@
             <button type="button" class="registerBtn" onclick="location.href='/board/register'">게시판 등록</button>
         </div>
     </div>
+    <script th:inline="javascript">
+        // 게시글 삭제
+        function confirmBoardDelete(id) {
+            if (confirm("삭제하시겠습니까?")) {
+                const boardId = id;
+                $.ajax({
+                    url: `/board/${boardId}`,
+                    type: 'DELETE',
+                    success: function(response) {
+                        window.location.href = '/board/list'
+                    },
+                    error: function(error) {
+                        console.log('삭제 실패', error);
+                    }
+                });
+            }
+        }
+    </script>
 </main>
 </body>
 </html>

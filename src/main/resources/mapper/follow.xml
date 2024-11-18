@@ -27,17 +27,20 @@
                  JOIN users u
                       ON p.user_id = u.user_id
         WHERE f.follow = #{userId}
+        ORDER BY u.user_id DESC
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <select id="findFollower" resultMap="User">
-        SELECT u.user_id, u.user_name
+        SELECT DISTINCT u.user_id, u.user_name
         FROM post p
-                 JOIN follow f
-                      ON p.user_id = f.follow
-                 JOIN users u
-                      ON p.user_id = u.user_id
+        JOIN follow f
+          ON p.user_id = f.follow
+        JOIN users u
+          ON p.user_id = u.user_id
         WHERE f.follower = #{userId}
-        GROUP BY u.user_id
+        ORDER BY u.user_id DESC
+        LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
     <select id="checkFollow" resultType="int">

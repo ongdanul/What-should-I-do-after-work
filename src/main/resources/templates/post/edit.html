@@ -2,34 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>예시 페이지</title>
+    <link rel="stylesheet" href="/css/post/edit.css">
+    <title>게시글 수정</title>
 </head>
 <body>
 <main layout:fragment="content">
     <form th:action="@{/post/{postId}(postId=${post.postId})}" th:method="patch">
-        <table border="1">
-            <tr>
-<!--                <td th:text="|No.${post.postId}|">default value</td>-->
-                <td>제목 : <input type="text" name="postTitle" th:value="${post.postTitle}"></td>
-                <!-- <td th:text="|작성일시 : ${post.regDate}|">default value</td> -->
-                <!-- <td th:text="|수정일시 : ${post.modDate}|">default value</td> -->
-            </tr>
-            <tr>
-                <td>내용 : <input type="text" name="postContent" th:value="${post.postContent}"></td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="submit" class="button">확인</button>
-                </td>
-                <td>
-                    <button class="button">
-                        <a th:href="'/post/'+${post.postId}">취소</a>
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </form>
+        <div class="mb-3">
+            <label for="postTitle" class="form-label">제목</label>
+            <input type="text" class="form-control" id="postTitle" name="postTitle" th:value="${post.postTitle}"
+                   required/>
+        </div>
+        <div class="mb-3 box">
+            <label for="postContent" class="form-label">내용</label>
+            <textarea class="form-control" id="postContent" name="postContent" th:text="${post.postContent}"
+                      rows="5" required></textarea>
+            <button type="submit" class="btn">확인</button>
+            <button type="button" class="btn" onclick="history.back()">취소</button>
+        </div>
 
+    </form>
 </main>
 </body>
 </html>

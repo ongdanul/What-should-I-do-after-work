@@ -1,4 +1,4 @@
-package com.elice.boardproject.home.controller;
+package com.elice.boardproject.global.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,5 +11,10 @@ public class HomeController {
     @GetMapping("/")
     public String home() {
         return "user/login";
+    }
+
+    @GetMapping("/notice")
+    public String notice() {
+        return "global/notice";
     }
 }

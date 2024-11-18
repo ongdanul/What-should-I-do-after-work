@@ -1,32 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="ko">
 <head>
   <link rel="stylesheet" href="/css/profile/profile.css">
+  <script th:src="@{/js/profile/profile.js}"></script>
   <title>회원정보 페이지</title>
 </head>
 <body>
 <main layout:fragment="content">
-  <div class="container">
+  <div class="profile-container">
     <h1>내 정보</h1>
-    <br>
-    <table class="table">
-      <tr>
-        <th>아이디</th>
-        <th>이름</th>
-        <th>전화번호</th>
-        <th>이메일</th>
-      </tr>
-      <tr>
-        <td th:text="${profile.userId}"></td>
-        <td th:text="${profile.userName}"></td>
-        <td th:text="${profile.contact}"></td>
-        <td th:text="${profile.email}"></td>
-      </tr>
-    </table>
+    <form>
+      <div class="profile-item">
+        <label for="userId" class="profile-label">🆔 아이디</label>
+        <span th:text="${profile.userId}" id="userId"></span>
+      </div>
+      <div class="profile-item">
+        <label for="userName" class="profile-label">🧑‍💻 이름</label>
+        <span th:text="${profile.userName}" id="userName"></span>
+      </div>
+      <div class="profile-item">
+        <label for="contact" class="profile-label">📱 전화번호</label>
+        <span th:text="${profile.contact}" id="contact"></span>
+      </div>
+      <div class="profile-item">
+        <label for="email" class="profile-label">✉️ 이메일</label>
+        <span th:text="${profile.email}" id="email"></span>
+      </div>
+    </form>
     <div class="button-group">
       <button onclick="location.href='/profile/edit'">수정</button>
-      <button onclick="history.back()">취소</button>
-      <form th:action="@{/profile/delete}" method="post" style="display:inline;">
+      <button onclick="location.href='/board/list'">취소</button>
+      <form th:action="@{/profile/delete}" method="post" style="display:inline;" onsubmit="return deleteUser(event);">
         <button type="submit">탈퇴</button>
       </form>
     </div>
@@ -34,6 +38,7 @@
 </main>
 </body>
 </html>
+
 
 
 

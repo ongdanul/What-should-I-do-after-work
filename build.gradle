@@ -77,8 +77,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.register('copy', Copy) {
-	from './Set-What-should-I-do-after-work/application.yml'
-	include "*.yml"
-	into 'src/main/resources'
+task copyGitSubmodule(type: Copy) {
+	copy {
+		from './Set-What-should-I-do-after-work/application.yml'
+		include "*.yml"
+		into './src/main/resources'
+	}
 }

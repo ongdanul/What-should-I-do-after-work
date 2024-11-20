@@ -11,18 +11,48 @@ async function checkUserId() {
 
     if (userId === '') {
         showFeedback(feedback, '', false);
-        return;
+        return false;
     }
 
     if (userId.length < 4 || userId.length > 10) {
         showFeedback(feedback, '4자 이상 10자 이하로 입력해주세요.', false);
-        return;
+        return false;
     }
 
+    const data = { userId };
+
     try {
-        const response = await axios.post('/check/userId', { userId });
+        const response = await axios.post('/check/userId', data );
         showFeedback(feedback, response.data.exists ? '이미 등록된 아이디입니다.' : '사용 가능한 아이디입니다.', !response.data.exists);
+        return !response.data.exists;
     } catch (error) {
+        console.error("아이디 중복 체크 오류:", error.message);
+        return false;
+    }
+}
+
+async function checkUserLimit() {
+    const userName = document.getElementById('userName').value.trim();
+    const contact = document.getElementById('contact').value.trim();
+
+    if (userName === '' || contact === '') {
+        return false;
+    }
+
+    const data = { userName, contact };
+
+    try {
+        const response = await axios.post('/check/userLimit', data);
+        if (response.data.userLimit) {
+            return true;
+        } else {
+            alert('가입 가능한 아이디 수가 초과되었습니다.');
+            return false;
+        }
+    } catch (error) {
+        console.error("회원가입 제한 확인 실패", error.message);
+        alert('서버 오류가 발생했습니다. 다시 시도해주세요.');
+        return false;
     }
 }
 
@@ -62,27 +92,31 @@ function checkEmail() {
     showFeedback(feedback, isValid ? '' : '이메일 형식으로 입력해주세요.', isValid);
 }
 
-function validateForm(e) {
+document.querySelector('form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    const userIdValid = document.getElementById('idFeedback').classList.contains('text-success');
+    const isUserValid = await checkUserId();
+    if (!isUserValid) { return; }
+
+    const isUserLimitValid  = await checkUserLimit();
+    if (!isUserLimitValid ) { return; }
+
     const pwValid = document.getElementById('pwFeedback').classList.contains('text-success');
     const confirmPwValid = document.getElementById('confirmPwFeedback').classList.contains('text-success');
     const emailValid = document.getElementById('emailFeedback').classList.contains('text-success');
 
-    if (!userIdValid || !pwValid || !confirmPwValid || !emailValid) {
+    if (!pwValid || !confirmPwValid || !emailValid) {
         alert('모든 입력값이 유효해야 회원가입이 가능합니다.');
-    } else {
-    document.querySelector('form').submit();
+        return;
     }
-}
+
+    document.querySelector('form').submit();
+});
 
 document.getElementById('userId').addEventListener('input', checkUserId);
 document.getElementById('userPw').addEventListener('input', checkPassword);
 document.getElementById('confirmPw').addEventListener('input', checkPasswordMatch);
 document.querySelectorAll('#contactPrefix, #contactMiddle, #contactSuffix').forEach(input => input.addEventListener('input', formatContactInput));
 document.getElementById('email').addEventListener('input', checkEmail);
-
-document.querySelector('form').addEventListener('submit', validateForm);
 
 document.querySelector('.cancelBtn').addEventListener('click', () => location.href = '/user/login');

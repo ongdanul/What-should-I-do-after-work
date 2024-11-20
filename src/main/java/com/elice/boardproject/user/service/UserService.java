@@ -3,7 +3,7 @@ package com.elice.boardproject.user.service;
 import com.elice.boardproject.user.dto.SignUpDTO;
 import com.elice.boardproject.user.entity.Users;
 import com.elice.boardproject.user.mapper.UsersMapper;
-import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
+import com.elice.boardproject.user.mapper.UsersAuthMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.Instant;
-import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -30,23 +30,26 @@ public class UserService {
     private final JavaMailSender javaMailSender;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Transactional
     public boolean signUpProcess(@Valid SignUpDTO signUpDTO) {
 
-        Boolean isExist = usersMapper.existsByUserId(signUpDTO.getUserId());
-
-        if (isExist) {
-            return false;
+        long countUserIds = countUserIds(signUpDTO.getUserName(), signUpDTO.getContact());
+        if (countUserIds > 3) {
+            log.error("회원가입 제한: userName={} contact={}", signUpDTO.getUserName(), signUpDTO.getContact());
+            throw new RuntimeException("가입 가능한 아이디 수가 초과되었습니다.");
         }
 
         signUpDTO.setUserPw(bCryptPasswordEncoder.encode(signUpDTO.getUserPw()));
         Users user = signUpDTO.toEntity();
-
-        usersMapper.registerUser(user);
-
-        usersAuthMapper.registerUserAuth(user.getUserId());
-
-        return true;
+        try {
+            usersMapper.registerUser(user);
+            usersAuthMapper.registerUserAuth(user.getUserId());
+            return true;
+        } catch (Exception e) {
+            log.error("회원가입 처리 중 오류 발생: {}", e.getMessage(), e);
+            throw new RuntimeException("회원가입 처리 중 오류가 발생했습니다.");
+        }
     }
 
     public Boolean isUserIdExists(String userId) {
@@ -54,33 +57,39 @@ public class UserService {
         return usersMapper.existsByUserId(userId);
     }
 
-    public String findUser(String userName, String contact) {
+    public long countUserIds(String userName, String contact) {
 
-        return usersMapper.findUser(userName, contact);
+        return usersMapper.countUserIds(userName, contact);
     }
 
-    public String findPw(String userName, String email) {
+    public Boolean existsByUserIdAndUserName(String userId, String userName) {
 
-        Users user = usersMapper.findUserPw(userName, email);
+        return usersMapper.existsByUserIdAndUserName(userId, userName);
+    }
 
-        if (user != null) {
+    public String findByUserId(String userName, String contact) {
 
-            String newPassword = createNewPassword();
+        return usersMapper.findByUserId(userName, contact);
+    }
 
-            user.setLoginLock(false);
+    public String findByUserdPw(String userName, String userId) {
+        boolean userExists = usersMapper.existsByUserIdAndUserName(userName, userId);
 
-            usersMapper.loginLock(user);
+        if (userExists) {
+            String email = usersMapper.findByEmail(userId);
+            String newPassword = registerNewPassword();
 
-            usersMapper.updatePassword(userName, email, bCryptPasswordEncoder.encode(newPassword), Instant.now());
+            usersMapper.editUserPw(email, bCryptPasswordEncoder.encode(newPassword), Instant.now(), false);
+
             sendNewPasswordByMail(email, newPassword);
 
-            return "비밀번호가 이메일로 발송되었습니다.";
+            return "임시 비밀번호 발급이 완료되었습니다.";
         }
 
         return "사용자 정보를 찾을 수 없습니다.";
     }
 
-    private String createNewPassword() {
+    private String registerNewPassword() {
 
         char[] chars = "0123456789abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuffer password  = new StringBuffer();

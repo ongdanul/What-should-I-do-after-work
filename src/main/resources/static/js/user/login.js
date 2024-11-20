@@ -10,12 +10,16 @@ async function login(e) {
     const password = document.getElementById('userPw').value;
     const rememberMe = document.getElementById('rememberMe').checked ? 'true' : 'false';
 
-    const data = { username, password, rememberMe };
+    const data = new URLSearchParams();
+    data.append("username", username);
+    data.append("password", password);
+    data.append("rememberMe", rememberMe);
 
     try {
-        const response = await axios.post("/user/loginProcess", null, { params: data });
+        const response = await axios.post("/user/loginProcess", data);
 
         window.location.href = "/board/list";
+
     } catch (error) {
         if (error.response) {
             if (error.response.status === 403 && error.response.data === "LOGIN_LOCKED") {

@@ -28,7 +28,7 @@ async function findId(e) {
     const data = { userName, contact };
 
     try {
-        const response = await axios.post("/user/find-id", null, { params: data });
+        const response = await axios.post("/user/find-id", data);
 
         const userId = response.data;
 

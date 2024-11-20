@@ -2,7 +2,6 @@ package com.elice.boardproject.global.config;
 
 import com.elice.boardproject.user.entity.Users;
 import com.elice.boardproject.user.mapper.UsersMapper;
-import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -55,7 +54,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String userId = authentication.getName();
 
-        Users user = usersMapper.findByUserId(userId);
+        Users user = usersMapper.findByUser(userId);
 
         if (user != null && user.isLoginLock()) {
             try {

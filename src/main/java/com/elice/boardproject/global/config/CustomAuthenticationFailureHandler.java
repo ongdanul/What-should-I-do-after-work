@@ -32,7 +32,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
         String userId = request.getParameter("username");
 
-        Users user = usersMapper.findByUserId(userId);
+        Users user = usersMapper.findByUser(userId);
 
         int attempts = loginAttempts.getOrDefault(userId, 0) + 1;
 
@@ -42,7 +42,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
             if (attempts >= MAX_ATTEMPTS) {
                 user.setLoginLock(true);
-                usersMapper.loginLock(user);
+                usersMapper.editLoginLock(user);
                 loginAttempts.remove(userId); // 잠금 처리 후 실패 횟수 초기화
 
                 response.setContentType("text/plain;charset=UTF-8");

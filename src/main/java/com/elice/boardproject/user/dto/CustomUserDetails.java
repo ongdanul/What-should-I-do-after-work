@@ -1,7 +1,7 @@
 package com.elice.boardproject.user.dto;
 
 import com.elice.boardproject.user.entity.Users;
-import com.elice.boardproject.usersAuth.entity.UsersAuth;
+import com.elice.boardproject.user.entity.UsersAuth;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

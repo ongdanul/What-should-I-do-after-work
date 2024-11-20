@@ -26,7 +26,7 @@ public class ProfileService {
     @Transactional
     public void updateProfile(Profile profile) {
 
-        Users existingUser = usersMapper.findByUserId(profile.getUserId());
+        Users existingUser = usersMapper.findByUser(profile.getUserId());
 
         if (existingUser == null) {
             throw new IllegalArgumentException("User not found");

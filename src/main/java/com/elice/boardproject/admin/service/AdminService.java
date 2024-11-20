@@ -2,8 +2,8 @@ package com.elice.boardproject.admin.service;
 
 import com.elice.boardproject.admin.entity.Admin;
 import com.elice.boardproject.admin.mapper.AdminMapper;
-import com.elice.boardproject.usersAuth.entity.UsersAuth;
-import com.elice.boardproject.usersAuth.mapper.UsersAuthMapper;
+import com.elice.boardproject.user.entity.UsersAuth;
+import com.elice.boardproject.user.mapper.UsersAuthMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

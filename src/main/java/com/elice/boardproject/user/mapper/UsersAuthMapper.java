@@ -1,6 +1,6 @@
-package com.elice.boardproject.usersAuth.mapper;
+package com.elice.boardproject.user.mapper;
 
-import com.elice.boardproject.usersAuth.entity.UsersAuth;
+import com.elice.boardproject.user.entity.UsersAuth;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

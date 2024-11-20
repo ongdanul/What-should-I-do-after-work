@@ -1,4 +1,4 @@
-package com.elice.boardproject.usersAuth.entity;
+package com.elice.boardproject.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

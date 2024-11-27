@@ -26,12 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Users user = usersMapper.findByUser(username);
+        log.info("Test - CustomUserDetailsService : userName: {}", username);
+        log.info("Test - CustomUserDetailsService : user: {}", user);
+        log.info("Test - CustomUserDetailsService : userId: {}, userPassword: {}", user.getUserId(), user.getUserPassword());
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
         UsersAuth usersAuth = usersAuthMapper.findByUserId(user.getUserId());
+        log.info("Test - CustomUserDetailsService : usersAuth: {}", usersAuth);
 
         if (usersAuth == null) {
             throw new UsernameNotFoundException("User authorities not found");

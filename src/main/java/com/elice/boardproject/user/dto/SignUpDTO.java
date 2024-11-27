@@ -1,6 +1,5 @@
 package com.elice.boardproject.user.dto;
 
-import com.elice.boardproject.user.entity.Users;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,7 +19,7 @@ public class SignUpDTO {
 
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 13, message = "Password must be between 8 and 13 characters")
-    private String userPw;
+    private String userPassword;
 
     @NotBlank(message = "User Name is required")
     private String userName;
@@ -32,8 +31,4 @@ public class SignUpDTO {
     @Email(message = "Email should be valid")
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email should match the required pattern")
     private String email;
-
-    public Users toEntity(){
-        return new Users(userId, userPw, userName, contact, email, Instant.now(), null, false);
-    }
 }

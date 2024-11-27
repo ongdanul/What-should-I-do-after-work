@@ -30,19 +30,25 @@ async function findId(e) {
     try {
         const response = await axios.post("/user/find-id", data);
 
-        const userId = response.data;
+        const userIds = response.data;
 
-        if (userId) {
+        if (userIds && userIds.length > 0) {
             const userIdDisplay = document.getElementById('userIdDisplay');
             userIdDisplay.style.display = 'flex';
+            userIdDisplay.style.flexDirection = 'column';
             userIdDisplay.style.height = '100px';
-            userIdDisplay.innerText = `아이디는 ${userId} 입니다.`;
+            userIdDisplay.innerHTML = '';
 
-            const findIdBtn = document.getElementById('findIdBtn');
-            findIdBtn.innerHTML = '<span>비밀번호 찾기</span>';
-            findIdBtn.onclick = () => {
-                window.location.href = '/user/find-pw';
-            };
+            userIds.forEach((userId) => {
+                const idElement = document.createElement('div');
+                idElement.className = 'userIdItem';
+                idElement.innerText = `아이디는 ${userId} 입니다.`;
+                idElement.style.cursor = 'pointer';
+                idElement.onclick = () => {
+                    window.location.href = `/user/find-pw?userName=${encodeURIComponent(userName)}&userId=${encodeURIComponent(userId)}`;
+                };
+                userIdDisplay.appendChild(idElement);
+            });
         }
     } catch (error) {
         console.error("아이디 찾기 에러 발생:", error.message);

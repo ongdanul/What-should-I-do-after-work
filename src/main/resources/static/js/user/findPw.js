@@ -1,3 +1,17 @@
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+        userName: params.get('userName') || '',
+        userId: params.get('userId') || ''
+    };
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const { userName, userId } = getQueryParams();
+    if (userName) document.getElementById('userName').value = userName;
+    if (userId) document.getElementById('userId').value = userId;
+});
+
 async function checkUser() {
     const userName = document.getElementById('userName').value.trim();
     const userId = document.getElementById('userId').value.trim();

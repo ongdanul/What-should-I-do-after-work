@@ -12,11 +12,9 @@ import java.util.List;
 @Component
 public class LoginFailureResetScheduler {
     private final UsersMapper usersMapper;
-
     public LoginFailureResetScheduler(UsersMapper usersMapper) {
         this.usersMapper = usersMapper;
     }
-
     private static final long RESET_PERIOD = 3 * 24 * 60 * 60 * 1000L; //3days
 
     /**

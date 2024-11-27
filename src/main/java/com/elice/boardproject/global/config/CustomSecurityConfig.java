@@ -26,6 +26,7 @@ public class CustomSecurityConfig {
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final AuthenticationConfiguration configuration;
     private final UsersMapper usersMapper;
+    private static final int TOKEN_VALIDITY =  7 * 24 * 60 * 60; //7days
     @Bean
     public BCryptPasswordEncoder cryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -70,7 +71,7 @@ public class CustomSecurityConfig {
                                 .key("security")
                                 .rememberMeParameter("rememberMe")
                                 .userDetailsService(userDetailsService)
-                                .tokenValiditySeconds(7*24*60*60)); // 7days
+                                .tokenValiditySeconds(TOKEN_VALIDITY));
 
         //세션 필요한 경우에만 만들어서 사용
         http.sessionManagement(session -> session

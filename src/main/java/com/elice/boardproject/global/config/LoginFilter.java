@@ -32,6 +32,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final UsersMapper usersMapper;
     private final AuthenticationManager authenticationManager;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private static final int ID_COOKIE_EXPIRATION = 30 * 24 * 60 * 60; //30days
     public LoginFilter(AuthenticationManager authenticationManager, UsersMapper usersMapper, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.authenticationManager = authenticationManager;
         this.usersMapper = usersMapper;
@@ -109,7 +110,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         if (Boolean.TRUE.equals(rememberId)) {
             String encodedUserId = Base64.getEncoder().encodeToString(userId.getBytes(StandardCharsets.UTF_8));
             rememberIdCookie = new Cookie("remember-id", encodedUserId);
-            rememberIdCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+            rememberIdCookie.setMaxAge(ID_COOKIE_EXPIRATION);
         } else {
             rememberIdCookie = new Cookie("remember-id", null);
             rememberIdCookie.setMaxAge(0); // Remove cookie

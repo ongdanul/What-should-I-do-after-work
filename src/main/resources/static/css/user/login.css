@@ -76,6 +76,9 @@ label {
 
 .loginOption {
     font-size: 13px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
 }
 
 #rememberMe {

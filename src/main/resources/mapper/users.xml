@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.elice.boardproject.user.mapper.UsersMapper">
+    <!-- 회원가입 시 특정 user_id가 데이터베이스에 존재하는지 확인 (아이디 중복 방지) -->
     <select id="existsByUserId" resultType="boolean">
         SELECT COUNT(*) > 0 FROM users
         WHERE user_id = #{userId}
     </select>
 
+    <!-- 회원가입 시 사용자 이름과 연락처를 기반으로 계정 수를 확인 (최대 가입 계정 수 3개 제한) -->
     <select id="countUserIds" resultType="long">
         SELECT COUNT(*) FROM users
         WHERE user_name = #{userName}
         AND contact = #{contact}
     </select>
 
-    <select id="existsByUserNameAndContact" resultType="com.elice.boardproject.user.entity.Users">
-        SELECT * FROM users
-        WHERE user_name = #{userName}
-        AND contact = #{contact}
-    </select>
-
-    <select id="existsByUserIdAndUserName" resultType="boolean">
-        SELECT COUNT(*) > 0 FROM users
-        WHERE user_name = #{userName}
-        AND user_id = #{userId}
-    </select>
-
-    <insert id="registerUser">
-        INSERT INTO users (user_id, user_pw, user_name, contact, email)
-        VALUES (#{userId}, #{userPw}, #{userName}, #{contact}, #{email})
+    <!-- 새 사용자 계정 등록 (회원가입) -->
+    <insert id="registerUser" parameterType="com.elice.boardproject.user.dto.SignUpDTO">
+        INSERT INTO users (user_id, user_password, user_name, contact, email)
+        VALUES (#{userId}, #{userPassword}, #{userName}, #{contact}, #{email})
     </insert>
 
-    <select id="findByUser" resultType="com.elice.boardproject.user.entity.Users">
-        SELECT * FROM users
-        WHERE user_id = #{userId}
-    </select>
-
-    <update id="editLoginLock">
-        UPDATE users
-        SET login_lock = #{loginLock}
-        WHERE user_id = #{userId}
-    </update>
-
+    <!-- 아이디 찾기시 사용자 이름과 연락처로 사용자 계정 조회 -->
     <select id="findByUserId" resultType="String">
         SELECT user_id FROM users
         WHERE user_name = #{userName}
         AND contact = #{contact}
     </select>
 
+    <!-- 비밀번호 찾기 시 사용자 계정과 사용자 이름으로 사용자 계정이 존재하는지 확인 -->
+    <select id="existsByUserIdAndUserName" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM users
+        WHERE user_name = #{userName}
+        AND user_id = #{userId}
+    </select>
+
+    <!-- 비밀번호 찾기 시 특정 user_id로 이메일 조회 -->
     <select id="findByEmail" resultType="String">
         SELECT email FROM users
         WHERE user_id = #{userId}
     </select>
 
-    <update id="editUserPw">
+    <!-- 비밀번호 찾기 시 이메일로 사용자의 비밀번호 초기화 또는 수정, 잠금 상태 함께 업데이트 -->
+    <update id="editUserPassWord">
         UPDATE users
-        SET user_pw = #{userPw}, mod_date = #{modDate}, login_lock = #{loginLock}
+        SET user_password = #{userPassword}, mod_date = #{modDate}, login_lock = #{loginLock}, login_attempts = #{loginAttempts}
         WHERE email = #{email}
     </update>
+
+    <!-- 특정 user_id로 사용자 정보 조회 -->
+    <select id="findByUser" resultType="com.elice.boardproject.user.entity.Users">
+        SELECT * FROM users
+        WHERE user_id = #{userId}
+    </select>
+
+    <!-- 로그인 잠금 상태를 업데이트 -->
+    <update id="editLoginLock">
+        UPDATE users
+        SET login_attempts = #{loginAttempts},
+        last_failed_login = #{lastFailedLogin},
+        login_lock = CASE
+        WHEN #{loginLock} = true THEN 1
+        WHEN #{loginLock} = false THEN 0
+        ELSE login_lock
+        END
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- 로그인 실패 횟수 초기화를 위한 사용자 정보 조회 -->
+    <select id="findLoginstatus" resultType="com.elice.boardproject.user.entity.Users">
+        SELECT user_id, login_lock, login_attempts, last_failed_login
+        FROM users
+        WHERE login_lock = false
+    </select>
 </mapper>

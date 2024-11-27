@@ -3,27 +3,56 @@ if (flashMessageElement && flashMessageElement.textContent) {
     alert(flashMessageElement.textContent);
 }
 
+function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].split("=");
+        if (cookie[0] === name) {
+            return decodeURIComponent(cookie[1]);
+        }
+    }
+    return null;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const encodedUserId = getCookie("remember-id");
+    if (encodedUserId) {
+        const userId = atob(encodedUserId);
+        const usernameInput = document.getElementById("username");
+        if (usernameInput) {
+            usernameInput.value = userId;
+            document.getElementById("rememberId").checked = true;
+        }
+    }
+});
+
 async function login(e) {
     e.preventDefault();
 
     const username = document.getElementById('username').value;
     const password = document.getElementById('userPw').value;
+    const rememberId = document.getElementById('rememberId').checked ? 'true' : 'false';
     const rememberMe = document.getElementById('rememberMe').checked ? 'true' : 'false';
 
     const data = new URLSearchParams();
     data.append("username", username);
     data.append("password", password);
+    data.append("rememberId", rememberId);
     data.append("rememberMe", rememberMe);
+
+    //TODO 로그인 관련 기능 완성이후 삭제하기
+    console.log("rememberId:", rememberId);
+    console.log("rememberMe:", rememberMe);
+    console.log("Data to send:", data.toString());
 
     try {
         const response = await axios.post("/user/loginProcess", data);
-
         window.location.href = "/board/list";
 
     } catch (error) {
         if (error.response) {
             if (error.response.status === 403 && error.response.data === "LOGIN_LOCKED") {
-                alert("로그인 5회 실패로 계정이 비활성화 되었습니다.\n비밀번호찾기에서 임시비밀번호를 발급하세요.");
+                alert("계정이 비활성화 되었습니다.\n비밀번호찾기에서 임시비밀번호를 발급하세요.");
             } else if (error.response.status === 401) {
                 alert("아이디 또는 비밀번호를 확인하세요.");
             } else {

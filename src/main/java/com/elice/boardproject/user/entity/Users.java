@@ -13,7 +13,7 @@ public class Users {
 
     private String userId;
 
-    private String userPw;
+    private String userPassword;
 
     private String userName;
 
@@ -26,4 +26,8 @@ public class Users {
     private Instant modDate;
 
     private boolean loginLock;
+
+    private int loginAttempts;
+
+    private Instant lastFailedLogin;
 }

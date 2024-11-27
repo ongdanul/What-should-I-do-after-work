@@ -2,7 +2,6 @@ package com.elice.boardproject.global.config;
 
 import com.elice.boardproject.user.mapper.UsersMapper;
 import com.elice.boardproject.user.service.CustomUserDetailsService;
-import com.elice.boardproject.user.mapper.UsersAuthMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,6 @@ public class CustomSecurityConfig {
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final AuthenticationConfiguration configuration;
-    private final UsersAuthMapper usersAuthMapper;
     private final UsersMapper usersMapper;
     @Bean
     public BCryptPasswordEncoder cryptPasswordEncoder() {
@@ -72,7 +70,7 @@ public class CustomSecurityConfig {
                                 .key("security")
                                 .rememberMeParameter("rememberMe")
                                 .userDetailsService(userDetailsService)
-                                .tokenValiditySeconds(604800));
+                                .tokenValiditySeconds(7*24*60*60)); // 7days
 
         //세션 필요한 경우에만 만들어서 사용
         http.sessionManagement(session -> session

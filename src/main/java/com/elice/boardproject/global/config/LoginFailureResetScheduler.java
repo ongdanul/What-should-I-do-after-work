@@ -2,6 +2,7 @@ package com.elice.boardproject.global.config;
 
 import com.elice.boardproject.user.entity.Users;
 import com.elice.boardproject.user.mapper.UsersMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -10,16 +11,15 @@ import java.util.List;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class LoginFailureResetScheduler {
     private final UsersMapper usersMapper;
-    public LoginFailureResetScheduler(UsersMapper usersMapper) {
-        this.usersMapper = usersMapper;
-    }
     private static final long RESET_PERIOD = 3 * 24 * 60 * 60 * 1000L; //3days
 
     /**
-     * 매일 자정(00:00:00)에 실패 횟수를 초기화
-     * 테스트 - 매 분 초기화 (cron = "0 0/1 * * * ?")
+     * 로그인 실패 횟수를 초기화하는 스케줄러 메소드.
+     * 매일 자정(00:00:00)에 실행되며, 로그인 실패 횟수를 초기화합니다.
+     * 테스트용으론 매 분 실행하려면 cron = "0 0/1 * * * ?"을 사용.
      */
     @Scheduled(cron = "0 0 0 * * ?")
     public void resetLoginAttempts() {

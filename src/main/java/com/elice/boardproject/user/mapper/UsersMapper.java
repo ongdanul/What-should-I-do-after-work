@@ -25,10 +25,16 @@ public interface UsersMapper {
     long countUserIds(String userName, String contact);
 
     /**
-     * 새 사용자 계정을 등록합니다. (회원가입)
+     * 새 사용자 계정을 등록합니다. (로컬 회원가입)
      * @param signUpDTO 사용자 정보를 포함한 DTO 객체
      */
-    public void registerUser(SignUpDTO signUpDTO);
+    void registerUser(SignUpDTO signUpDTO);
+
+    /**
+     * 새 사용자 계정을 등록합니다. (소셜 회원가입)
+     * @param user 사용자 정보를 포함한 Users 객체
+     */
+    void registerOauthUser(Users user);
 
     /**
      * 사용자 이름과 연락처를 기반으로 userId를 조회합니다.
@@ -54,13 +60,13 @@ public interface UsersMapper {
     String findByEmail(String userId);
 
     /**
-     * 이메일로 사용자의 비밀번호를 수정하거나 초기화합니다.
-     * @param email 사용자 이메일
+     * userId로 사용자의 비밀번호를 수정하거나 초기화합니다.
+     * @param userId 사용자 ID
      * @param userPassword 새 비밀번호
      * @param modDate 수정 일시
      * @param loginLock 로그인 잠금 상태
      */
-    void editUserPassWord(String email, String userPassword, Instant modDate, boolean loginLock, int loginAttempts);
+    void editUserPassword(String userId, String userPassword, Instant modDate, boolean loginLock, int loginAttempts);
 
     /**
      * 주어진 userId로 사용자 정보를 조회합니다.

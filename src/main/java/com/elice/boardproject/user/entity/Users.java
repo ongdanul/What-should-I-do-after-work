@@ -30,4 +30,8 @@ public class Users {
     private int loginAttempts;
 
     private Instant lastFailedLogin;
+
+    private String profileUrl;
+
+    private boolean social;
 }

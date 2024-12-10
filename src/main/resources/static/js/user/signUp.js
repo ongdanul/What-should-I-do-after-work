@@ -110,7 +110,21 @@ document.querySelector('form').addEventListener('submit', async function(e) {
         return;
     }
 
-    document.querySelector('form').submit();
+    const formData = new FormData(e.target);
+    try {
+        const response = await axios.post('/user/sign-up', formData);
+
+        if (response.data.success) {
+            const userName = response.data.userName;
+            alert('환영합니다,' + userName + '님! 회원가입이 완료되었습니다.');
+            window.location.href = '/user/login';
+        } else {
+            alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
+        }
+    } catch (error) {
+        console.error("회원가입 오류:", error.message);
+        alert('회원가입 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
 });
 
 document.getElementById('userId').addEventListener('input', checkUserId);

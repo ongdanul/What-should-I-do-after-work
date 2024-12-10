@@ -9,18 +9,25 @@
         WHERE user_id = #{userId}
     </select>
 
-    <!--MY 회원 정보 수정-->
-    <update id="updateProfile">
+    <!--MY 회원 정보 수정 (로컬 회원)-->
+    <update id="updateProfileLocalUser">
         UPDATE users
         SET contact = #{contact},
         email = #{email},
-        user_pw = #{userPw}
+        user_password = #{userPassword}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!--MY 회원 정보 수정 (소셜 회원)-->
+    <update id="updateProfileSocialUser">
+        UPDATE users
+        SET contact = #{contact}
         WHERE user_id = #{userId}
     </update>
 
     <!--MY 패스워드 찾기-->
     <select id="findPassword" resultType="String">
-        SELECT user_pw FROM users
+        SELECT user_password FROM users
         WHERE user_id = #{userId}
     </select>
 

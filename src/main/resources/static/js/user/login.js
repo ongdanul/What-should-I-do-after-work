@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const encodedUserId = getCookie("remember-id");
     if (encodedUserId) {
         const userId = atob(encodedUserId);
-        const usernameInput = document.getElementById("username");
+        const usernameInput = document.getElementById("userName");
         if (usernameInput) {
             usernameInput.value = userId;
             document.getElementById("rememberId").checked = true;
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function login(e) {
     e.preventDefault();
 
-    const username = document.getElementById('username').value;
+    const username = document.getElementById('userName').value;
     const password = document.getElementById('userPw').value;
     const rememberId = document.getElementById('rememberId').checked ? 'true' : 'false';
     const rememberMe = document.getElementById('rememberMe').checked ? 'true' : 'false';
@@ -41,9 +41,9 @@ async function login(e) {
     data.append("rememberMe", rememberMe);
 
     //TODO 로그인 관련 기능 완성이후 삭제하기
-    console.log("rememberId:", rememberId);
-    console.log("rememberMe:", rememberMe);
-    console.log("Data to send:", data.toString());
+    console.log("Test - rememberId:", rememberId);
+    console.log("Test - rememberMe:", rememberMe);
+    console.log("Test - Data to send:", data.toString());
 
     try {
         const response = await axios.post("/user/loginProcess", data);
@@ -67,3 +67,6 @@ async function login(e) {
 
 document.querySelector('.loginBtn').addEventListener('click', login);
 document.querySelector('.signUpBtn').addEventListener('click', () => location.href = '/user/sign-up');
+document.querySelector('.kakao').addEventListener('click', () => location.href = '/oauth2/authorization/kakao');
+document.querySelector('.naver').addEventListener('click', () => location.href = '/oauth2/authorization/naver');
+document.querySelector('.google').addEventListener('click', () => location.href = '/oauth2/authorization/google');

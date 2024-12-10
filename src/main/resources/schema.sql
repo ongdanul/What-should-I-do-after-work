@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
     login_lock TINYINT(1) NOT NULL DEFAULT 0,
     login_attempts TINYINT NOT NULL DEFAULT 0,
     last_failed_login TIMESTAMP DEFAULT NULL,
+    profile_url VARCHAR(255) DEFAULT NULL,
+    social TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (user_id)
 );
 
@@ -20,6 +22,16 @@ CREATE TABLE IF NOT EXISTS users_auth (
     authorities VARCHAR(100) NOT NULL DEFAULT 'ROLE_USER',
     PRIMARY KEY (user_id),
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS social_users (
+    social_id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id VARCHAR(50) NOT NULL,
+    provider VARCHAR(50) NOT NULL,
+    provider_id VARCHAR(50) NOT NULL,
+    UNIQUE KEY (provider, provider_id),
+    PRIMARY KEY (social_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS board (
@@ -78,6 +90,18 @@ CREATE TABLE IF NOT EXISTS upload (
     upload_path VARCHAR(255) DEFAULT NULL,
     upload_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     thumbnail_path VARCHAR(255) DEFAULT NULL,
+    upload_type ENUM('MAIN', 'CONTENT') NOT NULL,
     PRIMARY KEY (file_uuid),
+    FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS participation (
+    participation_id BIGINT NOT NULL AUTO_INCREMENT,
+    user_id VARCHAR(50) NOT NULL,
+    post_id BIGINT NOT NULL,
+    participation_type ENUM('JOIN', 'RESERVE') NOT NULL,
+    reg_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (participation_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (post_id) REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

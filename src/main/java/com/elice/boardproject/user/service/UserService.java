@@ -1,5 +1,6 @@
 package com.elice.boardproject.user.service;
 
+import com.elice.boardproject.file.FileHandler;
 import com.elice.boardproject.user.dto.SignUpDTO;
 import com.elice.boardproject.user.entity.Users;
 import com.elice.boardproject.user.mapper.UsersMapper;
@@ -7,6 +8,7 @@ import com.elice.boardproject.user.mapper.UsersAuthMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -98,7 +100,7 @@ public class UserService {
             String email = usersMapper.findByEmail(userId);
             String newPassword = registerNewPassword();
 
-            usersMapper.editUserPassWord(email, bCryptPasswordEncoder.encode(newPassword), Instant.now(), false, 0);
+            usersMapper.editUserPassword(userId, bCryptPasswordEncoder.encode(newPassword), Instant.now(), false, 0);
             sendNewPasswordByMail(email, newPassword);
             return "Temporary password issuance has been completed.";
         }
@@ -154,6 +156,5 @@ public class UserService {
         } catch (Exception e) {
             log.error("Error occurred while sending email: {}", e.getMessage());
         }
-
     }
 }

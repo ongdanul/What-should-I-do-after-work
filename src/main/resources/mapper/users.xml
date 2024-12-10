@@ -14,10 +14,16 @@
         AND contact = #{contact}
     </select>
 
-    <!-- 새 사용자 계정 등록 (회원가입) -->
+    <!-- 새 사용자 계정 등록 (로컬 회원가입) -->
     <insert id="registerUser" parameterType="com.elice.boardproject.user.dto.SignUpDTO">
         INSERT INTO users (user_id, user_password, user_name, contact, email)
         VALUES (#{userId}, #{userPassword}, #{userName}, #{contact}, #{email})
+    </insert>
+
+    <!-- 새 사용자 계정 등록 (소셜 회원가입) -->
+    <insert id="registerOauthUser" parameterType="com.elice.boardproject.user.entity.Users">
+        INSERT INTO users (user_id, user_password, user_name, contact, email, profile_url, social)
+        VALUES (#{userId}, #{userPassword}, #{userName}, #{contact}, #{email}, #{profileUrl}, #{social})
     </insert>
 
     <!-- 아이디 찾기시 사용자 이름과 연락처로 사용자 계정 조회 -->
@@ -41,10 +47,10 @@
     </select>
 
     <!-- 비밀번호 찾기 시 이메일로 사용자의 비밀번호 초기화 또는 수정, 잠금 상태 함께 업데이트 -->
-    <update id="editUserPassWord">
+    <update id="editUserPassword">
         UPDATE users
         SET user_password = #{userPassword}, mod_date = #{modDate}, login_lock = #{loginLock}, login_attempts = #{loginAttempts}
-        WHERE email = #{email}
+        WHERE user_id = #{userId}
     </update>
 
     <!-- 특정 user_id로 사용자 정보 조회 -->

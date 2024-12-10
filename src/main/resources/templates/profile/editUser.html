@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script th:src="@{/js/profile/edit.js}"></script>
+    <script th:src="@{/js/profile/editUser.js}"></script>
     <link rel="stylesheet" href="/css/profile/edit.css">
     <title>프로필 수정 페이지</title>
 </head>
@@ -23,7 +23,7 @@
                 <div id="existingPwFeedback" class="feedback"></div>
 
                 <label for="userPw">새로운 비밀번호</label>
-                <input type="password" id="userPw" name="userPw" placeholder="새로운 비밀번호로 변경을 원할 시 입력하세요">
+                <input type="password" id="userPw" name="userPassword" placeholder="새로운 비밀번호로 변경을 원할 시 입력하세요">
                 <div id="pwFeedback" class="feedback"></div>
 
                 <label for="confirmPw">새로운 비밀번호 확인</label>

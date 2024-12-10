@@ -25,13 +25,18 @@ public class Profile {
     private String email;
 
     @Size(min = 8, max = 13, message = "Password must be between 8 and 13 characters")
-    private String userPw; //회원정보 수정을 위한 비밀번호 필드 추가
+    private String userPassword; //회원정보 수정을 위한 비밀번호 필드 추가
 
-    public void edit (String userId, String userName, String contact, String email, String userPw) {
+    public void editLocalUser(String userId, String userName, String contact, String email, String userPassword) {
         this.userId = userId;
         this.userName = userName;
         this.contact = contact;
         this.email = email;
-        this.userPw = userPw;
+        this.userPassword = userPassword;
     }
+
+    public void editSocialUser(String contact) {
+        this.contact = contact;
+    }
+
 }

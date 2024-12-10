@@ -2,6 +2,7 @@ package com.elice.boardproject.user.controller;
 
 import com.elice.boardproject.profile.service.ProfileService;
 import com.elice.boardproject.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +15,12 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/check")
 public class VerificationController {
 
     private final UserService userService;
     private final ProfileService profileService;
-
-    public VerificationController(UserService userService, ProfileService profileService) {
-        this.userService = userService;
-        this.profileService = profileService;
-    }
 
     /**
      * 회원가입 시, 사용자 ID 중복 여부를 확인합니다.

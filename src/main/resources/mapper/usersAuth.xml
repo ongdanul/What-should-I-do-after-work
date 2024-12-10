@@ -6,6 +6,7 @@
         values (#{userId})
     </insert>
 
+    <!-- userId로 사용자 사용자의 인증 정보 조회 -->
     <select id="findByUserId" resultType="com.elice.boardproject.user.entity.UsersAuth">
         SELECT * FROM users_auth
         WHERE user_id = #{userId}

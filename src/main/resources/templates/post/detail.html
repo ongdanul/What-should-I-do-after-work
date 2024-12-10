@@ -19,7 +19,7 @@
             </div>
             <div class="infoForm">
                 <div class="nameSpace">
-                    <span class="username" th:text="|${post.user.userName} (${post.user.userId})|">default value</span>
+                    <span class="userName" th:text="|${post.user.userName} (${post.user.userId})|">default value</span>
                     <button id="followButton" class="btn followSize" onclick="following()"><i class="bi bi-person-check"></i></button>
                     <div sec:authorize="isAuthenticated()">
                         <div th:if="${post.user.userId == authenticatedUserId}">

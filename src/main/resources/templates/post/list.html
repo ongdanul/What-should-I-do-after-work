@@ -24,8 +24,8 @@
                 <div class="filter">
                     <a th:href="'/post/list/' + ${boardId}"><i class="bi bi-arrow-counterclockwise"></i></a>
                     <!-- 정렬 -->
-                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='reg_date')}"><img class="filterNewest" th:src="@{/img/filterNewest.jpg}"></a>
-                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='view_count')}"><img class="filterPopular" th:src="@{/img/filterPopular.jpg}"></a>
+                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='reg_date')}"><img class="filterNewest" th:src="@{/img/post/filterNewest.png}"></a>
+                    <a th:href="@{/post/list/{boardId}(boardId=${boardId}, orderBy='view_count')}"><img class="filterPopular" th:src="@{/img/post/filterPopular.png}"></a>
                 </div>
             </div>
 
